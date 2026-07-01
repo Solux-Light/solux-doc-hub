@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solux — AI & Product Initiatives</title>
+<style>
+  :root {
+    --beige:#F8F5F0; --white:#FFFFFF; --charcoal:#1C2030;
+    --navy:#1C3254; --steel:#4A6FA5; --mist:#C8D4E3; --bdr:#D8D4CC;
+    --sb-bg:#EDEAE4; --sb-bdr:#D8D4CC;
+
+    /* Per-doc accent = AI INITIATIVES amber */
+    --doc-accent:#C07000;
+    --doc-accent-bg:rgba(192,112,0,.09);
+    --doc-accent-bdr:rgba(192,112,0,.28);
+
+    /* Semantic colours */
+    --green:#2E7D52; --red:#C0392B; --amber:#C07000;
+    --purple:#6855A8; --teal:#2A7A7A;
+    --purple-bg:rgba(104,85,168,.06); --purple-bdr:rgba(104,85,168,.25);
+
+    /* Sprint badges */
+    --sp1-bg:#D6F5E3; --sp1-c:#1A5C35;
+    --sp2-bg:#E4F4F4; --sp2-c:#1A6060;
+    --sp3-bg:#EDE9F8; --sp3-c:#5040A0;
+
+    /* Alpha scale */
+    --c86:rgba(28,32,48,.86); --c68:rgba(28,32,48,.68);
+    --c48:rgba(28,32,48,.48); --c32:rgba(28,32,48,.32);
+    --c16:rgba(28,32,48,.16); --c08:rgba(28,32,48,.08); --c04:rgba(28,32,48,.04);
+
+    --sb:220px; --topbar:34px;
+
+    /* Back-compat aliases */
+    --orange:var(--doc-accent);
+    --blue:var(--steel);
+    --gray:var(--c68);
+    --dark:var(--charcoal);
+    --row:var(--c04);
+    --light:var(--beige);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--charcoal);background:var(--beige);}
+
+  /* TOPBAR */
+  .topbar{position:sticky;top:0;z-index:200;background:var(--charcoal);height:var(--topbar);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .topbar-back{display:flex;align-items:center;gap:5px;color:#B8C8DC;font-size:0.72rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;transition:color .12s;}
+  .topbar-back:hover{color:#fff;}
+  .topbar-doc{font-size:0.68rem;color:rgba(255,255,255,.30);letter-spacing:0.08em;text-transform:uppercase;}
+  .topbar-docs{display:flex;gap:14px;}
+  .topbar-docs a{font-size:0.68rem;color:rgba(255,255,255,.85);text-decoration:none;letter-spacing:0.03em;transition:color .12s;}
+  .topbar-docs a:hover{color:#fff;}
+
+  /* SIDEBAR */
+  #sidebar{position:fixed;right:0;top:0;width:var(--sb);height:100vh;background:var(--sb-bg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;padding-top:var(--topbar);border-left:1px solid var(--sb-bdr);}
+  #sidebar .sb-title{background:var(--sb-bdr);padding:8px 14px;color:var(--navy);font-size:0.64rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--sb-bdr);}
+  #sidebar a{display:block;padding:6px 14px;color:var(--c86);text-decoration:none;font-size:0.74rem;border-left:2px solid transparent;transition:all .12s;display:flex;align-items:center;justify-content:space-between;}
+  #sidebar a:hover{background:rgba(28,32,48,.05);color:var(--navy);border-left-color:var(--doc-accent);}
+  #sidebar a.active{color:var(--doc-accent);font-weight:600;border-left-color:var(--doc-accent);background:var(--doc-accent-bg);}
+  #sidebar .sb-sec{padding:7px 14px 2px;color:var(--c32);font-size:0.60rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+  #sidebar .hub-link{margin-top:auto;border-top:1px solid var(--sb-bdr);padding:6px 0 4px;background:var(--white);}
+  #sidebar .hub-link .sb-sec{color:var(--c32);padding-top:4px;}
+  #sidebar .hub-link a{color:var(--steel);font-size:0.72rem;padding:5px 14px;justify-content:flex-start;}
+  #sidebar .hub-link a:hover{color:var(--navy);background:var(--doc-accent-bg);border-left-color:var(--doc-accent);}
+  #sidebar .hub-link a.hub-back{color:var(--c48);font-size:0.69rem;border-top:1px solid var(--sb-bdr);padding-top:8px;margin-top:4px;}
+  #sidebar .hub-link a.hub-back:hover{color:var(--navy);}
+  .sprint-badge{font-size:0.58rem;font-weight:700;padding:1px 5px;border-radius:8px;white-space:nowrap;}
+  .sp1{background:var(--sp1-bg);color:var(--sp1-c);}
+  .sp2{background:var(--sp2-bg);color:var(--sp2-c);}
+  .sp3{background:var(--sp3-bg);color:var(--sp3-c);}
+
+  /* MAIN */
+  #main{margin-right:var(--sb);}
+
+  /* HEADER */
+  .hdr{background:var(--white);padding:14px 18px 12px;border-bottom:3px solid var(--doc-accent);display:flex;align-items:center;justify-content:space-between;}
+  .hdr-title{color:var(--navy);font-size:1rem;font-weight:700;}
+  .hdr-sub{color:var(--steel);font-size:0.73rem;margin-top:2px;}
+  .badge{background:var(--doc-accent);color:#fff;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:3px;}
+
+  /* TAB CONTENT */
+  .tab-content{display:none;background:var(--white);padding:0;}
+  .tab-content.active{display:block;}
+
+  /* PROJECT HEADER */
+  .proj-hdr{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .proj-hdr .pid{font-size:0.7rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.7);}
+  .proj-hdr .ptitle{font-size:1rem;font-weight:700;color:#fff;margin-top:1px;}
+  .proj-hdr .pstatus{font-size:0.68rem;font-weight:700;background:rgba(255,255,255,.22);color:#fff;padding:2px 9px;border-radius:3px;}
+
+  /* Project status backgrounds */
+  .s-active{background:var(--green);}
+  .s-design{background:var(--amber);}
+  .s-future{background:var(--purple);}
+
+  /* TWO-COL layout */
+  .two-col{display:flex;gap:0;min-height:500px;}
+  .col-mehdi{flex:1;padding:14px 16px;border-right:1px solid var(--mist);background:var(--beige);}
+  .col-claude{flex:1;padding:14px 16px;background:var(--white);}
+  .col-label{font-size:0.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;display:inline-block;margin-bottom:10px;}
+  .lbl-mehdi{background:var(--bdr);color:var(--c68);border:1px solid var(--bdr);}
+  .lbl-claude{background:var(--doc-accent-bg);color:var(--navy);border:1px solid var(--doc-accent-bdr);}
+
+  /* TYPOGRAPHY */
+  h2{font-size:0.92rem;color:var(--navy);margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid var(--mist);}
+  h3{font-size:0.82rem;color:var(--steel);margin:9px 0 4px;font-weight:700;}
+  h4{font-size:0.78rem;color:var(--c48);margin:7px 0 3px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+  p{font-size:0.83rem;line-height:1.6;margin-bottom:6px;}
+  ul{padding-left:15px;margin-bottom:7px;}
+  ol{padding-left:17px;margin-bottom:7px;}
+  li{font-size:0.82rem;line-height:1.55;margin-bottom:2px;}
+
+  /* TABLES */
+  .tw{overflow-x:auto;margin:5px 0 9px;}
+  table{border-collapse:collapse;width:100%;font-size:0.79rem;}
+  th{background:var(--navy);color:#fff;padding:5px 8px;text-align:left;font-size:0.73rem;}
+  td{padding:4px 8px;border:1px solid var(--mist);vertical-align:top;line-height:1.45;}
+  tr:nth-child(even) td{background:var(--c04);}
+
+  /* OVERVIEW STATUS CELLS */
+  .st-a{background:var(--green)!important;color:#fff;font-weight:700;text-align:center;font-size:0.72rem;}
+  .st-d{background:var(--amber)!important;color:#fff;font-weight:700;text-align:center;font-size:0.72rem;}
+  .st-f{background:var(--purple)!important;color:#fff;font-weight:700;text-align:center;font-size:0.72rem;}
+
+  /* TAGS */
+  .tag{display:inline-block;border-radius:3px;font-size:0.64rem;font-weight:700;padding:1px 5px;margin:0 1px;vertical-align:middle;white-space:nowrap;}
+  .tw2{color:var(--navy);background:#E8F0FB;border:1px solid #c5d4ef;}
+  .tm{color:#1A5C35;background:#E8F5E9;border:1px solid #a8d5b8;}
+  .tc{color:#1A5C35;background:#E8F5E9;border:1px solid #a8d5b8;}
+  .ti{color:var(--c68);background:var(--bdr);border:1px solid var(--bdr);}
+
+  .cite{display:block;font-size:0.7rem;color:var(--c48);font-style:italic;padding:2px 0 6px 8px;border-left:2px solid var(--mist);margin:2px 0 8px;}
+
+  /* CALLOUT BOXES */
+  .box{display:flex;margin:7px 0 9px;border-radius:4px;overflow:hidden;border:1px solid var(--mist);}
+  .box-bar{width:5px;flex-shrink:0;}
+  .box-body{padding:7px 10px;flex:1;background:var(--white);}
+  .box-body strong{display:block;margin-bottom:2px;font-size:0.8rem;}
+  .box-body p{font-size:0.8rem;margin:0;}
+
+  /* FLOW STEPS */
+  .flow{margin:6px 0 10px;}
+  .flow-step{display:flex;align-items:flex-start;margin-bottom:2px;}
+  .flow-num{background:var(--navy);color:#fff;font-size:0.65rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;margin-right:7px;}
+  .flow-arrow{color:var(--c48);font-size:0.75rem;padding:1px 0 1px 25px;display:block;}
+  .flow-text{font-size:0.82rem;line-height:1.45;}
+  .flow-sub{padding-left:25px;margin:1px 0 4px;}
+  .flow-sub li{font-size:0.78rem;}
+
+  /* SUGGESTION STEPS */
+  .sug-step{background:var(--white);border:1px solid var(--doc-accent-bdr);border-radius:4px;padding:7px 10px;margin-bottom:6px;border-left:3px solid var(--doc-accent);}
+  .sug-step .snum{font-size:0.68rem;font-weight:700;color:var(--doc-accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+  .sug-step p{font-size:0.81rem;margin:0;}
+  .sug-step code{background:var(--beige);padding:1px 4px;border-radius:2px;font-size:0.77rem;font-family:monospace;}
+
+  /* PILLS */
+  .legend{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 12px;}
+  .legend-item{background:var(--beige);border:1px solid var(--bdr);border-radius:4px;padding:5px 10px;font-size:0.75rem;flex:1;min-width:130px;}
+  .pill{display:inline-block;font-size:0.68rem;font-weight:700;padding:2px 7px;border-radius:10px;margin-right:3px;}
+  .pill-crm{background:#D6E8FF;color:#1B3A6B;}
+  .pill-auto{background:#D6F5E3;color:#1A5C35;}
+  .pill-int{background:var(--bdr);color:var(--c68);}
+  .pill-ai{background:rgba(104,85,168,.10);color:#5040A0;}
+
+  /* CROSS-LINK BUTTON */
+  .xlink{display:inline-flex;align-items:center;gap:5px;background:var(--doc-accent);color:#fff;text-decoration:none;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:3px;margin:3px 2px 5px 0;}
+  .xlink:hover{opacity:.85;}
+
+  /* DIVIDER */
+  .divider{height:1px;background:var(--mist);margin:10px 0;}
+
+  /* OVERVIEW */
+  #t-overview{padding:14px 16px;}
+
+  /* ANCHOR */
+  .anchor{display:block;position:relative;top:-16px;visibility:hidden;}
+</style>
+<script>
+function showTab(id,el){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('#sidebar a').forEach(e=>e.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(el) el.classList.add('active');
+  history.replaceState(null,null,'#'+id);
+}
+window.addEventListener('load',function(){
+  var h=window.location.hash.replace('#','');
+  if(h){
+    var tab=document.getElementById(h);
+    var lnk=document.querySelector('#sidebar a[href="#'+h+'"]');
+    if(tab){
+      document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+      document.querySelectorAll('#sidebar a').forEach(e=>e.classList.remove('active'));
+      tab.classList.add('active');
+      if(lnk)lnk.classList.add('active');
+    }
+  } else {
+    document.getElementById('t-overview').classList.add('active');
+    var fl=document.querySelector('#sidebar a[href="#t-overview"]');
+    if(fl)fl.classList.add('active');
+  }
+});
+</script>
+</head>
+<body>
+<div class="topbar">
+  <a class="topbar-back" href="Solux.html">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Back to Hub
+  </a>
+  <span class="topbar-doc">AI &amp; Product Initiatives</span>
+  <div class="topbar-docs">
+    <a href="Solux_Working_Doc.html">① Working Doc</a>
+    <a href="Solux_Business_Analysis.html">② Business Analysis</a>
+    <a href="Style_Guide.html">Style Guide</a>
+  </div>
+</div>
+
+<div id="sidebar">
+  <div class="sb-title">AI &amp; Product Initiatives</div>
+  <a href="#t-overview" onclick="showTab('t-overview',this);return false;">Overview</a>
+  <div class="sb-sec">Sprint 1 — Active</div>
+  <a href="#t-p01" onclick="showTab('t-p01',this);return false;"><span>P01 — Lead Platform</span> <span class="sprint-badge sp1">S1</span></a>
+  <a href="#t-p02" onclick="showTab('t-p02',this);return false;"><span>P02 — Study Platform</span> <span class="sprint-badge sp1">S1</span></a>
+  <div class="sb-sec">Sprint 2 — In Design</div>
+  <a href="#t-p04" onclick="showTab('t-p04',this);return false;"><span>P04 — Tender Tool</span> <span class="sprint-badge sp2">S2</span></a>
+  <a href="#t-p05" onclick="showTab('t-p05',this);return false;"><span>P05 — Knowledge Hub</span> <span class="sprint-badge sp2">S2</span></a>
+  <a href="#t-p06" onclick="showTab('t-p06',this);return false;"><span>P06 — Marketing Intel</span> <span class="sprint-badge sp2">S2</span></a>
+  <div class="sb-sec">Sprint 3 — Future</div>
+  <a href="#t-p03" onclick="showTab('t-p03',this);return false;"><span>P03 — Energy Study</span> <span class="sprint-badge sp3">S3</span></a>
+  <a href="#t-p07" onclick="showTab('t-p07',this);return false;"><span>P07 — Commercial DB</span> <span class="sprint-badge sp3">S3</span></a>
+  <div class="hub-link">
+    <div class="sb-sec">Documents</div>
+    <a href="Solux_Working_Doc.html">① Working Document</a>
+    <a href="Solux_Business_Analysis.html">② Business Analysis</a>
+    <a href="Style_Guide.html">Style Guide</a>
+    <a href="Solux.html" class="hub-back">← Back to Hub</a>
+  </div>
+</div>
+
+<div id="main">
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Solux — AI &amp; Product Initiatives</div>
+    <div class="hdr-sub">Source: Mehdi's IA KLAIRS.zip (7 files) + Claude implementation suggestions · June 2026</div>
+  </div>
+  <span class="badge">CITED + SUGGESTIONS</span>
+</div>
+
+<div style="background:rgba(192,112,0,.06);border-bottom:1px solid rgba(192,112,0,.22);padding:8px 18px;display:flex;align-items:center;gap:12px;font-size:0.78rem;">
+  <span style="background:var(--doc-accent);color:#fff;font-weight:bold;padding:2px 8px;border-radius:10px;white-space:nowrap;">Phase 2</span>
+  <span style="color:var(--c68);">These projects build on the CRM foundation established in Phase 1. See the <a href="Solux_Working_Doc.html" style="color:var(--doc-accent);font-weight:bold;">Internal Working Document</a> before beginning any project.</span>
+</div>
+
+<!-- ══════════════════ OVERVIEW ══════════════════ -->
+<div id="t-overview" class="tab-content active">
+  <h2>All 7 Projects — Mehdi's File Names &amp; Status</h2>
+
+  <div class="legend">
+    <div class="legend-item"><span class="pill pill-crm">CRM EDIT</span> Changes to the owner-built CRM</div>
+    <div class="legend-item"><span class="pill pill-auto">AUTOMATE</span> Scheduled jobs, triggers, n8n/Make flows</div>
+    <div class="legend-item"><span class="pill pill-int">INTEGRATE</span> API connections between systems</div>
+    <div class="legend-item"><span class="pill pill-ai">AI LAYER</span> Claude / GPT-4o mini calls</div>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>Tab</th><th>Mehdi's File Name</th><th>Mehdi's Title</th><th>Status</th><th>ROI</th><th>Key Suggestion Types</th></tr></thead>
+    <tbody>
+      <tr><td><strong>P01</strong></td><td>AI Lead Qualification Agent .pages</td><td>PROJECT – AI Lead Intelligence Platform</td><td class="st-a">ACTIVE</td><td style="font-weight:bold;color:var(--doc-accent);text-align:center">#1</td><td><span class="pill pill-crm">CRM EDIT</span><span class="pill pill-auto">AUTOMATE</span><span class="pill pill-int">INTEGRATE</span><span class="pill pill-ai">AI LAYER</span></td></tr>
+      <tr><td><strong>P02</strong></td><td>Light Study plateform .pages</td><td>Lighting Study Platform – Project Overview</td><td class="st-a">ACTIVE</td><td style="font-weight:bold;color:var(--doc-accent);text-align:center">#2</td><td><span class="pill pill-crm">CRM EDIT</span><span class="pill pill-int">INTEGRATE</span><span class="pill pill-auto">AUTOMATE</span></td></tr>
+      <tr><td><strong>P03</strong></td><td>Automated Energy Study Platform .pages</td><td>Future Project – Automated Energy Study Platform</td><td class="st-f">FUTURE</td><td style="font-weight:bold;color:#2E75B6;text-align:center">#8</td><td><span class="pill pill-int">INTEGRATE</span><span class="pill pill-ai">AI LAYER</span></td></tr>
+      <tr><td><strong>P04</strong></td><td>Tender inteligence tool Gavin.pages</td><td>Tender Intelligence Tool – Handover Overview</td><td class="st-d">IN DESIGN</td><td style="font-weight:bold;color:var(--doc-accent);text-align:center">#5</td><td><span class="pill pill-crm">CRM EDIT</span><span class="pill pill-auto">AUTOMATE</span><span class="pill pill-ai">AI LAYER</span></td></tr>
+      <tr><td><strong>P05</strong></td><td>Product Knowledge Hub &amp; Documentation Intelligence Platform .pages</td><td>PROJECT 3 — Product Knowledge Hub &amp; Documentation Intelligence Platform</td><td class="st-d">IN DESIGN</td><td style="font-weight:bold;color:var(--doc-accent);text-align:center">#4</td><td><span class="pill pill-int">INTEGRATE</span><span class="pill pill-ai">AI LAYER</span><span class="pill pill-auto">AUTOMATE</span></td></tr>
+      <tr><td><strong>P06</strong></td><td>Marketing Intelligence &amp; Email Automation Platform .pages</td><td>PROJECT 2 – Marketing Intelligence &amp; Email Automation Platform</td><td class="st-f">FUTURE</td><td style="font-weight:bold;color:#2E75B6;text-align:center">#6</td><td><span class="pill pill-int">INTEGRATE</span><span class="pill pill-ai">AI LAYER</span><span class="pill pill-auto">AUTOMATE</span></td></tr>
+      <tr><td><strong>P07</strong></td><td>Commercial Intelligence Database .pages</td><td>Future Project – Commercial Intelligence Database</td><td class="st-f">FUTURE</td><td style="font-weight:bold;color:#2E75B6;text-align:center">#7</td><td><span class="pill pill-crm">CRM EDIT</span><span class="pill pill-ai">AI LAYER</span><span class="pill pill-auto">AUTOMATE</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box"><div class="box-bar" style="background:var(--amber)"></div><div class="box-body" style="background:#FFFCF0;">
+    <strong style="color:var(--amber)">How to read each tab</strong>
+    <p>Left column = <strong>what Mehdi's file says</strong> (direct transcription, ordered lists kept in order). Right column = <strong>Claude's suggestions</strong> on how to implement it: what to edit in the CRM, what to automate, what to connect.</p>
+  </div></div>
+</div>
+
+<!-- ══════════════════ P01 ══════════════════ -->
+<div id="t-p01" class="tab-content">
+  <div class="proj-hdr s-active">
+    <div><div class="pid">P01 · AI Lead Qualification Agent .pages · ACTIVE</div><div class="ptitle">PROJECT – AI Lead Intelligence Platform</div></div>
+    <span class="pstatus">ROI Priority #1 &nbsp;·&nbsp; <span style="background:#D6F5E3;color:#1A5C35;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 1</span></span>
+  </div>
+  <div class="two-col">
+
+    <!-- MEHDI COLUMN -->
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Vision</h2>
+      <p>The objective is to build an AI-powered Lead Intelligence Platform that becomes the <strong>first point of contact for every incoming business opportunity</strong>.</p>
+      <p>Rather than simply collecting leads, the platform should <strong>automatically qualify, enrich, prioritize and route every inquiry</strong> before it reaches the Sales Team.</p>
+      <p>The goal is to <strong>eliminate repetitive manual work</strong> while ensuring that every salesperson starts with the maximum amount of business intelligence.</p>
+
+      <h2>Business Context</h2>
+      <p>One of Marketing's primary responsibilities is generating qualified business opportunities for the Sales Team.</p>
+      <p>Today, leads arrive from multiple independent channels and require significant manual work before they can be assigned.</p>
+
+      <h4>Lead sources (from file)</h4>
+      <ul>
+        <li>Website Contact Forms</li>
+        <li>JivoChat</li>
+        <li>Contact Email</li>
+        <li>LinkedIn</li>
+        <li>Google Ads</li>
+        <li>LinkedIn Ads</li>
+        <li>Waalaxy</li>
+        <li>Trade Shows</li>
+        <li>Sales Contact Lists</li>
+        <li>Future Lead Sources</li>
+      </ul>
+      <p>Today, these leads are <strong>manually collected, reviewed and often copied into Excel</strong> before being transferred to Sales.</p>
+
+      <h2>Current Workflow (from file)</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Incoming Lead</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Marketing manually reviews the inquiry</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Each channel begins its own disconnected process</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">No centralized dashboard — impossible to identify high-value leads</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">An "employee" handles routing — not scalable</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Decision Makers contacted (when available)</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">7</div><div class="flow-text">Geographic qualification attempted</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">8</div><div class="flow-text">Send a professional response — delayed and inconsistent</div></div>
+      </div>
+      <span class="cite">Source: AI Lead Qualification Agent .pages — preview.jpg + strings extraction</span>
+
+      <h2>What the File Describes (AI SDR concept)</h2>
+      <p>Mehdi's file refers to an <strong>AI SDR</strong> (Sales Development Representative) that can:</p>
+      <ul>
+        <li>Continuously monitor all lead channels</li>
+        <li>Qualify leads automatically (no human needed for initial triage)</li>
+        <li>Perform geographic qualification</li>
+        <li>Send a professional first response</li>
+        <li>Route to the correct Decision Maker</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa — "AI SDR", "continuously monitor", "Geographic qualification", "Decision Makers"</span>
+    </div>
+
+    <!-- CLAUDE COLUMN -->
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>CRM Edits Needed</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> New Fields</div>
+        <p>Add to the Lead object: <code>lead_source</code> (dropdown: Website / JivoChat / LinkedIn / Google Ads / Waalaxy / Trade Show / Email / Other), <code>lead_type</code> (New Project / Distributor / After-Sales / Study Request), <code>country</code>, <code>urgency_score</code> (1–5, set by AI), <code>assigned_to</code> (sales rep), <code>first_response_sent</code> (boolean + timestamp).</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Pipeline Rule</div>
+        <p>Leads cannot advance to "Qualification" stage unless <code>lead_source</code>, <code>lead_type</code>, and <code>country</code> are filled. This stops incomplete data reaching sales.</p>
+      </div>
+
+      <h2>Automation — Lead Capture</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Joomla Contact Form</div>
+        <p>Add a webhook to the Joomla contact form → on every submission, POST the data to an n8n/Make.com workflow → auto-create CRM Lead record. Map the existing form categories directly to <code>lead_type</code>.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> JivoChat</div>
+        <p>JivoChat has a native webhook. On every new conversation, fire the webhook → n8n creates CRM lead with source = "JivoChat" and chat transcript attached.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Waalaxy / LinkedIn Ads</div>
+        <p>Both have CSV export or Zapier connectors. Set a scheduled job (daily 8am) to pull new contacts from Waalaxy → create CRM leads, deduplicated by email.</p>
+      </div>
+
+      <h2>AI Layer — The SDR Logic</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Lead Classifier</div>
+        <p>When a new CRM lead is created, trigger an API call to GPT-4o mini. Send: inquiry text + country + lead source. Receive back: <code>lead_type</code>, <code>product_family</code>, <code>urgency_score</code> (1–5), <code>suggested_assignee</code> (by region/office). Write results back to CRM automatically. Cost: ~$0.001 per lead.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> First Reply Drafter</div>
+        <p>After classification, AI drafts a personalised first response email in the correct language (French / English / Arabic based on country). Sales rep reviews and sends in one click — no writing from scratch.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Daily Owner Summary</div>
+        <p>Every morning at 8am, a scheduled job queries the CRM and sends the owner a summary email: leads received yesterday, classified breakdown by type, any urgent leads not yet assigned.</p>
+      </div>
+
+      <h2>Recommended Stack</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Component</th><th>Tool</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Workflow automation</td><td>n8n (self-hosted) or Make.com</td><td>Free / ~€9/mo</td></tr>
+          <tr><td>AI classifier</td><td>GPT-4o mini API</td><td>&lt;€25/mo</td></tr>
+          <tr><td>CRM webhooks</td><td>Owner-built CRM + n8n</td><td>Dev time only</td></tr>
+          <tr><td>JivoChat webhook</td><td>Native JivoChat feature</td><td>Free</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#s6">→ Sprint 1 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint2">→ Sprint 2 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#s5">→ ROI Roadmap</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P02 ══════════════════ -->
+<div id="t-p02" class="tab-content">
+  <div class="proj-hdr s-active">
+    <div><div class="pid">P02 · Light Study plateform .pages · ACTIVE</div><div class="ptitle">Lighting Study Platform — Project Overview</div></div>
+    <span class="pstatus">ROI Priority #2 &nbsp;·&nbsp; <span style="background:#D6F5E3;color:#1A5C35;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 1</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Background</h2>
+      <p>One of the strategic projects currently under development is our <strong>Lighting Study Platform</strong>.</p>
+      <p>The objective is to transform what is currently a manual engineering workflow into a <strong>collaborative platform shared between the Sales Team, our Partners, and the Engineering Department</strong>.</p>
+      <p>Today, hundreds of lighting studies have already been completed, but most of the information is <strong>stored inside folders, PDFs, Dialux reports, energy studies and spreadsheets</strong>. While these files contain valuable technical knowledge, they are <strong>difficult to search, compare and reuse</strong>.</p>
+      <p>This project aims to centralize that knowledge and make it accessible across the company.</p>
+
+      <h2>Current Workflow (from file — ordered)</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">A salesperson or partner requests a lighting study</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">The Engineering Department prepares the lighting calculations</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Dialux reports, energy studies and supporting documents are generated</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">The final files are sent back to Sales as PDFs and other attachments</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Once delivered, the project is essentially archived inside folders with very little structured data available</div></div>
+      </div>
+      <p><em>"Although this process works, the information becomes difficult to retrieve later."</em></p>
+      <span class="cite">Source: Light Study plateform .pages — preview.jpg (exact quote)</span>
+
+      <h2>Existing Application</h2>
+      <p>A first version of the application has already been developed.</p>
+      <p>It already allows salespeople and partners to submit lighting study requests through a structured workflow.</p>
+      <p>However, this first version now needs to be <strong>reviewed, stabilized and expanded</strong> before it can become our standard platform.</p>
+
+      <h2>First Mission (Mehdi's direct instruction)</h2>
+      <p><em>"One of your first tasks will be to perform a <strong>complete review of the current application</strong>."</em></p>
+      <span class="cite">Source: Light Study plateform .pages — "First Mission" section, preview.jpg (exact quote)</span>
+
+      <h2>Additional Data Points (from strings)</h2>
+      <ul>
+        <li>Platform should "progressively evolve" over time</li>
+        <li>One metric tracked: <strong>Average illuminance</strong></li>
+        <li>Approximately <strong>600</strong> studies referenced (likely existing study count)</li>
+        <li>Platform includes a structured database component</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa — partial fragments only</span>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>Step 1 — Audit First (Mehdi's instruction)</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Review Checklist</div>
+        <p>Before any development, audit the existing Study Platform v1 against these criteria: (1) Can it accept a structured study request form? (2) Does it track study status (Pending / In Progress / Delivered)? (3) Does it store Dialux + PVGIS outputs? (4) Can Sales search past studies by country, product, power? (5) Is there an API or webhook to connect to the CRM?</p>
+      </div>
+
+      <h2>CRM Integration — Close the Loop</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Add Study Request Object</div>
+        <p>Add a "Study Request" linked object to every CRM Deal. Fields: <code>requested_by</code>, <code>project_location</code> (GPS or country), <code>road_type</code>, <code>luminaire_qty</code>, <code>requested_date</code>, <code>status</code>, <code>assigned_engineer</code>, <code>delivered_date</code>.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> CRM → Study Platform trigger</div>
+        <p>When a CRM Deal reaches stage "Study Requested" → automatically send a webhook to the Study Platform creating a new study job in the engineering queue. The engineer opens the platform and sees a pre-filled request — no re-entry of data from emails.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Study Platform → CRM callback</div>
+        <p>When the engineer marks the study as "Delivered" in the Study Platform → webhook fires back → CRM Deal automatically advances to "Study Complete" stage + PDF report attached to the Deal record.</p>
+      </div>
+
+      <h2>Searchable Archive — Unlock 600 Past Studies</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Retroactive Import</div>
+        <p>Use GPT-4o mini to parse the ~600 existing PDF study reports. Extract: project name, country, product used, luminaire count, panel size, battery capacity, average illuminance. Load into a structured database. Now Sales can search: "Show me all studies in Senegal with AOS Pro+ products" — instantly.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Study Reuse Feature</div>
+        <p>When a new study request arrives for a similar location/product combination, the platform shows the engineer past similar studies as reference. Reduces engineering time by eliminating work done from scratch.</p>
+      </div>
+
+      <h2>Recommended Architecture</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Layer</th><th>What</th><th>How</th></tr></thead>
+        <tbody>
+          <tr><td>Request intake</td><td>Structured form (Sales / Partners)</td><td>Existing Study Platform v1 — stabilize</td></tr>
+          <tr><td>CRM link</td><td>Bidirectional sync</td><td>Webhook: CRM ↔ Study Platform API</td></tr>
+          <tr><td>Archive search</td><td>Past 600 studies searchable</td><td>GPT-4o mini PDF extraction → database</td></tr>
+          <tr><td>Status visibility</td><td>Engineering queue + SLA</td><td>CRM dashboard showing study backlog</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#s6">→ Sprint 1 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint3">→ Sprint 3 (PVGIS)</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P03 ══════════════════ -->
+<div id="t-p03" class="tab-content">
+  <div class="proj-hdr s-future">
+    <div><div class="pid">P03 · Automated Energy Study Platform .pages · FUTURE</div><div class="ptitle">Future Project — Automated Energy Study Platform</div></div>
+    <span class="pstatus">ROI Priority #8 &nbsp;·&nbsp; <span style="background:#D6E8FF;color:#1B3A6B;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 3</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Vision</h2>
+      <p>Today, the Engineering Department performs <strong>two separate tasks</strong> for every project:</p>
+      <ol>
+        <li>Lighting Design</li>
+        <li>Energy Study</li>
+      </ol>
+      <p>While the lighting study is performed using lighting simulation software, the energy study is <strong>largely completed manually using PVGIS</strong>.</p>
+      <p>The long-term objective is to <strong>integrate both workflows into a single platform</strong>.</p>
+      <p>Instead of engineers manually entering the same information multiple times, the platform should <strong>automatically generate the PVGIS simulation based on the lighting study results</strong>.</p>
+
+      <h2>Current Workflow (from file — as shown)</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Sales Request</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Lighting Design</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Selection of: Luminaire · Power · Optic · Pole height · Operating profile</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Engineer manually opens PVGIS</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Manually enters project location + panel parameters</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">PVGIS returns: Solar panel size · Battery capacity · Other required parameters</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">7</div><div class="flow-text">Engineer transfers results manually into the study document</div></div>
+      </div>
+      <span class="cite">Source: Automated Energy Study Platform .pages — preview.jpg (steps 1–3 visible) + strings extraction (steps 4–7)</span>
+
+      <h2>From strings extraction</h2>
+      <ul>
+        <li>Outputs: <strong>Solar panel size</strong>, <strong>Battery capacity</strong>, <strong>Other required parameters</strong></li>
+        <li>Goal: data that "already exists inside" the Lighting Study should be reused automatically</li>
+        <li>Platform should "learn from previous successes"</li>
+        <li>Should "integrate directly" with other systems</li>
+        <li>Result becomes "validated" through the automation</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa — partial fragments</span>
+
+      <div class="box"><div class="box-bar" style="background:var(--purple)"></div><div class="box-body" style="background:#F9F3FF;">
+        <strong style="color:var(--purple)">Mehdi labels this "Future Project"</strong>
+        <p>This is deliberately deferred — it requires the Lighting Study Platform (P02) to be stable first. Do not start P03 until P02 review is complete and CRM-integrated.</p>
+      </div></div>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>The Core Problem to Solve</h2>
+      <p>Steps 4–7 in the current workflow are pure data re-entry. The engineer already has everything needed from the Lighting Design output — the system should just call PVGIS automatically and fill in the results.</p>
+
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">DEPENDENCY</span> P02 Must Come First</div>
+        <p>P03 automation cannot be built standalone — it plugs directly into the Study Platform (P02). The PVGIS API call is triggered <em>from within</em> P02 after a lighting design is selected. This means: <strong>P02 must be reviewed and stabilised in Sprint 1 before any P03 development begins in Sprint 3.</strong> The GPS coordinate field must also be added to P02 study request forms during Sprint 1 — without coordinates, there is nothing to send to PVGIS when automation is ready.</p>
+        <a class="xlink" href="Solux_AI_Initiatives.html#t-p02" style="margin-top:4px;">→ P02 Study Platform</a>
+      </div>
+      <h2>PVGIS API Integration</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> PVGIS REST API</div>
+        <p>PVGIS has a free public REST API from the EU Joint Research Centre. Once the engineer selects a project location (GPS coordinates), the Study Platform automatically sends: <code>lat</code>, <code>lon</code>, <code>peak_power</code>, <code>system_loss</code>, <code>mountingplace</code> → API returns monthly irradiance data, optimal tilt angle, peak sun hours by month. No manual web browser entry needed.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Panel Sizing Engine</div>
+        <p>After PVGIS returns irradiance data, the platform automatically calculates panel size using Solux's 30% safety margin rule. Formula: <code>panel_size = (daily_consumption / worst_month_sun_hours) × 1.30</code>. Result auto-fills the study.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Battery Sizing Engine</div>
+        <p>Platform automatically calculates battery capacity: <code>battery_size = daily_consumption × 2</code> (minimum 2-day backup rule from solux.fr/en/study-lab). Result auto-fills. Engineer reviews — does not recalculate.</p>
+      </div>
+
+      <h2>Dialux Export Parsing</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Parse Dialux Output</div>
+        <p>Dialux can export reports as PDF or XML. The Study Platform should accept Dialux export upload → parse luminaire power, average illuminance, number of luminaires → auto-populate the study request form. This eliminates Step 2 manual data entry.</p>
+      </div>
+
+      <h2>"Learn from Previous Successes"</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Similar Project Recommender</div>
+        <p>When a new study request arrives (country + road type + luminaire count), query the archive of ~600 past studies → find the 3 most similar completed studies → suggest their panel and battery sizing as a starting reference. Engineer validates rather than calculates from zero.</p>
+      </div>
+
+      <h2>Prerequisite Checklist</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Must be done first</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>P02 Study Platform reviewed &amp; stable</td><td>P03 extends P02 — can't automate a broken base</td></tr>
+          <tr><td>P05 Product Knowledge Hub live</td><td>Product selection (step after battery sizing) needs spec database</td></tr>
+          <tr><td>GPS coordinates captured in study requests</td><td>PVGIS API requires lat/lon — must be a required field in P02 forms</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint3">→ Sprint 3 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#w3">→ W3 Engineering Workflow</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P04 ══════════════════ -->
+<div id="t-p04" class="tab-content">
+  <div class="proj-hdr s-design">
+    <div><div class="pid">P04 · Tender inteligence tool Gavin.pages · IN DESIGN (Handover)</div><div class="ptitle">Tender Intelligence Tool — Handover Overview</div></div>
+    <span class="pstatus">ROI Priority #5 &nbsp;·&nbsp; <span style="background:#FFF0D6;color:#8B4A00;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 2</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Purpose</h2>
+      <p>This application was developed by <strong>Gavin</strong> as an internal tool to improve the way we analyze public tenders.</p>
+      <p>It is <strong>not a replacement for J360</strong>. Instead, it acts as an intelligent layer on top of J360 by collecting tender information, enriching it with AI, and organizing it into a format that is much more useful for Solux.</p>
+      <p>The current version should be considered a <strong>Minimum Viable Product (MVP)</strong>. It successfully proves the concept but has significant room for improvement in terms of <strong>automation, user experience, and intelligence</strong>.</p>
+
+      <h2>Overall Workflow (from file — numbered)</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">The user launches a search <strong>manually through Claude</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">The application retrieves tenders from J360 for a selected period</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">For each tender, it follows the official links provided by J360</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">It downloads the available tender documents</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Claude reads and analyzes the documentation</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Relevant information is extracted</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">7</div><div class="flow-text">The application classifies and organizes the opportunities for review</div></div>
+      </div>
+      <p><em>"The objective is to reduce the amount of manual work required to identify interesting projects."</em></p>
+
+      <h2>Current Features — 1. J360 Integration</h2>
+      <p>The application uses J360 as its primary source of tender information.</p>
+      <p>It retrieves:</p>
+      <ul>
+        <li>New tenders</li>
+        <li>Awarded tenders</li>
+      </ul>
+      <span class="cite">Source: Tender inteligence tool Gavin.pages — preview.jpg (exact transcription)</span>
+
+      <h2>Improvement Areas (from strings)</h2>
+      <ul>
+        <li>Needs <strong>advanced scoring</strong> (currently relatively simple)</li>
+        <li>Scoring should be <strong>built around priorities</strong></li>
+        <li>Needs <strong>daily monitoring</strong> capability</li>
+        <li>J360 described as providing "the most valuable" tender data</li>
+      </ul>
+      <span class="cite">Source: strings extraction — "advanced scoring", "built around priorities", "daily monitoring"</span>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>The 3 Gaps to Fix</h2>
+      <div class="box"><div class="box-bar" style="background:var(--red)"></div><div class="box-body" style="background:#FFF5F5;">
+        <strong style="color:var(--red)">Gap 1 — Manual trigger</strong><p>Every search requires a human to initiate it through Claude. Needs to be scheduled.</p>
+      </div></div>
+      <div class="box"><div class="box-bar" style="background:var(--amber)"></div><div class="box-body" style="background:#FFFCF0;">
+        <strong style="color:var(--amber)">Gap 2 — Simple scoring</strong><p>Claude reads and classifies but the scoring logic is basic. Needs structured criteria.</p>
+      </div></div>
+      <div class="box"><div class="box-bar" style="background:var(--amber)"></div><div class="box-body" style="background:#FFFCF0;">
+        <strong style="color:var(--amber)">Gap 3 — No CRM link</strong><p>High-value tenders don't automatically become Opportunities in the CRM.</p>
+      </div></div>
+
+      <h2>Fix 1 — Schedule the Search</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Daily Cron Job</div>
+        <p>Remove the manual trigger. Set up a cron job (server) or n8n scheduled workflow to run the J360 fetch every weekday at 7am. It runs without any human action. Results are stored and scored automatically before the team arrives at work.</p>
+      </div>
+
+      <h2>Fix 2 — Structured Scoring Criteria</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Scoring Prompt Engineering</div>
+        <p>Rewrite the Claude prompt to return a structured JSON score for each tender:</p>
+        <ul>
+          <li><code>product_fit</code> (0–10): Does this tender mention solar lighting, street lighting, or outdoor lighting?</li>
+          <li><code>geography_fit</code> (0–10): Is the country/region where Solux has an office or distributor?</li>
+          <li><code>scale_fit</code> (0–10): Is the project scale appropriate (not too small, not too large)?</li>
+          <li><code>eligibility</code> (Yes/No/Unclear): Does Solux meet stated certifications or origin requirements?</li>
+          <li><code>deadline_days</code>: Days until submission deadline</li>
+          <li><code>recommended_action</code>: "Pursue" / "Monitor" / "Skip"</li>
+        </ul>
+        <p>Total score determines CRM action automatically.</p>
+      </div>
+
+      <h2>Fix 3 — CRM Integration</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> New Tender Object</div>
+        <p>Add a "Tender" object to the CRM with fields: <code>tender_name</code>, <code>source</code> (J360), <code>country</code>, <code>deadline</code>, <code>estimated_value</code>, <code>score</code>, <code>status</code> (New / Under Review / Submitted / Won / Lost), <code>assigned_to</code>.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Auto-Create CRM Opportunity</div>
+        <p>When a tender scores ≥ 7/10 → the tool automatically creates a CRM Tender record and notifies the relevant regional sales manager via email. Score &lt;7 → logged but not escalated. Sales manager reviews in the CRM, not inside Claude.</p>
+      </div>
+
+      <h2>Recommended Improvement Roadmap</h2>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Improvement</th><th>Effort</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Add n8n daily cron to replace manual Claude trigger</td><td>1 day</td></tr>
+          <tr><td>2</td><td>Rewrite Claude scoring prompt → structured JSON output</td><td>Half day</td></tr>
+          <tr><td>3</td><td>Add Tender object to CRM</td><td>1 day</td></tr>
+          <tr><td>4</td><td>Auto-create CRM record for high-score tenders</td><td>1 day</td></tr>
+          <tr><td>5</td><td>Build simple review UI (list of scored tenders + accept/reject)</td><td>2–3 days</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint2">→ Sprint 2 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#w7">→ W7 Tender Monitoring</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P05 ══════════════════ -->
+<div id="t-p05" class="tab-content">
+  <div class="proj-hdr s-design">
+    <div><div class="pid">P05 · Product Knowledge Hub &amp; Documentation Intelligence Platform .pages · IN DESIGN</div><div class="ptitle">PROJECT 3 — Product Knowledge Hub &amp; Documentation Intelligence Platform</div></div>
+    <span class="pstatus">ROI Priority #4 &nbsp;·&nbsp; <span style="background:#FFF0D6;color:#8B4A00;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 2</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Vision</h2>
+      <p>As Solux continues to expand its product portfolio, <strong>maintaining accurate technical information across all customer-facing documentation has become increasingly difficult</strong>.</p>
+      <p>Today, product specifications are <strong>maintained by the factory in a master Excel file</strong>, while Marketing manually recreates the same information across dozens of technical sheets, catalogues, brochures, presentations, websites and sales documents.</p>
+      <p>Over time, this process creates <strong>inconsistencies, duplicated work and the constant risk of outdated information being sent to customers</strong>.</p>
+      <p>The objective of this project is <strong>not simply to digitize the existing Excel file</strong>.</p>
+      <p>The objective is to build a <strong>centralized Product Knowledge Hub that becomes the single source of truth</strong> for every technical specification used across the entire company.</p>
+      <p>This platform will serve as the foundation for <strong>Marketing, Sales, Engineering, Product Management and future AI assistants</strong>.</p>
+
+      <h2>Current Situation — Product Information</h2>
+      <p>Today the factory maintains one or several master Excel files containing official specifications for every product.</p>
+      <p>These files include information such as:</p>
+      <ul>
+        <li>Product names</li>
+        <li>Product families</li>
+        <li>LED power</li>
+        <li>LED brand</li>
+        <li>Solar panel specifications</li>
+        <li>Battery specifications</li>
+        <li>Dimensions</li>
+        <li>Weight</li>
+      </ul>
+      <span class="cite">Source: Product Knowledge Hub .pages — preview.jpg (exact transcription, list cut off at "Weight")</span>
+
+      <h2>Additional Fields (from strings)</h2>
+      <ul>
+        <li><strong>Mechanical drawings</strong> — referenced as another document type</li>
+        <li>Specific product mentioned: <strong>SSLXPRO Dual 80</strong></li>
+        <li>Platform includes a <strong>Health Dashboard</strong> feature</li>
+        <li>Problem described: <em>"nobody knows exactly where"</em> specs are / which version is current</li>
+        <li>Some specs that are "no longer" valid still circulate</li>
+        <li>Data "copied from" multiple places inconsistently</li>
+        <li>Same spec "may appear in" dozens of different documents</li>
+        <li>Platform should "continuously monitor" for inconsistencies</li>
+        <li>Specs come from Philips LEDs — confirmed supplier</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa</span>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>Why This is the Foundation for Everything</h2>
+      <div class="box"><div class="box-bar" style="background:var(--navy)"></div><div class="box-body" style="background:#F0F4FF;">
+        <strong style="color:var(--navy)">Without this hub, every AI tool gives wrong specs</strong>
+        <p>P01 (lead classifier suggests products), P02 (study selects products), P03 (PVGIS sizes panel to product), P04 (tender tool checks product fit) — all need accurate, real-time spec data. Build this before the others try to use it.</p>
+      </div></div>
+
+      <h2>Database Structure</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Core Schema</div>
+        <p>Build one structured table per product with these fields (from Mehdi's file + WEB-TECH): <code>product_name</code>, <code>product_family</code>, <code>led_power_w</code>, <code>led_brand</code> (Philips), <code>led_lumens_per_w</code>, <code>led_lifetime_hrs</code>, <code>panel_type</code> (TOPCON), <code>panel_efficiency_pct</code>, <code>panel_wattage</code>, <code>battery_type</code> (LiFePO4), <code>battery_kwh</code>, <code>battery_cycles</code>, <code>mppt</code> (yes/no), <code>ip_rating</code>, <code>dimensions_mm</code>, <code>weight_kg</code>, <code>wind_resistance</code>, <code>solux_bridge</code> (yes/no), <code>version</code>, <code>last_updated</code>, <code>source</code> (Factory Excel).</p>
+      </div>
+
+      <h2>Import Pipeline from Factory Excel</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Excel → Database Sync</div>
+        <p>Factory sends updated Excel → a script (Python + openpyxl) parses it and upserts records in the hub database. Changes are logged with version history. Marketing sees exactly what changed and when — no more manual recreation in documents.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Change Notification</div>
+        <p>When a product spec changes in the hub → automatically notify the Marketing team by email: "SSLXPRO Dual 80 specs updated — please review technical sheet." Eliminates outdated information being sent to customers.</p>
+      </div>
+
+      <h2>AI Layer — The Q&amp;A Assistant</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Product Selector API</div>
+        <p>Any other system (Study Platform, Tender Tool, CRM) can query the hub via API: "I need a product for a 10W road, sandy climate, 5 nights backup, budget range B." The hub's AI layer returns: ranked product matches + reasoning + spec comparison table. Uses vector search on product descriptions + GPT-4o mini for reasoning.</p>
+      </div>
+
+      <h2>Health Dashboard (Mehdi mentioned this)</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Consistency Monitor</div>
+        <p>The Health Dashboard continuously scans: (1) Are technical sheets on the website matching the hub? (2) Are brochures using current specs? (3) Are there any products in the hub marked as discontinued that still appear in active CRM quotes? Dashboard shows red/amber/green status per product per document type.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint2">→ Sprint 2 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#s4">→ CRM / ERP Assessment</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P06 ══════════════════ -->
+<div id="t-p06" class="tab-content">
+  <div class="proj-hdr s-future">
+    <div><div class="pid">P06 · Marketing Intelligence &amp; Email Automation Platform .pages · FUTURE</div><div class="ptitle">PROJECT 2 — Marketing Intelligence &amp; Email Automation Platform</div></div>
+    <span class="pstatus">ROI Priority #6 &nbsp;·&nbsp; <span style="background:#FFF0D6;color:#8B4A00;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 2</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Vision</h2>
+      <p>Email marketing has become one of Solux's primary communication channels. Over the years, we have built a large ecosystem of marketing assets, including <strong>campaigns, templates, mailing lists, brochures, technical documentation and downloadable content</strong>.</p>
+      <p>Today, however, most of this content is <strong>underutilized</strong>. Campaigns are generally launched manually, customer journeys are not personalized, and years of valuable marketing data remain <strong>hidden inside Mailchimp and Brevo</strong>.</p>
+      <p>The objective of this project is <strong>not to replace Mailchimp or Brevo</strong>, but to build an <strong>intelligent platform around them</strong>.</p>
+      <p>The platform should become the central marketing intelligence layer, capable of <strong>analyzing historical campaign performance, automating customer journeys, enriching customer profiles</strong> and helping both Marketing and Sales make better decisions.</p>
+
+      <h2>Current Situation</h2>
+      <p>Today we already have a strong marketing foundation.</p>
+
+      <h4>Platforms</h4>
+      <ul>
+        <li>Mailchimp (International &amp; Africa)</li>
+        <li>Brevo (France)</li>
+      </ul>
+
+      <h4>Existing Assets (from file)</h4>
+      <ul>
+        <li>Hundreds of email campaigns</li>
+        <li>Multiple audience databases</li>
+        <li>Country-specific mailing lists</li>
+        <li>Audience tags</li>
+        <li>Email templates</li>
+        <li>Product catalogues</li>
+        <li>Technical brochures</li>
+        <li>Product datasheets</li>
+        <li>Landing pages</li>
+        <li>Marketing documents</li>
+      </ul>
+      <p><em>"Most of this content already exists but is not being reused strategically."</em></p>
+      <span class="cite">Source: Marketing Intelligence .pages — preview.jpg (exact transcription)</span>
+
+      <h2>Additional Details (from strings)</h2>
+      <ul>
+        <li>"Very little" data being exploited currently</li>
+        <li>Goal: be able to "easily answer questions" about campaign performance</li>
+        <li>Example project referenced in file: <strong>Senegal Port Reference</strong> (an Africa case study used in campaigns)</li>
+        <li>Issue identified: campaigns "stopped halfway" — incomplete follow-through</li>
+        <li>Platform should "continuously identify mistakes" in campaigns</li>
+        <li>Feature: "Remove invalid" contacts / data cleaning</li>
+        <li>Feature: "Optimize future" campaigns based on historical data</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa</span>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>Strategy — Build the Intelligence Layer, Don't Replace the Tools</h2>
+      <div class="box"><div class="box-bar" style="background:var(--green)"></div><div class="box-body" style="background:#F0FFF5;">
+        <strong style="color:var(--green)">Mehdi's exact instruction: NOT to replace Mailchimp or Brevo</strong>
+        <p>Both tools stay. The work is to build a middle layer that reads their data, surfaces insights, triggers automations, and syncs contacts with the CRM.</p>
+      </div></div>
+
+      <h2>Step 1 — Connect to Mailchimp + Brevo APIs</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Pull Campaign Data</div>
+        <p>Mailchimp API + Brevo API both allow full campaign history export: open rates, click rates, unsubscribes, bounces — by campaign, by audience segment, by country. Pull this data weekly into a central analytics database. This is what makes the "easily answer questions" goal possible.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Data Cleaning — Remove Invalid</div>
+        <p>Schedule a weekly job: query Mailchimp + Brevo for bounced, unsubscribed, or invalid emails → remove from active lists → flag in CRM so sales reps don't try to reach them by email. Keeps list quality high.</p>
+      </div>
+
+      <h2>Step 2 — AI Campaign Intelligence</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Campaign Performance Analysis</div>
+        <p>Monthly: GPT-4o mini reads all campaign performance data → generates a report: which product topics got the highest click rates by region, which subject lines worked in Africa vs France, which campaigns "stopped halfway" and why. Actionable recommendations for next month.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Audience Segmentation</div>
+        <p>AI analyses Mailchimp audience tags + click history → suggests better segmentation: e.g., "contacts who clicked Pro Line content 3+ times but have no CRM deal → flag as hot leads for sales." Bridges marketing engagement with sales follow-up.</p>
+      </div>
+
+      <h2>Step 3 — CRM Loop (the Missing Link)</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Add Email Engagement Fields</div>
+        <p>Add to CRM Contact: <code>last_email_opened</code>, <code>last_clicked_product</code>, <code>email_engagement_score</code> (auto-updated from Mailchimp/Brevo API). When a contact clicks a product link → CRM automatically tags their interest. Sales sees this in the contact record.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Hot Lead Alert</div>
+        <p>When a Mailchimp/Brevo contact opens 3+ emails AND clicks a product → automatically create a CRM task: "[Contact Name] has engaged with Pro Line content 3 times — follow up." Sales gets notified before they go cold.</p>
+      </div>
+
+      <h2>Drip Sequence Automation</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Behaviour-based Sequences</div>
+        <p>Set up triggers in Mailchimp/Brevo: contact submits website form for Study Request → automatically enrolled in a "Study Request nurture" sequence (3 emails over 10 days: what is a lighting study / how to prepare / example project). No human action needed. Uses existing email templates + case studies like the Senegal Port Reference.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint2">→ Sprint 2 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#w5">→ W5 Marketing Workflow</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ P07 ══════════════════ -->
+<div id="t-p07" class="tab-content">
+  <div class="proj-hdr s-future">
+    <div><div class="pid">P07 · Commercial Intelligence Database .pages · FUTURE</div><div class="ptitle">Future Project — Commercial Intelligence Database</div></div>
+    <span class="pstatus">ROI Priority #7 &nbsp;·&nbsp; <span style="background:#D6E8FF;color:#1B3A6B;font-size:0.65rem;font-weight:bold;padding:1px 6px;border-radius:8px;">Sprint 3</span></span>
+  </div>
+  <div class="two-col">
+    <div class="col-mehdi">
+      <span class="col-label lbl-mehdi">📄 Mehdi's File — Verbatim</span>
+
+      <h2>Vision</h2>
+      <p>Over the past <strong>15 years</strong>, Solux has generated thousands of commercial documents, including <strong>quotations, proformas, sales orders, invoices and customer files</strong>.</p>
+      <p>These documents represent <strong>one of the company's most valuable assets</strong>.</p>
+      <p>Today, however, this information exists primarily as <strong>PDF files stored inside folders</strong>, making it difficult to search, analyze or reuse.</p>
+      <p>The objective of this project is to <strong>transform this historical archive into a structured commercial database</strong>.</p>
+
+      <h2>Current Situation — What the Archive Contains</h2>
+      <p>Our historical data contains valuable information such as:</p>
+      <ul>
+        <li>Customer names</li>
+        <li>Countries</li>
+        <li>Sales representatives</li>
+        <li>Products sold</li>
+        <li>Product configurations</li>
+        <li>Quantities</li>
+        <li>Selling prices</li>
+        <li>Discounts</li>
+        <li>Project names</li>
+        <li>Order dates</li>
+        <li>Delivery dates</li>
+        <li>Order values</li>
+        <li>Commercial history</li>
+      </ul>
+      <p><em>"Although this information already exists, it is spread across thousands of documents and is therefore difficult to exploit."</em></p>
+      <span class="cite">Source: Commercial Intelligence Database .pages — preview.jpg (exact transcription)</span>
+
+      <h2>From strings extraction</h2>
+      <ul>
+        <li>Mehdi says to <strong>"Develop an AI-powered platform"</strong> that should extract relevant business data</li>
+        <li>Example query the platform should answer: <strong>"How many units have been sold?"</strong> by product</li>
+        <li>Platform should track <strong>product popularity</strong></li>
+        <li>Should serve as <strong>"truth for both"</strong> Sales and Operations teams</li>
+      </ul>
+      <span class="cite">Source: strings extraction from Document.iwa</span>
+
+      <div class="box"><div class="box-bar" style="background:var(--purple)"></div><div class="box-body" style="background:#F9F3FF;">
+        <strong style="color:var(--purple)">Mehdi labels this "Future Project"</strong>
+        <p>The archive exists but extracting it is a significant one-time effort. Should be sequenced after the CRM (P01) and Product Hub (P05) are live so the extracted data has a home.</p>
+      </div></div>
+    </div>
+
+    <div class="col-claude">
+      <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
+
+      <h2>What the AI Platform Should Do (implementing Mehdi's vision)</h2>
+            <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Validate 50 PDFs Before Full Run</div>
+        <p>Before running GPT-4o mini across the full 15-year archive, extract a random sample of 50 PDFs spanning different document types (quotation, proforma, invoice) and different years (2010, 2015, 2020, 2024). Manually compare AI-extracted fields against the source PDFs. Target &gt;95% accuracy on customer name, product, and price. If accuracy is lower, refine the extraction prompt before processing thousands of documents — bad data at scale is far harder to fix than bad data at 50 records.</p>
+      </div>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> PDF Batch Extraction</div>
+        <p>Use GPT-4o mini with vision to read each PDF (quotation, proforma, invoice). For each document, extract into structured JSON: <code>doc_type</code>, <code>customer_name</code>, <code>country</code>, <code>sales_rep</code>, <code>products</code> (array: name, qty, unit_price, config), <code>discount_pct</code>, <code>total_value</code>, <code>currency</code>, <code>order_date</code>, <code>delivery_date</code>, <code>project_name</code>. Cost: GPT-4o mini at $0.15/1M input tokens → processing 5,000 documents ≈ USD 20–40 one-time.</p>
+      </div>
+
+      <h2>Database Design (Mehdi's data fields)</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Schema from Mehdi's List</div>
+        <p>Directly from the file — build the database to capture all 13 data points Mehdi listed: customer, country, sales rep, products sold, product configurations, quantities, selling prices, discounts, project names, order dates, delivery dates, order values, commercial history. Add: <code>outcome</code> (Won/Lost where determinable), <code>source_file</code> (original PDF name for audit trail).</p>
+      </div>
+
+      <h2>Answering Mehdi's Example Query</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Natural Language Query Interface</div>
+        <p>Build a simple search interface. Sales manager types: "How many SSLX Pro units have been sold in Saudi Arabia since 2020?" → AI queries the structured database → instant answer with breakdown by year. Also enables: "What discount % did we give to [Customer X] historically?" → informs new quote negotiations.</p>
+      </div>
+
+      <h2>CRM Back-Population</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Enrich Existing CRM Contacts</div>
+        <p>After extraction: for every customer already in the CRM, automatically attach their 15-year commercial history. Sales rep opens a CRM contact and immediately sees: total lifetime value, products bought, last purchase date, average discount, preferred configuration. No manual research needed.</p>
+      </div>
+
+      <h2>Product Popularity Tracking (Mehdi's goal)</h2>
+      <div class="sug-step"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Product Demand Dashboard</div>
+        <p>From the extracted data: auto-generate a product popularity report by year/region. Shows: which products are growing, which are declining, which configurations customers prefer. Informs product roadmap decisions and factory production planning. Updates automatically as new orders are added.</p>
+      </div>
+
+      <h2>Implementation Sequence</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Phase</th><th>Action</th><th>Effort</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Collect all PDFs into one folder (quotations, invoices, proformas)</td><td>Internal task</td></tr>
+          <tr><td>2</td><td>Run GPT-4o mini batch extraction → structured JSON for each document</td><td>1–2 days dev</td></tr>
+          <tr><td>3</td><td>Load into database — validate sample records for accuracy</td><td>1 day</td></tr>
+          <tr><td>4</td><td>Connect to CRM — back-populate customer commercial history</td><td>1–2 days</td></tr>
+          <tr><td>5</td><td>Build query interface + product popularity dashboard</td><td>2–3 days</td></tr>
+        </tbody>
+      </table></div>
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid #c8d8f0;">
+        <div style="font-size:0.65rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:5px;">Business Analysis Links</div>
+        <a class="xlink" href="Solux_Business_Analysis.html#sprint3">→ Sprint 3 Plan</a>
+        <a class="xlink" href="Solux_Business_Analysis.html#year1">→ Year 1 Summary</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</body>
+</html>

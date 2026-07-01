@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solux — Internal Working Document v2</title>
+<style>
+:root{
+  --beige:#F8F5F0; --white:#FFFFFF; --charcoal:#1C2030;
+  --navy:#1C3254; --steel:#4A6FA5; --mist:#C8D4E3; --bdr:#D8D4CC;
+  --sb-bg:#EDEAE4; --sb-bdr:#D8D4CC; --sb-active:#E4EBF5;
+
+  /* Per-doc accent = WORKING DOC green */
+  --doc-accent:#2E7D52;
+  --doc-accent-bg:rgba(46,125,82,.09);
+  --doc-accent-bdr:rgba(46,125,82,.28);
+
+  /* Semantic colours */
+  --green:#2E7D52; --red:#C0392B; --amber:#C07000;
+  --purple:#6855A8; --teal:#2A7A7A;
+  --purple-bg:rgba(104,85,168,.06); --purple-bdr:rgba(104,85,168,.25);
+
+  /* Alpha scale */
+  --c86:rgba(28,32,48,.86); --c68:rgba(28,32,48,.68);
+  --c48:rgba(28,32,48,.48); --c32:rgba(28,32,48,.32);
+  --c16:rgba(28,32,48,.16); --c08:rgba(28,32,48,.08); --c04:rgba(28,32,48,.04);
+
+  /* Sprint badges */
+  --sp1-bg:#D6F5E3; --sp1-c:#1A5C35;
+  --sp2-bg:#E4F4F4; --sp2-c:#1A6060;
+  --sp3-bg:#EDE9F8; --sp3-c:#5040A0;
+
+  --sb:220px; --topbar:34px; --warm:#FDFBF6;
+
+  /* Back-compat aliases so inline style="var(--orange)" etc still work */
+  --orange:var(--doc-accent);
+  --blue:var(--steel);
+  --gray:var(--c68);
+  --dark:var(--charcoal);
+  --row:var(--c04);
+  --light:var(--beige);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--charcoal);background:var(--beige);}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:200;background:var(--charcoal);height:var(--topbar);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.topbar-back{display:flex;align-items:center;gap:5px;color:#B8C8DC;font-size:0.72rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;transition:color .12s;}
+.topbar-back:hover{color:#fff;}
+.topbar-doc{font-size:0.68rem;color:rgba(255,255,255,.30);letter-spacing:0.08em;text-transform:uppercase;}
+.topbar-docs{display:flex;gap:14px;}
+.topbar-docs a{font-size:0.68rem;color:rgba(255,255,255,.85);text-decoration:none;letter-spacing:0.03em;transition:color .12s;}
+.topbar-docs a:hover{color:#fff;}
+
+/* SIDEBAR */
+#sidebar{position:fixed;right:0;top:0;width:var(--sb);height:100vh;background:var(--sb-bg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;padding-top:var(--topbar);border-left:1px solid var(--sb-bdr);}
+#sidebar .sb-title{background:var(--sb-bdr);padding:8px 14px;color:var(--navy);font-size:0.64rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--sb-bdr);}
+#sidebar a{display:block;padding:6px 14px;color:var(--c86);text-decoration:none;font-size:0.74rem;border-left:2px solid transparent;transition:all .12s;}
+#sidebar a:hover{background:rgba(28,32,48,.05);color:var(--navy);border-left-color:var(--doc-accent);}
+#sidebar a.sub{padding-left:24px;font-size:0.70rem;color:var(--c48);}
+#sidebar a.sub:hover{color:var(--c86);background:rgba(28,32,48,.03);}
+#sidebar .sb-sec{padding:7px 14px 2px;color:var(--c32);font-size:0.60rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+#sidebar .hub-link{margin-top:auto;border-top:1px solid var(--sb-bdr);padding:6px 0 4px;background:var(--white);}
+#sidebar .hub-link .sb-sec{color:var(--c32);padding-top:4px;}
+#sidebar .hub-link a{color:var(--steel);font-size:0.72rem;padding:5px 14px;}
+#sidebar .hub-link a:hover{color:var(--navy);background:var(--doc-accent-bg);border-left-color:var(--doc-accent);}
+#sidebar .hub-link a.hub-back{color:var(--c48);font-size:0.69rem;border-top:1px solid var(--sb-bdr);padding-top:8px;margin-top:4px;}
+#sidebar .hub-link a.hub-back:hover{color:var(--navy);}
+
+/* MAIN */
+#main{margin-right:var(--sb);}
+
+/* HEADER */
+.hdr{background:var(--white);padding:14px 18px 12px;border-bottom:3px solid var(--doc-accent);display:flex;align-items:center;justify-content:space-between;}
+.hdr-title{color:var(--navy);font-size:1rem;font-weight:700;}
+.hdr-sub{color:var(--steel);font-size:0.73rem;margin-top:2px;}
+.hdr-badge{background:var(--doc-accent-bg);color:var(--navy);font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:3px;border:1px solid var(--doc-accent-bdr);}
+
+/* PHASE STRIP */
+.phase-strip{display:flex;background:var(--white);border-bottom:1px solid var(--mist);}
+.phase{flex:1;text-align:center;padding:7px 4px;border-right:1px solid var(--mist);}
+.phase:last-child{border-right:none;}
+.phase .n{color:var(--doc-accent);font-size:0.9rem;font-weight:700;display:block;}
+.phase .l{color:var(--c48);font-size:0.62rem;}
+
+/* SECTIONS */
+.section{padding:16px 18px;background:var(--white);border-bottom:1px solid var(--mist);}
+.section-alt{background:var(--beige);}
+.section-internal{background:var(--warm);border-bottom:1px solid #E0D8C8;}
+
+/* TYPOGRAPHY */
+h1{color:var(--navy);font-size:1.05rem;border-bottom:2px solid var(--doc-accent);padding-bottom:4px;margin-bottom:10px;font-weight:700;}
+h2{color:var(--navy);font-size:0.92rem;margin:12px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--mist);}
+h3{color:var(--steel);font-size:0.82rem;margin:8px 0 5px;font-weight:700;}
+h4{font-size:0.74rem;color:var(--c48);margin:8px 0 4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+p{font-size:0.83rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:16px;margin-bottom:8px;}
+li{font-size:0.82rem;line-height:1.6;margin-bottom:3px;}
+em{font-style:italic;color:var(--c68);}
+strong{font-weight:700;}
+
+/* TABLES */
+.tw{overflow-x:auto;margin:6px 0 10px;}
+table{border-collapse:collapse;width:100%;font-size:0.79rem;}
+th{background:var(--navy);color:#fff;padding:5px 9px;text-align:left;font-size:0.73rem;}
+td{padding:5px 9px;border:1px solid var(--mist);vertical-align:top;line-height:1.5;}
+tr:nth-child(even) td{background:var(--c04);}
+
+/* STATUS CELLS */
+.p-hi{background:#FDECEA!important;color:var(--red);font-weight:700;text-align:center;}
+.p-md{background:rgba(42,122,122,.08)!important;color:var(--teal);font-weight:700;text-align:center;}
+.p-lo{background:rgba(46,125,82,.08)!important;color:var(--green);font-weight:700;text-align:center;}
+.st-pending{background:#FEF3E2!important;color:var(--amber);font-weight:700;text-align:center;font-size:0.72rem;}
+.st-confirmed{background:rgba(46,125,82,.08)!important;color:var(--green);font-weight:700;text-align:center;font-size:0.72rem;}
+.st-later{background:var(--doc-accent-bg)!important;color:var(--navy);font-weight:700;text-align:center;font-size:0.72rem;}
+.ai-yes{background:rgba(46,125,82,.08)!important;color:var(--green);font-weight:700;text-align:center;}
+.ai-med{background:#FEF3E2!important;color:var(--amber);font-weight:700;text-align:center;}
+.ai-no{background:#FDECEA!important;color:var(--red);font-weight:700;text-align:center;}
+.conf-hi{background:rgba(46,125,82,.08)!important;color:var(--green);font-weight:700;text-align:center;font-size:0.72rem;}
+
+/* CALLOUT BOX */
+.box{display:flex;margin:8px 0 10px;border-radius:4px;overflow:hidden;border:1px solid var(--mist);}
+.box-bar{width:5px;flex-shrink:0;}
+.box-body{padding:8px 11px;flex:1;background:var(--white);}
+.box-body strong{display:block;margin-bottom:3px;font-size:0.8rem;}
+.box-body p{font-size:0.8rem;margin:0;}
+
+/* WARN */
+.warn{background:#FEF3E2;border:1px solid #F5C97A;border-radius:4px;padding:8px 11px;margin:6px 0 10px;font-size:0.8rem;}
+.warn strong{color:var(--amber);}
+
+/* INTERNAL BADGE */
+.int-badge{display:inline-block;background:var(--doc-accent-bg);color:var(--doc-accent);border:1px solid var(--doc-accent-bdr);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:10px;}
+
+/* MONTH BLOCK */
+.month-hdr{background:var(--navy);color:#fff;padding:8px 12px;border-radius:4px 4px 0 0;margin-bottom:0;}
+.month-hdr .mnum{font-size:0.65rem;color:var(--mist);font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.month-hdr .mtitle{font-size:0.88rem;font-weight:700;}
+.month-hdr .mgoal{font-size:0.74rem;color:rgba(255,255,255,.65);margin-top:2px;}
+.month-body{background:var(--beige);border:1px solid var(--mist);border-top:none;border-radius:0 0 4px 4px;padding:12px 14px;margin-bottom:14px;}
+
+/* WEEK BLOCK */
+.week-hdr{background:var(--doc-accent);color:#fff;padding:6px 11px;border-radius:4px 4px 0 0;margin-bottom:0;}
+.week-hdr .wnum{font-size:0.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85;}
+.week-hdr .wtitle{font-size:0.85rem;font-weight:700;}
+.week-hdr .wgoal{font-size:0.73rem;opacity:.85;margin-top:1px;}
+.week-body{background:rgba(46,125,82,.04);border:1px solid rgba(46,125,82,.20);border-top:none;border-radius:0 0 4px 4px;padding:11px 13px;margin-bottom:14px;}
+
+/* DELIVERABLE LIST */
+.del-list{background:var(--white);border:1px solid var(--mist);border-radius:3px;padding:8px 12px;margin:6px 0;}
+.del-list li{font-size:0.8rem;line-height:1.55;}
+
+/* DECISION BOX */
+.dec-box{background:var(--purple-bg);border:1px solid var(--purple-bdr);border-left:4px solid var(--purple);border-radius:4px;padding:10px 13px;margin:10px 0;}
+.dec-box h4{color:var(--purple);margin-bottom:6px;}
+
+/* PRINCIPLE */
+.principle{display:flex;gap:10px;margin-bottom:5px;align-items:flex-start;}
+.pnum{background:var(--navy);color:#fff;font-size:0.65rem;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+
+/* SECTION PATTERN */
+.pat-grid{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+.pat-item{background:var(--doc-accent-bg);border:1px solid var(--doc-accent-bdr);border-radius:3px;padding:4px 10px;font-size:0.78rem;color:var(--navy);}
+.pat-item .pn{color:var(--doc-accent);font-weight:700;margin-right:4px;}
+
+/* ANCHOR */
+.anchor{display:block;position:relative;top:-16px;visibility:hidden;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="topbar-back" href="Solux.html">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Back to Hub
+  </a>
+  <span class="topbar-doc">Internal Working Document</span>
+  <div class="topbar-docs">
+    <a href="Solux_Business_Analysis.html">② Business Analysis</a>
+    <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
+    <a href="Style_Guide.html">Style Guide</a>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sb-title">Working Document v2</div>
+  <a href="#s0">0. One-Page Summary</a>
+  <a href="#s1">1. What We Need</a>
+  <a href="#s2">2. Problem → Fix Table</a>
+  <a href="#s3">3. Roadmap</a>
+  <a class="sub" href="#week1">Week 1 — Discovery</a>
+  <a class="sub" href="#month1">Month 1 — CRM Refinement</a>
+  <a class="sub" href="#month2">Month 2 — Automation & AI</a>
+  <a class="sub" href="#month3">Month 3 — UAT & Handover</a>
+  <a href="#s4">4. UAT / Usability</a>
+  <a class="sub" href="#s4-uat">Functional UAT</a>
+  <a class="sub" href="#s4-ux">UX Testing</a>
+  <a class="sub" href="#s4-heuristic">Heuristic Evaluation</a>
+  <a href="#s5">5. Success Metrics</a>
+  <a href="#s6">6. Risks & Dependencies</a>
+  <a href="#s7">7. AI Readiness</a>
+  <a href="#s8">8. Decision Boxes</a>
+  <a href="#s9">9. Klairs Working Notes</a>
+  <a class="sub" href="#s9-assumptions">Assumptions</a>
+  <a class="sub" href="#s9-principles">Guiding Principles</a>
+  <a class="sub" href="#s9-review">Review Questions</a>
+  <a class="sub" href="#s9-log">Decision Log</a>
+  <a class="sub" href="#s9-continuation">Continuation Logic</a>
+  <a href="#s10">10. Section Pattern</a>
+  <div class="hub-link">
+    <div class="sb-sec">Documents</div>
+    <a href="Solux_Business_Analysis.html">② Business Analysis</a>
+    <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
+    <a href="Style_Guide.html">Style Guide</a>
+    <a href="Solux.html" class="hub-back">← Back to Hub</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Solux — Internal Working Document</div>
+    <div class="hdr-sub">CRM · Workflow · AI-Assisted MVP · Operations Consulting</div>
+  </div>
+  <span class="hdr-badge">v2 · Phase 1 of 2</span>
+</div>
+<div class="phase-strip">
+  <div class="phase"><span class="n">Week 1</span><span class="l">Discovery Sprint</span></div>
+  <div class="phase"><span class="n">Month 1</span><span class="l">CRM Refinement</span></div>
+  <div class="phase"><span class="n">Month 2</span><span class="l">Automation & AI</span></div>
+  <div class="phase"><span class="n">Month 3</span><span class="l">UAT & Handover</span></div>
+</div>
+
+<!-- ══ 0. ONE-PAGE SUMMARY ══ -->
+<div class="section" id="s0">
+  <h1>0. One-Page Summary</h1>
+
+  <h2>Main Problem</h2>
+  <p>Solux already has valuable systems, product expertise, project history, and AI ideas — but the operational workflow is fragmented. The CRM is currently in the build phase and has not yet been deployed to end-users. When it goes live, it must immediately guide daily work, enforce workflow discipline, reduce manual re-entry, and give management clear visibility.</p>
+
+  <h2>Highest-Impact Focus</h2>
+  <p>The first priority is not to build everything. The first priority is to make the CRM and related workflow tools useful for the most important daily operations:</p>
+  <ol>
+    <li>Lead intake and classification</li>
+    <li>Sales qualification</li>
+    <li>Study Lab request handoff</li>
+    <li>Quotation tracking and follow-up</li>
+    <li>Owner dashboard and reporting</li>
+    <li>UAT / usability improvement</li>
+    <li>AI-assisted support — only after core workflow structure is clean</li>
+  </ol>
+
+  <h2>Recommended Direction</h2>
+  <p>Start with workflow clarity and CRM refinement before adding advanced AI. AI should support classification, missing-information checks, summaries, and drafting — but it should not replace structured CRM rules, required fields, approvals, or human validation.</p>
+
+  <div class="box"><div class="box-bar" style="background:var(--orange)"></div><div class="box-body" style="background:#FFF9F4;">
+    <strong style="color:var(--orange)">Phase 1 vs Phase 2</strong>
+    <p>This document covers Phase 1: CRM foundation, workflow clarity, and AI-assisted basics. Phase 2 (Business Analysis & AI Initiatives) builds on this foundation with advanced AI projects, integrations, and automation. AI Initiatives should not start before Phase 1 workflows are stable.</p>
+  </div></div>
+</div>
+
+<!-- ══ 1. WHAT WE NEED ══ -->
+<div class="section section-alt" id="s1">
+  <h1>1. What We Need From Solux</h1>
+
+  <h2>Access Needed</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Item Needed</th><th>Why It Is Needed</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>CRM access</td><td>Review current modules, fields, stages, and usability</td><td>Solux / Mehdi</td><td class="st-pending">Pending</td></tr>
+      <tr><td>CRM demo walkthrough</td><td>Understand how the team is expected to use the system</td><td>Solux / Mehdi</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Current user roles</td><td>Design permissions and role-based screens</td><td>Solux</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Sample leads</td><td>Understand intake quality and missing data</td><td>Sales / Marketing</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Sample quotation</td><td>Understand pricing, versioning, approval, and follow-up needs</td><td>Sales</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Sample Study Lab request</td><td>Understand sales-to-engineering handoff</td><td>Engineering</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Sample after-sales case</td><td>Understand support and diagnosis workflow</td><td>Support / Technical</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Product catalogue / spec source</td><td>Required for product recommendation and AI accuracy</td><td>Product / Engineering</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Current Excel/Word templates</td><td>Identify what still happens outside the CRM</td><td>Sales / Ops</td><td class="st-pending">Pending</td></tr>
+      <tr><td>Dashboard expectations</td><td>Define what owner wants to see daily/weekly</td><td>Owner</td><td class="st-pending">Pending</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Feedback Rules</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Type of Feedback</th><th>Expected Response Time</th></tr></thead>
+    <tbody>
+      <tr><td>Simple clarification</td><td>24–48 hours</td></tr>
+      <tr><td>Workflow confirmation</td><td>2 business days</td></tr>
+      <tr><td>CRM change approval</td><td>2–3 business days</td></tr>
+      <tr><td>UAT feedback</td><td>3 business days</td></tr>
+      <tr><td>Major decision</td><td>3 business days</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="warn"><strong>Blocker Rule:</strong> If information is not provided on time, the item is marked as blocked. Work continues on non-blocked items, but all assumptions must be recorded clearly.</div>
+</div>
+
+<!-- ══ 2. PROBLEM TABLE ══ -->
+<div class="section" id="s2">
+  <h1>2. Problem → Impact → Fix → Priority</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Problem</th><th>Business Impact</th><th>Recommended Fix</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>Leads come from many channels and are manually reviewed</td><td>Slow response, duplicated work, possible missed opportunities</td><td>Connect website/JivoChat/email/ads to CRM intake; add lead source and lead type fields</td><td class="p-hi">High</td></tr>
+      <tr><td>Sales qualification is unstructured</td><td>Incomplete project data reaches engineering</td><td>Add project qualification form with required fields before Study Lab handoff</td><td class="p-hi">High</td></tr>
+      <tr><td>Study Lab receives incomplete or repeated data</td><td>Engineering wastes time on clarification rounds</td><td>Add Study Request object with statuses, required fields, and handoff checklist</td><td class="p-hi">High</td></tr>
+      <tr><td>Quotation is manual and not controlled in CRM</td><td>No version control, no approval, no reliable follow-up</td><td>Add Quote object, quote status, versioning, approval rules, and follow-up reminders</td><td class="p-hi">High</td></tr>
+      <tr><td>Owner lacks business visibility</td><td>Hard to know what is stuck, delayed, or high-value</td><td>Build owner dashboard for leads, studies, quotes, overdue tasks, and regional pipeline</td><td class="p-hi">High</td></tr>
+      <tr><td>Distributor inquiries handled like normal leads</td><td>Territory ownership and partner pipeline are unclear</td><td>Create Distributor Inquiry pipeline with territory and onboarding stages</td><td class="p-md">Medium</td></tr>
+      <tr><td>After-sales happens through WhatsApp/email</td><td>No case history, warranty clarity, or repeated issue tracking</td><td>Add After-sales Case object linked to product, installation, and diagnosis history</td><td class="p-md">Medium</td></tr>
+      <tr><td>Tender tool is manual and disconnected</td><td>Tender opportunities may not become trackable pipeline</td><td>Add scheduled tender scan and CRM opportunity creation</td><td class="p-md">Medium</td></tr>
+      <tr><td>AI ideas are ahead of system readiness</td><td>AI may produce inaccurate or untrusted outputs</td><td>Clean CRM data and product knowledge first, then add AI as suggestion-only</td><td class="p-hi">High</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══ 3. ROADMAP ══ -->
+<div class="section section-alt" id="s3">
+  <h1>3. Roadmap — Week 1 + 3 Months</h1>
+  <p style="font-size:0.83rem;color:var(--gray);margin-bottom:14px;">This roadmap focuses on the highest-impact changes that make the CRM and workflow system useful, accurate, and ready for adoption. Future initiatives remain visible in the continuation backlog — they are not excluded, they are sequenced.</p>
+
+  <!-- WEEK 1 -->
+  <span class="anchor" id="week1"></span>
+  <div class="week-hdr">
+    <div class="wnum">Week 1</div>
+    <div class="wtitle">Discovery Sprint</div>
+    <div class="wgoal">Goal: Get oriented fast. Confirm what exists, what's broken, and what to fix first.</div>
+  </div>
+  <div class="week-body">
+    <p>Close working relationship with Mehdi and the teams means discovery does not need a full month. One focused week is enough to lock the plan.</p>
+    <h3>Main Work</h3>
+    <ul>
+      <li>CRM access and first walkthrough with Mehdi</li>
+      <li>One session each with sales and engineering to confirm handoff pain points</li>
+      <li>Review sample records: lead, quote, Study Lab request, after-sales case</li>
+      <li>Confirm which workflows match Mehdi's files and which differ in practice</li>
+      <li>Lock the problem-impact-fix backlog and priority order</li>
+    </ul>
+    <h3>Deliverables</h3>
+    <ul class="del-list">
+      <li>CRM audit notes</li>
+      <li>Confirmed workflow map</li>
+      <li>Locked problem-impact-fix backlog</li>
+      <li>Open questions tracker</li>
+    </ul>
+    <h3>Solux Input Needed</h3>
+    <ul>
+      <li>CRM access before Week 1 starts</li>
+      <li>Mehdi walkthrough session — Day 1–2</li>
+      <li>Sales and engineering sessions — Day 3–4</li>
+    </ul>
+  </div>
+
+  <!-- MONTH 1 -->
+  <span class="anchor" id="month1"></span>
+  <div class="month-hdr">
+    <div class="mnum">Month 1</div>
+    <div class="mtitle">CRM Workflow Refinement</div>
+    <div class="mgoal">Goal: Edit, polish, and improve the CRM based on confirmed workflow problems from Week 1.</div>
+  </div>
+  <div class="month-body">
+    <h3>Main Work</h3>
+    <ul>
+      <li>Clean Lead, Account, Contact, Project, and Deal structure</li>
+      <li>Add or refine project qualification fields</li>
+      <li>Define required fields by stage</li>
+      <li>Create Study Request workflow with statuses and handoff checklist</li>
+      <li>Refine sales pipeline and quote stages</li>
+      <li>Add task and follow-up logic</li>
+      <li>Improve naming, labels, field grouping, and screen clarity</li>
+    </ul>
+    <h3>Deliverables</h3>
+    <ul class="del-list">
+      <li>Improved lead structure</li>
+      <li>Project qualification form</li>
+      <li>Study Request pipeline</li>
+      <li>Quote workflow draft</li>
+      <li>Required-field rules</li>
+      <li>Follow-up task rules</li>
+      <li>Updated CRM change log</li>
+    </ul>
+    <h3>Solux Feedback Needed</h3>
+    <ul>
+      <li>Validate required fields</li>
+      <li>Confirm sales and engineering handoff rules</li>
+      <li>Confirm quote stages</li>
+      <li>2 business days for small changes · 3 business days for major decisions</li>
+    </ul>
+  </div>
+
+  <!-- MONTH 2 -->
+  <span class="anchor" id="month2"></span>
+  <div class="month-hdr">
+    <div class="mnum">Month 2</div>
+    <div class="mtitle">Automation, Dashboard & AI-Ready Foundation</div>
+    <div class="mgoal">Goal: Reduce manual work and improve visibility without adding unnecessary complexity.</div>
+  </div>
+  <div class="month-body">
+    <h3>Main Work</h3>
+    <ul>
+      <li>Define and implement automation rules</li>
+      <li>Lead assignment and follow-up reminders</li>
+      <li>Study Request alerts</li>
+      <li>Quote follow-up reminders</li>
+      <li>Build owner dashboard</li>
+      <li>Build sales and Study Lab dashboards if possible</li>
+      <li>Define AI-Assisted MVP — only after CRM fields and workflow are stable</li>
+    </ul>
+    <h3>Recommended First AI-Assisted Features (in order)</h3>
+    <ol>
+      <li>Lead classifier</li>
+      <li>Missing-information checker</li>
+      <li>Draft client reply</li>
+      <li>Owner daily summary</li>
+      <li>Product direction suggestion — only if product data is structured enough</li>
+    </ol>
+    <h3>Deliverables</h3>
+    <ul class="del-list">
+      <li>Automation rules live</li>
+      <li>Dashboard setup</li>
+      <li>AI readiness checklist</li>
+      <li>AI-Assisted MVP scope confirmed</li>
+      <li>Cost-control rules</li>
+      <li>Human approval rules defined</li>
+    </ul>
+    <h3>Solux Feedback Needed</h3>
+    <ul>
+      <li>Approve automations</li>
+      <li>Approve dashboard metrics</li>
+      <li>Confirm first AI-assisted use cases</li>
+      <li>Confirm AI budget and API key ownership</li>
+    </ul>
+  </div>
+
+  <!-- MONTH 3 -->
+  <span class="anchor" id="month3"></span>
+  <div class="month-hdr">
+    <div class="mnum">Month 3</div>
+    <div class="mtitle">UAT, Usability Testing, Training & Handover</div>
+    <div class="mgoal">Goal: Make sure the CRM is not only functional, but obvious and usable for daily work from day one.</div>
+  </div>
+  <div class="month-body">
+    <h3>Main Work</h3>
+    <ul>
+      <li>Test workflows with real Solux cases</li>
+      <li>Run usability-focused UAT</li>
+      <li>Evaluate screens using heuristic UX principles</li>
+      <li>Record confusing screens, missing context, unclear statuses, and unnecessary clicks</li>
+      <li>Fix high-friction areas</li>
+      <li>Create usage guide and SOPs</li>
+      <li>Train users — getting adoption right from day one</li>
+      <li>Define next-phase backlog (Phase 2 = AI Initiatives)</li>
+    </ul>
+    <h3>Deliverables</h3>
+    <ul class="del-list">
+      <li>UAT test cases</li>
+      <li>UX / usability issue log</li>
+      <li>Final CRM workflow updates</li>
+      <li>User guide</li>
+      <li>Admin guide</li>
+      <li>Handover notes</li>
+      <li>Phase 2 continuation backlog</li>
+    </ul>
+    <h3>Solux Feedback Needed</h3>
+    <ul>
+      <li>End-users test real workflows</li>
+      <li>Feedback within 3 business days</li>
+      <li>Final sign-off or continuation backlog confirmation</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 4. UAT ══ -->
+<div class="section" id="s4">
+  <h1>4. UAT / Usability Checklist + Heuristic Evaluation</h1>
+
+  <h2 id="s4-uat">Functional UAT</h2>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:7px;">For each workflow, check:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th style="width:90px;">Pass / Fail</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Can the user complete the task from start to finish?</td><td></td><td></td></tr>
+      <tr><td>Does the saved data appear correctly?</td><td></td><td></td></tr>
+      <tr><td>Does the status update correctly?</td><td></td><td></td></tr>
+      <tr><td>Are required fields enforced?</td><td></td><td></td></tr>
+      <tr><td>Are tasks/reminders created correctly?</td><td></td><td></td></tr>
+      <tr><td>Does the right user receive the right notification?</td><td></td><td></td></tr>
+      <tr><td>Can the owner see the result in the dashboard?</td><td></td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="s4-ux">UX / Usability Testing</h2>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:7px;">For every screen, ask:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Would a brand-new employee know what to do?</td><td></td></tr>
+      <tr><td>Is the main action obvious?</td><td></td></tr>
+      <tr><td>Is there too much information?</td><td></td></tr>
+      <tr><td>Is important information missing?</td><td></td></tr>
+      <tr><td>Are buttons in the right place?</td><td></td></tr>
+      <tr><td>Is the visual hierarchy clear?</td><td></td></tr>
+      <tr><td>Does the user know what happened after clicking?</td><td></td></tr>
+      <tr><td>Is the next step obvious?</td><td></td></tr>
+      <tr><td>Are there too many clicks?</td><td></td></tr>
+      <tr><td>Are mandatory fields obvious?</td><td></td></tr>
+      <tr><td>Are statuses easy to understand?</td><td></td></tr>
+      <tr><td>Are there places where users may make mistakes?</td><td></td></tr>
+      <tr><td>Are reminders or contextual hints missing?</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="s4-heuristic">Heuristic Evaluation</h2>
+  <div class="tw"><table>
+    <thead><tr><th>UX Principle</th><th>What To Check</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Clarity</strong></td><td>Labels, buttons, statuses, and forms are easy to understand</td></tr>
+      <tr><td><strong>Efficiency</strong></td><td>Users can complete common tasks with minimal clicks</td></tr>
+      <tr><td><strong>Feedback</strong></td><td>System clearly shows what happened after save, submit, or status change</td></tr>
+      <tr><td><strong>Error prevention</strong></td><td>Required fields, validations, and warnings prevent bad data</td></tr>
+      <tr><td><strong>Consistency</strong></td><td>Similar screens use similar wording, layout, and actions</td></tr>
+      <tr><td><strong>Visibility</strong></td><td>Important statuses, next steps, and owners are visible</td></tr>
+      <tr><td><strong>Recognition over memory</strong></td><td>Users should not need to remember what to do next</td></tr>
+      <tr><td><strong>Recovery</strong></td><td>Users can fix mistakes or understand why something failed</td></tr>
+      <tr><td><strong>Pleasantness</strong></td><td>Screen feels clean, balanced, and not stressful for daily use</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══ 5. SUCCESS METRICS ══ -->
+<div class="section section-alt" id="s5">
+  <h1>5. Success Metrics</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Area</th><th>Success Metric</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lead intake</strong></td><td>Majority of new inquiries are created in CRM without manual copying</td></tr>
+      <tr><td><strong>Lead classification</strong></td><td>Leads have source, type, country, and product interest filled consistently</td></tr>
+      <tr><td><strong>Sales qualification</strong></td><td>Study Requests cannot be submitted without required project data</td></tr>
+      <tr><td><strong>Study Lab handoff</strong></td><td>Fewer clarification rounds between sales and engineering</td></tr>
+      <tr><td><strong>Quote tracking</strong></td><td>Every sent quote has status, version, next follow-up date, and owner</td></tr>
+      <tr><td><strong>Follow-up discipline</strong></td><td>No active quote or lead is left without a next action</td></tr>
+      <tr><td><strong>Dashboard visibility</strong></td><td>Owner can see open leads, studies, quotes, overdue items, and regional pipeline</td></tr>
+      <tr><td><strong>CRM adoption</strong></td><td>End-users (sales, engineering, support) update records from day one without relying on the owner</td></tr>
+      <tr><td><strong>Usability</strong></td><td>New users can complete core workflows with minimal explanation</td></tr>
+      <tr><td><strong>AI value</strong></td><td>AI saves time on classification, drafting, and checking without making final decisions</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══ 6. RISKS ══ -->
+<div class="section" id="s6">
+  <h1>6. Risks & Dependencies</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Risk / Dependency</th><th>Impact</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>CRM may not be easy to customise</td><td>Some changes may require developer support</td><td>Audit system flexibility in Week 1 before promising implementation</td></tr>
+      <tr><td>CRM API/webhook access may be limited</td><td>Automation may be harder</td><td>Start with manual workflow improvements first</td></tr>
+      <tr><td>Existing data may be messy</td><td>Dashboards and AI outputs may be unreliable</td><td>Clean fields and required data rules before reporting/AI</td></tr>
+      <tr><td>Getting adoption right from day one</td><td>First deployment is the best chance to build good habits</td><td>Keep screens simple, test with real users before go-live</td></tr>
+      <tr><td>Product data may be fragmented</td><td>AI product suggestions may be inaccurate</td><td>Build Product Knowledge Hub before advanced AI</td></tr>
+      <tr><td>Engineering workflow more complex than expected</td><td>Study workflow may need more time</td><td>Start with handoff/status tracking before full automation</td></tr>
+      <tr><td>AI cost/accuracy concerns</td><td>Owner may hesitate</td><td>Use low-cost AI only for narrow tasks, keep human approval</td></tr>
+      <tr><td>Feedback delays from Solux</td><td>Timeline may slip</td><td>Use feedback windows and blocker tracking</td></tr>
+      <tr><td>Too many features at once</td><td>CRM becomes harder to use</td><td>Prioritise highest-ROI workflows first</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══ 7. AI READINESS ══ -->
+<div class="section section-alt" id="s7">
+  <h1>7. AI Should Not Be First Everywhere</h1>
+
+  <h2>AI Readiness Rule</h2>
+  <p>AI should only be added after the workflow and source data are clean. Before any AI feature, Solux needs:</p>
+  <ol>
+    <li>Clean CRM fields</li>
+    <li>Clear pipeline stages</li>
+    <li>Required fields by workflow stage</li>
+    <li>Product data source</li>
+    <li>Human approval rules</li>
+    <li>Dashboard/reporting logic</li>
+    <li>End-user adoption of the basic CRM flow</li>
+  </ol>
+
+  <h2>Good First AI-Assisted Use Cases</h2>
+  <div class="tw"><table>
+    <thead><tr><th>AI Use Case</th><th style="width:70px;">Safe?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Lead classification</td><td class="ai-yes">Yes</td><td>Helps categorise faster</td></tr>
+      <tr><td>Missing-information checker</td><td class="ai-yes">Yes</td><td>Reduces incomplete handoff</td></tr>
+      <tr><td>Draft client reply</td><td class="ai-yes">Yes</td><td>Human reviews before sending</td></tr>
+      <tr><td>Owner daily summary</td><td class="ai-yes">Yes</td><td>Summarises existing CRM data</td></tr>
+      <tr><td>Product direction suggestion</td><td class="ai-med">Medium</td><td>Needs clean product data first</td></tr>
+      <tr><td>Quote approval</td><td class="ai-no">No</td><td>Pricing/margin must stay human-controlled</td></tr>
+      <tr><td>Final engineering decision</td><td class="ai-no">No</td><td>Technical validation must stay with engineering</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box"><div class="box-bar" style="background:var(--navy)"></div><div class="box-body">
+    <strong>Rule</strong>
+    <p>AI can suggest, summarise, classify, and draft. AI should not approve pricing, finalise product selection, override engineering decisions, or update critical CRM data without human confirmation.</p>
+  </div></div>
+</div>
+
+<!-- ══ 8. DECISION BOXES ══ -->
+<div class="section" id="s8">
+  <h1>8. Decision Needed Boxes</h1>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:10px;">Add this box after every major workflow section.</p>
+
+  <div class="dec-box">
+    <h4>Decision Needed — Template</h4>
+    <div class="tw"><table>
+      <thead><tr><th>Decision</th><th>Options</th><th>Owner</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Should this workflow be changed now or later?</td><td>Now / Later / Continuation backlog</td><td></td><td></td></tr>
+        <tr><td>Who owns this workflow?</td><td>Sales / Engineering / Owner / Support</td><td></td><td></td></tr>
+        <tr><td>Which fields are mandatory?</td><td>Field list</td><td></td><td></td></tr>
+        <tr><td>Should this be automated?</td><td>Yes / No / Later</td><td></td><td></td></tr>
+        <tr><td>Is AI useful here?</td><td>Yes / No / Only after cleanup</td><td></td><td></td></tr>
+        <tr><td>What is the approval rule?</td><td>Owner / Manager / User</td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <h2>Example — Study Request Decision Box</h2>
+  <div class="dec-box">
+    <h4>Decision Needed — Study Request</h4>
+    <div class="tw"><table>
+      <thead><tr><th>Decision</th><th>Recommendation</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Create Study Request object/module?</td><td>Yes</td><td class="st-pending">Pending</td></tr>
+        <tr><td>Require project location before engineer review?</td><td>Yes</td><td class="st-pending">Pending</td></tr>
+        <tr><td>Require road width / pole height / quantity?</td><td>Yes</td><td class="st-pending">Pending</td></tr>
+        <tr><td>Allow sales to submit incomplete request?</td><td>No, unless marked Missing Info</td><td class="st-pending">Pending</td></tr>
+        <tr><td>Connect Study Platform to CRM?</td><td>Yes, after workflow is stable</td><td class="st-later">Later</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ 9. KLAIRS WORKING NOTES ══ -->
+<div class="section-internal" id="s9">
+  <div style="padding:16px 18px;">
+  <span class="int-badge">🔒 Internal — Klairs Working Notes</span>
+  <h1>9. Klairs Working Notes</h1>
+
+  <h2>My Working Position</h2>
+  <p>The goal is not only to improve the CRM interface. The real goal is to help Solux turn fragmented manual operations into a more reliable business workflow system.</p>
+  <p>The CRM is the operational base, but the larger improvement includes lead intake, qualification, Study Lab handoff, quotation, follow-up, dashboards, automation, product knowledge, AI support, and future system integrations.</p>
+  <p>This document should help me track what exists, what is broken, what should be changed first, what decisions are needed, and what should be sequenced for continuation.</p>
+
+  <h2 id="s9-assumptions">My Current Assumptions</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Assumption</th><th style="width:90px;">Confidence</th><th>How To Validate</th></tr></thead>
+    <tbody>
+      <tr><td>The CRM is currently in the build phase and has not yet been deployed to end-users (sales, engineering, support)</td><td class="conf-hi">High</td><td>Confirm current build status and go-live timeline with Mehdi</td></tr>
+      <tr><td>The biggest early value is workflow clarity, not AI</td><td class="conf-hi">High</td><td>Confirm with sales and engineering pain points</td></tr>
+      <tr><td>Study Lab handoff is one of the highest-ROI areas</td><td class="conf-hi">High</td><td>Review real Study Lab requests</td></tr>
+      <tr><td>Quote tracking and follow-up are likely leaking revenue</td><td class="conf-hi">High</td><td>Review recent quote process and follow-up history</td></tr>
+      <tr><td>AI can help, but only after CRM data and workflow are structured</td><td class="conf-hi">High</td><td>Check field quality, product data, and CRM usage plan</td></tr>
+      <tr><td>Future initiatives are necessary, but should be sequenced carefully</td><td class="conf-hi">High</td><td>Build continuation roadmap after first implementation cycle</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="s9-principles">My Guiding Principles</h2>
+  <div style="margin:8px 0 12px;">
+    <div class="principle"><div class="pnum">1</div><p>Do not build randomly.</p></div>
+    <div class="principle"><div class="pnum">2</div><p>Do not add AI before the workflow is clear.</p></div>
+    <div class="principle"><div class="pnum">3</div><p>Do not overcomplicate the CRM.</p></div>
+    <div class="principle"><div class="pnum">4</div><p>Make every screen obvious for a new employee.</p></div>
+    <div class="principle"><div class="pnum">5</div><p>Prioritise the workflows that save the most time or prevent the most revenue leakage.</p></div>
+    <div class="principle"><div class="pnum">6</div><p>Turn every vague problem into a specific CRM change, automation rule, dashboard, checklist, or decision.</p></div>
+    <div class="principle"><div class="pnum">7</div><p>Keep future initiatives visible, but sequence them based on readiness and ROI.</p></div>
+    <div class="principle"><div class="pnum">8</div><p>Test with real Solux cases, not imaginary examples.</p></div>
+    <div class="principle"><div class="pnum">9</div><p>Always separate confirmed facts from assumptions.</p></div>
+    <div class="principle"><div class="pnum">10</div><p>Make the system useful enough that the team actually wants to use it.</p></div>
+  </div>
+
+  <h2 id="s9-review">My Personal Review Questions</h2>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:7px;">Before recommending any change, ask:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>What problem does this solve?</td><td></td></tr>
+      <tr><td>Which workflow does this improve?</td><td></td></tr>
+      <tr><td>Who uses this daily?</td><td></td></tr>
+      <tr><td>Does this reduce manual work?</td><td></td></tr>
+      <tr><td>Does this reduce mistakes?</td><td></td></tr>
+      <tr><td>Does this improve visibility for the owner?</td><td></td></tr>
+      <tr><td>Does this make the CRM easier or more complicated?</td><td></td></tr>
+      <tr><td>Is this ready for automation, or does the process need cleanup first?</td><td></td></tr>
+      <tr><td>Is AI actually useful here, or would rules/fields be better?</td><td></td></tr>
+      <tr><td>What decision do I need from Mehdi or Solux?</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="s9-log">My Decision Log</h2>
+  <div class="tw"><table>
+    <thead><tr><th style="width:80px;">Date</th><th>Decision</th><th>Reason</th><th style="width:100px;">Status</th></tr></thead>
+    <tbody>
+      <tr><td></td><td>Keep Week 1 + 3 Months roadmap</td><td>More practical for close working relationship with Mehdi</td><td class="st-confirmed">Confirmed</td></tr>
+      <tr><td></td><td>Keep UAT and Success Metrics as separate sections</td><td>UAT is how we test; success metrics are how we measure outcome</td><td class="st-confirmed">Confirmed</td></tr>
+      <tr><td></td><td>Do not add "Not In Scope" section</td><td>Future initiatives are still part of the bigger improvement roadmap</td><td class="st-confirmed">Confirmed</td></tr>
+      <tr><td></td><td>Use "AI-Assisted MVP" instead of "AI MVP"</td><td>More accurate — AI supports the CRM, not a separate product</td><td class="st-confirmed">Confirmed</td></tr>
+      <tr><td></td><td>Add Klairs Working Notes section</td><td>Needed for private reasoning, assumptions, decisions, and next actions</td><td class="st-confirmed">Confirmed</td></tr>
+      <tr><td></td><td>CRM assumption updated to reflect build phase</td><td>CRM has not yet been deployed — first deployment is the opportunity to get adoption right</td><td class="st-confirmed">Confirmed</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="s9-continuation">Continuation Logic</h2>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:8px;">Do not describe future initiatives as out of scope. Use continuation language instead:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Wording To Avoid</th><th>Better Wording</th></tr></thead>
+    <tbody>
+      <tr><td>Out of scope</td><td>Later sequence</td></tr>
+      <tr><td>Excluded</td><td>Not first priority</td></tr>
+      <tr><td>Not included</td><td>Continuation backlog</td></tr>
+      <tr><td>Future only</td><td>Depends on workflow readiness</td></tr>
+      <tr><td>Phase 2 = AI only</td><td>Next cycle = AI, automation, integrations, and advanced workflow improvements</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box"><div class="box-bar" style="background:var(--amber)"></div><div class="box-body" style="background:#FFFBF0;">
+    <strong style="color:var(--amber)">Long-Term Goal</strong>
+    <p>The long-term goal is still to improve the full business workflow system. Phase 1 focuses on the highest-ROI foundation so later initiatives have clean data, clear ownership, and real operational value.</p>
+  </div></div>
+  </div>
+</div>
+
+<!-- ══ 10. SECTION PATTERN ══ -->
+<div class="section" id="s10">
+  <h1>10. Section Pattern</h1>
+  <p style="font-size:0.82rem;color:var(--gray);margin-bottom:10px;">For every workflow section, use this repeatable structure. Not every section needs all 13 points — skip points that do not apply.</p>
+  <div class="pat-grid">
+    <div class="pat-item"><span class="pn">1</span>What we know</div>
+    <div class="pat-item"><span class="pn">2</span>Current workflow</div>
+    <div class="pat-item"><span class="pn">3</span>Problem</div>
+    <div class="pat-item"><span class="pn">4</span>Business impact</div>
+    <div class="pat-item"><span class="pn">5</span>Recommended fix</div>
+    <div class="pat-item"><span class="pn">6</span>Priority</div>
+    <div class="pat-item"><span class="pn">7</span>CRM change needed</div>
+    <div class="pat-item"><span class="pn">8</span>Automation opportunity</div>
+    <div class="pat-item"><span class="pn">9</span>AI opportunity</div>
+    <div class="pat-item"><span class="pn">10</span>UAT / usability checks</div>
+    <div class="pat-item"><span class="pn">11</span>Success metrics</div>
+    <div class="pat-item"><span class="pn">12</span>Decision needed</div>
+    <div class="pat-item"><span class="pn">13</span>Open questions</div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</body>
+</html>

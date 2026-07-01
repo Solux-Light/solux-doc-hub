@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Style — Solux Projects by Klairs</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── OPTION A — STEEL ── */
+    --ivory:   #F7F3EE;
+    --charcoal:#1C2030;
+    --navy:    #1C3254;
+    --steel:   #4A6FA5;
+    --mist:    #C8D4E3;
+
+    /* Alpha stack — Charcoal */
+    --charcoal-86: rgba(28,32,48,0.86);
+    --charcoal-68: rgba(28,32,48,0.68);
+    --charcoal-48: rgba(28,32,48,0.48);
+    --charcoal-32: rgba(28,32,48,0.32);
+    --charcoal-16: rgba(28,32,48,0.16);
+    --charcoal-08: rgba(28,32,48,0.08);
+    --charcoal-04: rgba(28,32,48,0.04);
+
+    /* Alpha stack — Navy */
+    --navy-70: rgba(28,50,84,0.70);
+    --navy-32: rgba(28,50,84,0.32);
+    --navy-12: rgba(28,50,84,0.12);
+
+    /* Alpha stack — Steel */
+    --steel-40: rgba(74,111,165,0.40);
+    --steel-18: rgba(74,111,165,0.18);
+    --steel-10: rgba(74,111,165,0.10);
+
+    /* Alpha stack — Ivory */
+    --ivory-90: rgba(247,243,238,0.90);
+    --ivory-64: rgba(247,243,238,0.64);
+
+    /* Typography */
+    --font-sans:  "Helvetica Neue", Arial, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-mono:  "SF Mono", "Fira Code", "Courier New", monospace;
+
+    /* Type scale */
+    --text-display: clamp(32px, 4vw, 52px);
+    --text-h1:  clamp(22px, 2.5vw, 30px);
+    --text-h2:  20px;
+    --text-h3:  16px;
+    --text-body: 14px;
+    --text-ui:   13px;
+    --text-small:11px;
+    --text-label:10px;
+
+    /* Letter spacing */
+    --track-display: -0.02em;
+    --track-heading:  0.00em;
+    --track-ui:       0.04em;
+    --track-label:    0.14em;
+    --track-caps:     0.18em;
+
+    /* Spacing base: 8px */
+    --sp-1:  4px;
+    --sp-2:  8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+    --sp-10:40px;
+    --sp-12:48px;
+    --sp-16:64px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-size: var(--text-body);
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    background: var(--charcoal);
+    color: var(--ivory);
+    padding: 3rem 2.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    border-bottom: 3px solid var(--steel);
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: "";
+    position: absolute;
+    right: 6%;
+    top: -60px;
+    width: 200px;
+    height: 200px;
+    border: 0.5px solid var(--steel-40);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .doc-header::after {
+    content: "";
+    position: absolute;
+    right: 9%;
+    top: -30px;
+    width: 110px;
+    height: 110px;
+    border: 0.5px solid var(--mist);
+    opacity: 0.2;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .doc-header > * { position: relative; z-index: 1; }
+  .header-left h1 {
+    font-family: var(--font-serif);
+    font-size: var(--text-h1);
+    font-weight: 400;
+    letter-spacing: var(--track-heading);
+    color: var(--ivory);
+    margin-bottom: 5px;
+  }
+  .header-left p {
+    font-size: var(--text-small);
+    color: var(--ivory-64);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+  }
+  .doc-badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--mist);
+    border: 0.5px solid var(--steel-40);
+    padding: 6px 14px;
+    border-radius: 2px;
+    background: var(--navy-12);
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    min-height: calc(100vh - 120px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    border-right: 0.5px solid var(--charcoal-16);
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--ivory-90);
+    backdrop-filter: blur(8px);
+  }
+  .sidebar-section { padding: 0 1.4rem; margin-bottom: 1.6rem; }
+  .sidebar-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--charcoal-32);
+    margin-bottom: 0.6rem;
+  }
+  .sidebar a {
+    display: block;
+    font-size: 12px;
+    color: var(--charcoal-68);
+    text-decoration: none;
+    padding: 3px 0;
+    transition: color 0.12s, padding-left 0.12s;
+    border-left: 2px solid transparent;
+    padding-left: 6px;
+  }
+  .sidebar a:hover { color: var(--navy); border-left-color: var(--steel); padding-left: 9px; }
+
+  /* ── MAIN ── */
+  .main { padding: 3rem 3.5rem 6rem; max-width: 960px; }
+
+  .guide-section { margin-bottom: 5rem; scroll-margin-top: 2rem; }
+
+  .section-eyebrow {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-h1);
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--charcoal-16);
+  }
+  .section-desc {
+    font-size: var(--text-ui);
+    color: var(--charcoal-68);
+    line-height: 1.85;
+    margin-bottom: 2rem;
+    max-width: 680px;
+  }
+
+  /* ── COLOR PALETTE ── */
+  .palette-primary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .swatch-block { height: 110px; }
+  .swatch-info { padding: 12px 14px 14px; background: var(--ivory); border-top: 0.5px solid var(--charcoal-16); }
+  .swatch:not(:last-child) .swatch-info { border-right: 0.5px solid var(--charcoal-16); }
+  .swatch-name { font-size: 11px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+  .swatch-hex  { font-family: var(--font-mono); font-size: 10px; color: var(--charcoal-68); }
+  .swatch-role { font-size: 10px; color: var(--charcoal-48); margin-top: 3px; line-height: 1.4; }
+
+  /* Alpha tokens grid */
+  .alpha-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--charcoal-16);
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .alpha-group { background: var(--ivory); padding: 1.1rem 1.25rem; }
+  .alpha-group-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--charcoal-48);
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.5px solid var(--charcoal-08);
+  }
+  .alpha-token {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+  .alpha-dot { width: 20px; height: 20px; border-radius: 2px; flex-shrink: 0; }
+  .alpha-name { font-family: var(--font-mono); font-size: 10px; color: var(--charcoal-68); }
+
+  /* Semantic roles table */
+  .role-table {
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .role-row {
+    display: grid;
+    grid-template-columns: 160px 160px 1fr;
+    border-bottom: 0.5px solid var(--charcoal-08);
+  }
+  .role-row:last-child { border-bottom: none; }
+  .role-row.header { background: var(--charcoal); }
+  .role-row.header span { font-size: 9px; font-weight: 600; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ivory-64); padding: 8px 14px; }
+  .role-cell { padding: 9px 14px; font-size: 12px; color: var(--charcoal); background: var(--ivory); display: flex; align-items: center; gap: 8px; }
+  .role-cell:nth-child(2) { background: var(--charcoal-04); }
+  .role-cell:nth-child(3) { background: var(--ivory); color: var(--charcoal-68); font-size: 11px; }
+  .role-swatch { width: 16px; height: 16px; border-radius: 2px; border: 0.5px solid var(--charcoal-16); flex-shrink: 0; }
+
+  /* ── TYPOGRAPHY ── */
+  .type-table { border: 0.5px solid var(--charcoal-16); border-radius: 3px; overflow: hidden; margin-bottom: 1.5rem; }
+  .type-row {
+    display: grid;
+    grid-template-columns: 175px 1fr;
+    border-bottom: 0.5px solid var(--charcoal-08);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    padding: 1rem 1.25rem;
+    background: var(--steel-10);
+    border-right: 0.5px solid var(--charcoal-16);
+  }
+  .type-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .type-spec { font-family: var(--font-mono); font-size: 10px; color: var(--charcoal-68); line-height: 1.9; }
+  .type-preview { padding: 1rem 1.5rem; display: flex; align-items: center; min-height: 80px; }
+
+  /* Font families */
+  .font-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--charcoal-16);
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .font-card {
+    background: var(--ivory);
+    padding: 1.5rem 1.25rem;
+  }
+  .font-role {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 0.75rem;
+  }
+  .font-specimen { font-size: 26px; line-height: 1.2; margin-bottom: 0.6rem; }
+  .font-name { font-size: 11px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+  .font-stack { font-family: var(--font-mono); font-size: 10px; color: var(--charcoal-48); line-height: 1.7; }
+  .font-use { font-size: 11px; color: var(--charcoal-68); margin-top: 8px; border-top: 0.5px solid var(--charcoal-08); padding-top: 8px; line-height: 1.6; }
+
+  /* ── IMPLEMENTATION REFERENCE ── */
+  .impl-table {
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .impl-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background: var(--navy);
+  }
+  .impl-header span {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--ivory-64);
+    padding: 8px 12px;
+    border-right: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .impl-header span:last-child { border-right: none; }
+  .impl-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 0.5px solid var(--charcoal-08);
+  }
+  .impl-row:last-child { border-bottom: none; }
+  .impl-row:nth-child(even) .impl-cell { background: var(--charcoal-04); }
+  .impl-cell {
+    padding: 9px 12px;
+    font-size: 11px;
+    color: var(--charcoal);
+    border-right: 0.5px solid var(--charcoal-08);
+    background: var(--ivory);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .impl-cell:last-child { border-right: none; }
+  .impl-cell code {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--steel-10);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--navy);
+    border: 0.5px solid var(--charcoal-08);
+    display: inline-block;
+    margin: 1px 0;
+  }
+  .impl-section-label {
+    grid-column: 1 / -1;
+    background: var(--mist);
+    padding: 5px 12px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 0.5px solid var(--charcoal-16);
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--steel-10);
+    border-left: 2px solid var(--steel);
+    border-radius: 0 3px 3px 0;
+    padding: 0.8rem 1rem;
+    font-size: 12px;
+    color: var(--charcoal);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── SPACING ── */
+  .spacing-table {
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .spacing-header {
+    display: grid;
+    grid-template-columns: 80px 90px 120px 1fr 1fr;
+    background: var(--navy);
+  }
+  .spacing-header span {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--ivory-64);
+    padding: 8px 12px;
+    border-right: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .spacing-header span:last-child { border-right: none; }
+  .spacing-row {
+    display: grid;
+    grid-template-columns: 80px 90px 120px 1fr 1fr;
+    border-bottom: 0.5px solid var(--charcoal-08);
+    align-items: center;
+  }
+  .spacing-row:last-child { border-bottom: none; }
+  .spacing-row:nth-child(even) { background: var(--charcoal-04); }
+  .sp-cell {
+    padding: 9px 12px;
+    font-size: 11px;
+    color: var(--charcoal);
+    border-right: 0.5px solid var(--charcoal-08);
+    font-family: var(--font-mono);
+  }
+  .sp-cell:last-child { border-right: none; font-family: var(--font-sans); color: var(--charcoal-68); font-size: 10px; }
+  .sp-cell.label-cell { font-family: var(--font-mono); color: var(--navy); font-size: 10px; font-weight: 600; }
+  .sp-bar-cell { padding: 8px 12px; border-right: 0.5px solid var(--charcoal-08); }
+  .sp-bar {
+    background: var(--steel);
+    height: 18px;
+    border-radius: 2px;
+    opacity: 0.75;
+  }
+
+  /* Live preview strip */
+  .preview-strip {
+    border: 0.5px solid var(--charcoal-16);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .preview-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--charcoal-48);
+    padding: 8px 14px;
+    background: var(--charcoal-04);
+    border-bottom: 0.5px solid var(--charcoal-16);
+  }
+  .preview-body { padding: 2rem; }
+
+  /* ── CRM CARD DEMO ── */
+  .demo-crm-card {
+    background: #fff;
+    border: 1px solid var(--mist);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 480px;
+    box-shadow: 0 2px 8px rgba(28,32,48,0.07);
+  }
+  .demo-crm-hdr {
+    background: var(--navy);
+    color: var(--ivory);
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .demo-crm-badge {
+    background: var(--steel);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .demo-crm-body { padding: 14px; }
+  .demo-crm-field {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .demo-crm-field label { color: var(--charcoal-48); width: 100px; flex-shrink: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding-top: 1px; }
+  .demo-crm-field span { color: var(--charcoal); }
+  .demo-crm-footer {
+    border-top: 1px solid var(--mist);
+    padding: 8px 14px;
+    background: var(--steel-10);
+    font-size: 10px;
+    color: var(--charcoal-68);
+    letter-spacing: 0.04em;
+  }
+
+  /* Footer */
+  .doc-footer {
+    background: var(--charcoal);
+    padding: 10px 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .doc-footer span { font-size: 10px; color: var(--ivory-64); letter-spacing: var(--track-label); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="doc-header">
+  <div class="header-left">
+    <h1>Style — Solux Projects</h1>
+    <p>UI Design Guidelines &nbsp;·&nbsp; Option A — Steel &nbsp;·&nbsp; By Klairs</p>
+  </div>
+  <div class="doc-badge">Design System v1</div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Colour</div>
+    <a href="#s1">Primary Palette</a>
+    <a href="#s1-alpha">Alpha Tokens</a>
+    <a href="#s1-roles">Semantic Roles</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Typography</div>
+    <a href="#s2">Font Families</a>
+    <a href="#s2-scale">Type Scale</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Implementation</div>
+    <a href="#s3">Colour & Type Reference</a>
+    <a href="#s3-preview">Live Preview</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Spacing</div>
+    <a href="#s4">Spacing Scale</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Documents</div>
+    <a href="Solux.html">← Back to Hub</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ══ 1. COLOUR PALETTE ══ -->
+<section class="guide-section" id="s1">
+  <div class="section-eyebrow">01 — Colour</div>
+  <h2 class="section-title">Primary Palette — Option A · Steel</h2>
+  <p class="section-desc">Five colours derived from the Steel system. Professional, calm, and tech-adjacent. Blue accent replaces gold entirely — consistent with Solux's B2B solar and engineering positioning. All UI colour decisions reference only these five values and their alpha derivatives.</p>
+
+  <div class="palette-primary">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F7F3EE;border-right:0.5px solid var(--charcoal-16);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ivory</div>
+        <div class="swatch-hex">#F7F3EE</div>
+        <div class="swatch-role">Page background · Light surface · Warm neutral</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1C2030;border-right:0.5px solid var(--charcoal-16);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Deep Charcoal</div>
+        <div class="swatch-hex">#1C2030</div>
+        <div class="swatch-role">Primary text · Header background · Highest contrast</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#1C3254;border-right:0.5px solid var(--charcoal-16);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Rich Navy</div>
+        <div class="swatch-hex">#1C3254</div>
+        <div class="swatch-role">Section headers · Sidebar · Primary action surfaces</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#4A6FA5;border-right:0.5px solid var(--charcoal-16);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Steel Blue</div>
+        <div class="swatch-hex">#4A6FA5</div>
+        <div class="swatch-role">Links · Active states · Pills · Accent highlights</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#C8D4E3;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Mist</div>
+        <div class="swatch-hex">#C8D4E3</div>
+        <div class="swatch-role">Borders · Dividers · Table row alt · Subtle fill</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Rule:</strong> These five values are the only permitted base colours. All other UI values must be derived from them using the alpha token system below. Do not introduce new hues — use opacity to create hierarchy within the palette.
+  </div>
+
+  <!-- ALPHA TOKENS -->
+  <div class="section-eyebrow" id="s1-alpha" style="margin-top:2.5rem;">Alpha Tokens</div>
+  <h3 style="font-size:var(--text-h3);font-weight:600;color:var(--charcoal);margin-bottom:0.4rem;margin-top:0.3rem;">Derived Values</h3>
+  <p class="section-desc" style="margin-bottom:1rem;">Use alpha tokens to build subtle fills, overlays, borders, and disabled states without introducing new hues.</p>
+
+  <div class="alpha-grid">
+    <div class="alpha-group">
+      <div class="alpha-group-label">Charcoal</div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.86);"></div><span class="alpha-name">--charcoal-86 &nbsp;·&nbsp; Primary text alt</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.68);"></div><span class="alpha-name">--charcoal-68 &nbsp;·&nbsp; Secondary text</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.48);"></div><span class="alpha-name">--charcoal-48 &nbsp;·&nbsp; Placeholder / label</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.32);"></div><span class="alpha-name">--charcoal-32 &nbsp;·&nbsp; Disabled text</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.16);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--charcoal-16 &nbsp;·&nbsp; Borders</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.08);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--charcoal-08 &nbsp;·&nbsp; Subtle dividers</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,32,48,0.04);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--charcoal-04 &nbsp;·&nbsp; Alt row fill</span></div>
+    </div>
+    <div class="alpha-group">
+      <div class="alpha-group-label">Navy</div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,50,84,0.70);"></div><span class="alpha-name">--navy-70 &nbsp;·&nbsp; Strong navy overlay</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,50,84,0.32);"></div><span class="alpha-name">--navy-32 &nbsp;·&nbsp; Medium navy tint</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(28,50,84,0.12);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--navy-12 &nbsp;·&nbsp; Light navy fill</span></div>
+      <div class="alpha-group-label" style="margin-top:1rem;">Steel Blue</div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(74,111,165,0.40);"></div><span class="alpha-name">--steel-40 &nbsp;·&nbsp; Active / hover fill</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(74,111,165,0.18);"></div><span class="alpha-name">--steel-18 &nbsp;·&nbsp; Selected row</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(74,111,165,0.10);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--steel-10 &nbsp;·&nbsp; Subtle accent fill</span></div>
+    </div>
+    <div class="alpha-group">
+      <div class="alpha-group-label">Ivory</div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(247,243,238,0.90);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--ivory-90 &nbsp;·&nbsp; Frosted overlay</span></div>
+      <div class="alpha-token"><div class="alpha-dot" style="background:rgba(247,243,238,0.64);border:0.5px solid var(--charcoal-16);"></div><span class="alpha-name">--ivory-64 &nbsp;·&nbsp; Text on dark BG</span></div>
+    </div>
+  </div>
+
+  <!-- SEMANTIC ROLES -->
+  <div class="section-eyebrow" id="s1-roles" style="margin-top:2.5rem;">Semantic Roles</div>
+  <h3 style="font-size:var(--text-h3);font-weight:600;color:var(--charcoal);margin-bottom:0.4rem;margin-top:0.3rem;">Colour Assignments</h3>
+  <p class="section-desc" style="margin-bottom:1rem;">Every colour decision maps to a named role. Use role names in CSS variables, not raw hex values.</p>
+
+  <div class="role-table">
+    <div class="role-row header">
+      <span>Role</span><span>Token / Hex</span><span>Usage</span>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:#F7F3EE;"></div>Page background</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">#F7F3EE</code></div>
+      <div class="role-cell">Main body background, card surfaces, sidebar</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:#1C2030;"></div>Primary text</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">#1C2030</code></div>
+      <div class="role-cell">Body copy, headings, labels on light background</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:#1C3254;"></div>Brand primary</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">#1C3254</code></div>
+      <div class="role-cell">Section h1, sidebar background, CRM module headers, table headers</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:#4A6FA5;"></div>Accent / action</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">#4A6FA5</code></div>
+      <div class="role-cell">Links, active tab, sprint badge, AI pill, hover border highlight</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:#C8D4E3;"></div>Border / divider</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">#C8D4E3</code></div>
+      <div class="role-cell">Card borders, table dividers, section separators, alt row background</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:rgba(28,32,48,0.68);"></div>Secondary text</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">--charcoal-68</code></div>
+      <div class="role-cell">Supporting copy, captions, descriptions, table cell body</div>
+    </div>
+    <div class="role-row">
+      <div class="role-cell"><div class="role-swatch" style="background:rgba(28,32,48,0.48);"></div>Disabled / hint</div>
+      <div class="role-cell"><code style="font-family:var(--font-mono);font-size:10px;">--charcoal-48</code></div>
+      <div class="role-cell">Placeholders, column labels, disabled field text</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. TYPOGRAPHY ══ -->
+<section class="guide-section" id="s2">
+  <div class="section-eyebrow">02 — Typography</div>
+  <h2 class="section-title">Type System</h2>
+  <p class="section-desc">Three typeface roles. Sans-serif carries all UI, data, and body. Serif is reserved for section titles and document headers only — never for table cells, labels, or body copy. Mono is for code, hex values, CSS tokens, and technical specs.</p>
+
+  <!-- FONT FAMILIES -->
+  <div class="font-grid" id="s2-families">
+    <div class="font-card">
+      <div class="font-role">Primary — UI & Body</div>
+      <div class="font-specimen" style="font-family:'Helvetica Neue',Arial,sans-serif;font-weight:400;">Aa Bb Cc</div>
+      <div class="font-name">Helvetica Neue / Arial</div>
+      <div class="font-stack">font-family: "Helvetica Neue",<br>Arial, sans-serif</div>
+      <div class="font-use">All UI text, body copy, labels, table cells, nav, buttons, tags, pills, dashboards. Default for all document content.</div>
+    </div>
+    <div class="font-card">
+      <div class="font-role">Secondary — Display & Headings</div>
+      <div class="font-specimen" style="font-family:Georgia,serif;font-weight:400;">Aa Bb Cc</div>
+      <div class="font-name">Georgia</div>
+      <div class="font-stack">font-family: Georgia,<br>"Times New Roman", serif</div>
+      <div class="font-use">Section titles (h1 only), document headers, style guide display text. Never for table rows, labels, or body paragraphs.</div>
+    </div>
+    <div class="font-card">
+      <div class="font-role">Tertiary — Code & Specs</div>
+      <div class="font-specimen" style="font-family:'Courier New',monospace;font-size:22px;font-weight:400;">#4A6FA5</div>
+      <div class="font-name">SF Mono / Fira Code</div>
+      <div class="font-stack">font-family: "SF Mono",<br>"Fira Code", "Courier New",<br>monospace</div>
+      <div class="font-use">Hex values, CSS variable names, token names, code snippets, API references. Anywhere precision and machine-readability matters.</div>
+    </div>
+  </div>
+
+  <!-- TYPE SCALE -->
+  <div class="section-eyebrow" id="s2-scale" style="margin-top:2.5rem;">Type Scale</div>
+  <h3 style="font-size:var(--text-h3);font-weight:600;color:var(--charcoal);margin-bottom:0.4rem;margin-top:0.3rem;">Size · Weight · Spacing</h3>
+  <p class="section-desc" style="margin-bottom:1rem;">Base unit: 14px body. Scale derived from purpose, not arbitrary multipliers. Line-height tightens as size increases.</p>
+
+  <div class="type-table">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Display</div>
+        <div class="type-spec">32–52px clamp<br>font-weight: 300<br>serif<br>tracking: −0.02em<br>line-height: 1.1</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:Georgia,serif;font-size:38px;font-weight:300;letter-spacing:-0.02em;line-height:1.1;color:var(--charcoal);">Solux Projects</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">H1 — Section Title</div>
+        <div class="type-spec">22–30px clamp<br>font-weight: 400<br>serif<br>tracking: 0<br>line-height: 1.2</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:Georgia,serif;font-size:26px;font-weight:400;color:var(--charcoal);">Business Analysis & AI Roadmap</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">H2 — Sub-heading</div>
+        <div class="type-spec">20px<br>font-weight: 700<br>sans-serif<br>tracking: 0<br>line-height: 1.3</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:20px;font-weight:700;color:var(--navy);">CRM Workflow Refinement</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">H3 — Block Title</div>
+        <div class="type-spec">16px<br>font-weight: 600<br>sans-serif<br>tracking: 0<br>line-height: 1.4</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:16px;font-weight:600;color:var(--steel);">Study Lab Handoff Checklist</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Body</div>
+        <div class="type-spec">14px<br>font-weight: 400<br>sans-serif<br>tracking: 0<br>line-height: 1.7</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:14px;color:var(--charcoal);line-height:1.7;">The CRM is currently in the build phase and has not yet been deployed to end-users. The first deployment is the opportunity to establish good habits.</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">UI / Table</div>
+        <div class="type-spec">13px<br>font-weight: 400<br>sans-serif<br>tracking: 0<br>line-height: 1.5</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:13px;color:var(--charcoal-68);">Study Request cannot be submitted without required project data</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Label / Eyebrow</div>
+        <div class="type-spec">10px<br>font-weight: 600<br>sans-serif<br>ALL CAPS<br>tracking: 0.18em<br>line-height: 1.4</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--steel);">AI Initiatives &nbsp;·&nbsp; Sprint 2</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Caption / Meta</div>
+        <div class="type-spec">11px<br>font-weight: 400<br>sans-serif<br>tracking: 0.04em<br>line-height: 1.6<br>color: charcoal-68</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-size:11px;color:var(--charcoal-68);letter-spacing:0.04em;">Source: Mehdi's IA KLAIRS · Confirmed with engineering team</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. IMPLEMENTATION REFERENCE ══ -->
+<section class="guide-section" id="s3">
+  <div class="section-eyebrow">03 — Implementation</div>
+  <h2 class="section-title">Colour & Typography Reference</h2>
+  <p class="section-desc">Lookup table for every recurring UI element across the four Solux project documents. Column 1 names the element. Column 2 gives the colour. Column 3 gives the type style. Column 4 gives notes or exceptions.</p>
+
+  <div class="impl-table">
+    <div class="impl-header">
+      <span>UI Element</span>
+      <span>Colour</span>
+      <span>Type Style</span>
+      <span>Notes</span>
+    </div>
+
+    <!-- STRUCTURE -->
+    <div class="impl-row"><div class="impl-section-label">Document Structure</div></div>
+    <div class="impl-row">
+      <div class="impl-cell">Page background</div>
+      <div class="impl-cell"><code>#F7F3EE</code> Ivory</div>
+      <div class="impl-cell">—</div>
+      <div class="impl-cell">All document backgrounds default to Ivory</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Section background (alt)</div>
+      <div class="impl-cell"><code>--charcoal-04</code></div>
+      <div class="impl-cell">—</div>
+      <div class="impl-cell">Alternating sections use 4% charcoal tint</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Document header</div>
+      <div class="impl-cell"><code>#1C2030</code> Charcoal</div>
+      <div class="impl-cell">Georgia 24–30px / weight 400</div>
+      <div class="impl-cell">Ivory text on Charcoal BG</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Sidebar / nav background</div>
+      <div class="impl-cell"><code>#1C3254</code> Navy</div>
+      <div class="impl-cell">Arial 12px / weight 400</div>
+      <div class="impl-cell">Ivory 78% text; hover = Ivory 100% + Steel border</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Tab bar</div>
+      <div class="impl-cell"><code>#1C2030</code> Charcoal</div>
+      <div class="impl-cell">Arial 12px / weight 600 / caps</div>
+      <div class="impl-cell">Active tab = Steel Blue underline or fill</div>
+    </div>
+
+    <!-- HEADINGS -->
+    <div class="impl-row"><div class="impl-section-label">Headings</div></div>
+    <div class="impl-row">
+      <div class="impl-cell">h1 — section title</div>
+      <div class="impl-cell"><code>#1C3254</code> Navy</div>
+      <div class="impl-cell">Arial 16–18px / weight 700<br><em>or</em> Georgia 22–26px / 400</div>
+      <div class="impl-cell">Orange underline border-bottom (3px) on document h1</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">h2 — sub-heading</div>
+      <div class="impl-cell"><code>#1C3254</code> Navy</div>
+      <div class="impl-cell">Arial 14px / weight 700</div>
+      <div class="impl-cell">2px Navy border-bottom</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">h3 — block title</div>
+      <div class="impl-cell"><code>#4A6FA5</code> Steel</div>
+      <div class="impl-cell">Arial 13px / weight 700</div>
+      <div class="impl-cell">No border; margin-top 8px</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Eyebrow label</div>
+      <div class="impl-cell"><code>#4A6FA5</code> Steel</div>
+      <div class="impl-cell">Arial 9–10px / weight 600 / ALL CAPS / tracking 0.18em</div>
+      <div class="impl-cell">Always appears above h1 or h2</div>
+    </div>
+
+    <!-- TABLES -->
+    <div class="impl-row"><div class="impl-section-label">Tables</div></div>
+    <div class="impl-row">
+      <div class="impl-cell">Table header row</div>
+      <div class="impl-cell"><code>#1C3254</code> Navy</div>
+      <div class="impl-cell">Arial 11px / weight 600 / Ivory text</div>
+      <div class="impl-cell">Padding 5–8px; all-caps optional</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Table cell — primary</div>
+      <div class="impl-cell"><code>#F7F3EE</code> Ivory</div>
+      <div class="impl-cell">Arial 12–13px / weight 400 / Charcoal text</div>
+      <div class="impl-cell">Border: 1px Mist</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Table row — alternate</div>
+      <div class="impl-cell"><code>--charcoal-04</code></div>
+      <div class="impl-cell">Same as primary cell</div>
+      <div class="impl-cell">Every even row</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Table cell — status HIGH</div>
+      <div class="impl-cell"><code>#FDECEA</code> Red tint</div>
+      <div class="impl-cell">Arial 11px / weight 700 / Red text</div>
+      <div class="impl-cell">Text-align center; used for priority columns</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Table cell — status MED</div>
+      <div class="impl-cell"><code>#FFF3E0</code> Amber tint</div>
+      <div class="impl-cell">Arial 11px / weight 700 / Amber text</div>
+      <div class="impl-cell">Same pattern as HIGH</div>
+    </div>
+
+    <!-- TAGS & PILLS -->
+    <div class="impl-row"><div class="impl-section-label">Tags, Pills & Badges</div></div>
+    <div class="impl-row">
+      <div class="impl-cell">Pill — CRM</div>
+      <div class="impl-cell"><code>--steel-10</code> fill / <code>#1C3254</code> text</div>
+      <div class="impl-cell">Arial 10px / weight 700 / tracking 0.06em</div>
+      <div class="impl-cell">Border: 1px Mist</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Pill — Automation</div>
+      <div class="impl-cell">Green tint fill / Green text</div>
+      <div class="impl-cell">Arial 10px / weight 700</div>
+      <div class="impl-cell">Consistent with status system</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Sprint badge</div>
+      <div class="impl-cell">Sprint 1: green · Sprint 2: amber · Sprint 3: <code>--steel-10</code></div>
+      <div class="impl-cell">Arial 9–10px / weight 700</div>
+      <div class="impl-cell">Pill shape, border-radius 10px</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Cross-link button (.xlink)</div>
+      <div class="impl-cell"><code>#4A6FA5</code> Steel (replaces orange)</div>
+      <div class="impl-cell">Arial 11px / weight 700 / Ivory text</div>
+      <div class="impl-cell">border-radius 3px; hover = Navy</div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="impl-row"><div class="impl-section-label">Cards & Callouts</div></div>
+    <div class="impl-row">
+      <div class="impl-cell">Source column (col-src)</div>
+      <div class="impl-cell"><code>#FFFDF8</code> warm cream fill</div>
+      <div class="impl-cell">Arial 13px / weight 400 / Charcoal text</div>
+      <div class="impl-cell">Border: 1px #f0e8d0</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Suggestion column (col-sug)</div>
+      <div class="impl-cell"><code>--steel-10</code> fill</div>
+      <div class="impl-cell">Arial 13px / weight 400 / Charcoal text</div>
+      <div class="impl-cell">Border: 1px Mist</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Callout / info box</div>
+      <div class="impl-cell"><code>--steel-10</code> fill + Steel left border (2px)</div>
+      <div class="impl-cell">Arial 12px / Charcoal text</div>
+      <div class="impl-cell">border-radius 3px</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Warning box</div>
+      <div class="impl-cell"><code>#FFF8E1</code> fill + Amber border</div>
+      <div class="impl-cell">Arial 12–13px</div>
+      <div class="impl-cell">Used for blockers and risks</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-cell">Internal / private section</div>
+      <div class="impl-cell"><code>#FFFBF0</code> warm ivory</div>
+      <div class="impl-cell">Same as body</div>
+      <div class="impl-cell">Amber bottom border; distinct from standard sections</div>
+    </div>
+  </div>
+
+  <!-- LIVE PREVIEW -->
+  <div class="section-eyebrow" id="s3-preview" style="margin-top:2.5rem;">Live Preview</div>
+  <h3 style="font-size:var(--text-h3);font-weight:600;color:var(--charcoal);margin-bottom:0.4rem;margin-top:0.3rem;">CRM Card — Steel System Applied</h3>
+  <div class="preview-strip">
+    <div class="preview-label">Specimen — CRM Lead Record Card</div>
+    <div class="preview-body">
+      <div class="demo-crm-card">
+        <div class="demo-crm-hdr">
+          Lead Record — L-2026-0047
+          <span class="demo-crm-badge">Qualified</span>
+        </div>
+        <div class="demo-crm-body">
+          <div class="demo-crm-field">
+            <label>Company</label>
+            <span>Dakar Port Authority</span>
+          </div>
+          <div class="demo-crm-field">
+            <label>Country</label>
+            <span>Senegal</span>
+          </div>
+          <div class="demo-crm-field">
+            <label>Product Interest</label>
+            <span>AOS Pro+ · Solar Street Lighting</span>
+          </div>
+          <div class="demo-crm-field">
+            <label>Source</label>
+            <span>JivoChat · Website</span>
+          </div>
+          <div class="demo-crm-field">
+            <label>Study Request</label>
+            <span style="color:#1A7A4A;font-weight:600;">Submitted → Engineering</span>
+          </div>
+        </div>
+        <div class="demo-crm-footer">
+          Next action: Study Lab review &nbsp;·&nbsp; Owner: Sales Rep · Due: 3 Jul 2026
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4. SPACING ══ -->
+<section class="guide-section" id="s4">
+  <div class="section-eyebrow">04 — Spacing</div>
+  <h2 class="section-title">Spacing Scale</h2>
+  <p class="section-desc">Base unit: <strong>8px</strong>. All spacing values in the Solux documents should be multiples of 4px (half-unit) or 8px (full unit). Named tokens replace raw pixel values in CSS. Use the smallest step that creates clear visual separation — do not default to large gaps.</p>
+
+  <div class="spacing-table">
+    <div class="spacing-header">
+      <span>Token</span>
+      <span>Value</span>
+      <span>Visualisation</span>
+      <span>Primary Use</span>
+      <span>Example</span>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-1</div>
+      <div class="sp-cell">4px · 0.25rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:4px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Micro gap</div>
+      <div class="sp-cell">Between tag and icon; badge inner vertical padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-2</div>
+      <div class="sp-cell">8px · 0.5rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:8px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Tight spacing</div>
+      <div class="sp-cell">Table cell padding (vertical); label margin-bottom; icon gap</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-3</div>
+      <div class="sp-cell">12px · 0.75rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:12px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Component internal</div>
+      <div class="sp-cell">Card inner padding (small); sidebar link padding; tab padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-4</div>
+      <div class="sp-cell">16px · 1rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:16px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Standard gap</div>
+      <div class="sp-cell">Column gap in two-col layout; section padding-top; list item gap</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-5</div>
+      <div class="sp-cell">20px · 1.25rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:20px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Generous gap</div>
+      <div class="sp-cell">Sidebar sub-link indent; secondary card padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-6</div>
+      <div class="sp-cell">24px · 1.5rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:24px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Section internal</div>
+      <div class="sp-cell">Padding inside sections; card gap in hub grid; between-section margin</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-8</div>
+      <div class="sp-cell">32px · 2rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:32px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Large separation</div>
+      <div class="sp-cell">Between major sections; sidebar top padding; header bottom</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-10</div>
+      <div class="sp-cell">40px · 2.5rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:40px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Layout padding</div>
+      <div class="sp-cell">Hub main padding; document section horizontal padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-12</div>
+      <div class="sp-cell">48px · 3rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:48px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Page-level gap</div>
+      <div class="sp-cell">Between guide sections; scroll margin offset</div>
+    </div>
+    <div class="spacing-row">
+      <div class="sp-cell label-cell">--sp-16</div>
+      <div class="sp-cell">64px · 4rem</div>
+      <div class="sp-bar-cell"><div class="sp-bar" style="width:64px;"></div></div>
+      <div class="sp-cell" style="font-family:var(--font-sans);">Document breathing</div>
+      <div class="sp-cell">Bottom page padding; hero / header height component</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Spacing rule:</strong> If two elements feel too close, add one step up (e.g. 8px → 12px). If a gap feels excessive, step down. Never use arbitrary values like 7px, 15px, or 22px — always stay on the 4px grid.
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer class="doc-footer">
+  <span>Solux Solar Lighting &nbsp;·&nbsp; Design System v1 &nbsp;·&nbsp; Option A — Steel</span>
+  <span>By Klairs &nbsp;·&nbsp; klairs@klairsthefirst.com</span>
+</footer>
+
+</body>
+</html>

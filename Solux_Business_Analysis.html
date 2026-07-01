@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solux — Business Analysis & AI ROI Roadmap</title>
+<style>
+:root {
+  --beige:#F8F5F0; --white:#FFFFFF; --charcoal:#1C2030;
+  --navy:#1C3254; --steel:#4A6FA5; --mist:#C8D4E3; --bdr:#D8D4CC;
+  --sb-bg:#EDEAE4; --sb-bdr:#D8D4CC;
+
+  /* Per-doc accent = BUSINESS ANALYSIS steel blue */
+  --doc-accent:#4A6FA5;
+  --doc-accent-bg:rgba(74,111,165,.10);
+  --doc-accent-bdr:rgba(74,111,165,.30);
+
+  /* Semantic colours */
+  --green:#2E7D52; --red:#C0392B; --amber:#C07000;
+  --purple:#6855A8; --teal:#2A7A7A;
+  --purple-bg:rgba(104,85,168,.06); --purple-bdr:rgba(104,85,168,.25);
+
+  /* Alpha scale */
+  --c86:rgba(28,32,48,.86); --c68:rgba(28,32,48,.68);
+  --c48:rgba(28,32,48,.48); --c32:rgba(28,32,48,.32);
+  --c16:rgba(28,32,48,.16); --c08:rgba(28,32,48,.08); --c04:rgba(28,32,48,.04);
+
+  --sb:220px; --topbar:34px;
+
+  /* Back-compat aliases */
+  --orange:var(--doc-accent);
+  --blue:var(--steel);
+  --gray:var(--c68);
+  --dark:var(--charcoal);
+  --row:var(--c04);
+  --light:var(--beige);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--charcoal);background:var(--beige);}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:200;background:var(--charcoal);height:var(--topbar);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.topbar-back{display:flex;align-items:center;gap:5px;color:#B8C8DC;font-size:0.72rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;transition:color .12s;}
+.topbar-back:hover{color:#fff;}
+.topbar-doc{font-size:0.68rem;color:rgba(255,255,255,.30);letter-spacing:0.08em;text-transform:uppercase;}
+.topbar-docs{display:flex;gap:14px;}
+.topbar-docs a{font-size:0.68rem;color:rgba(255,255,255,.85);text-decoration:none;letter-spacing:0.03em;transition:color .12s;}
+.topbar-docs a:hover{color:#fff;}
+
+/* RIGHT SIDEBAR */
+#sidebar{position:fixed;right:0;top:0;width:var(--sb);height:100vh;background:var(--sb-bg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;padding-top:var(--topbar);border-left:1px solid var(--sb-bdr);}
+#sidebar .sb-title{background:var(--sb-bdr);padding:8px 14px;color:var(--navy);font-size:0.64rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--sb-bdr);}
+#sidebar a{display:block;padding:6px 14px;color:var(--c86);text-decoration:none;font-size:0.74rem;border-left:2px solid transparent;transition:all .12s;}
+#sidebar a:hover{background:rgba(28,32,48,.05);color:var(--navy);border-left-color:var(--doc-accent);}
+#sidebar a.sub{padding-left:24px;font-size:0.70rem;color:var(--c48);}
+#sidebar a.sub:hover{color:var(--c86);background:rgba(28,32,48,.03);}
+#sidebar .sb-sec{padding:7px 14px 2px;color:var(--c32);font-size:0.60rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+#sidebar .hub-link{margin-top:auto;border-top:1px solid var(--sb-bdr);padding:6px 0 4px;background:var(--white);}
+#sidebar .hub-link .sb-sec{color:var(--c32);padding-top:4px;}
+#sidebar .hub-link a{color:var(--steel);font-size:0.72rem;padding:5px 14px;}
+#sidebar .hub-link a:hover{color:var(--navy);background:var(--doc-accent-bg);border-left-color:var(--doc-accent);}
+#sidebar .hub-link a.hub-back{color:var(--c48);font-size:0.69rem;border-top:1px solid var(--sb-bdr);padding-top:8px;margin-top:4px;}
+#sidebar .hub-link a.hub-back:hover{color:var(--navy);}
+
+/* MAIN */
+#main{margin-right:var(--sb);}
+
+/* HEADER */
+.hdr{background:var(--white);padding:14px 18px 12px;border-bottom:3px solid var(--doc-accent);display:flex;align-items:center;justify-content:space-between;}
+.hdr-title{color:var(--navy);font-size:1rem;font-weight:700;}
+.hdr-sub{color:var(--steel);font-size:0.73rem;margin-top:2px;}
+
+/* METRICS */
+.metrics{display:flex;background:var(--white);border-bottom:1px solid var(--mist);}
+.metric{flex:1;text-align:center;padding:8px 4px;border-right:1px solid var(--mist);}
+.metric:last-child{border-right:none;}
+.metric .n{color:var(--doc-accent);font-size:1.1rem;font-weight:700;display:block;}
+.metric .l{color:var(--c48);font-size:0.64rem;}
+
+/* SECTIONS */
+.section{padding:16px 18px;background:var(--white);border-bottom:1px solid var(--mist);}
+.section-alt{background:var(--beige);}
+
+/* TWO-COL */
+.two-col{display:flex;gap:16px;margin-top:10px;}
+.col-src{flex:1.1;padding:12px 14px;background:var(--beige);border:1px solid var(--bdr);border-radius:4px;}
+.col-sug{flex:1;padding:12px 14px;background:rgba(74,111,165,.05);border:1px solid rgba(74,111,165,.20);border-radius:4px;}
+.col-label{font-size:0.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:8px;}
+.lbl-src{background:var(--bdr);color:var(--c68);border:1px solid var(--bdr);}
+.lbl-sug{background:var(--doc-accent-bg);color:var(--navy);border:1px solid var(--doc-accent-bdr);}
+
+/* TYPOGRAPHY */
+h1{color:var(--navy);font-size:1.05rem;border-bottom:2px solid var(--doc-accent);padding-bottom:4px;margin-bottom:8px;font-weight:700;}
+h2{color:var(--navy);font-size:0.92rem;margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid var(--mist);}
+h3{color:var(--steel);font-size:0.82rem;margin:8px 0 4px;font-weight:700;}
+h4{font-size:0.74rem;color:var(--c48);margin:6px 0 3px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+p{font-size:0.83rem;line-height:1.6;margin-bottom:6px;}
+ul,ol{padding-left:15px;margin-bottom:7px;}
+li{font-size:0.82rem;line-height:1.55;margin-bottom:2px;}
+em{font-style:italic;color:var(--c68);}
+strong{font-weight:700;}
+
+/* TABLES */
+.tw{overflow-x:auto;margin:5px 0 9px;}
+table{border-collapse:collapse;width:100%;font-size:0.79rem;}
+th{background:var(--navy);color:#fff;padding:5px 8px;text-align:left;font-size:0.73rem;}
+td{padding:4px 8px;border:1px solid var(--mist);vertical-align:top;line-height:1.45;}
+tr:nth-child(even) td{background:var(--c04);}
+
+/* STATUS CELLS */
+.sev-hi{background:var(--red)!important;color:#fff;font-weight:700;text-align:center;font-size:0.72rem;}
+.sev-md{background:var(--amber)!important;color:#fff;font-weight:700;text-align:center;font-size:0.72rem;}
+.roi-1,.roi-2{background:var(--red)!important;color:#fff;font-weight:700;text-align:center;}
+.roi-3,.roi-4{background:var(--amber)!important;color:#fff;font-weight:700;text-align:center;}
+.roi-5,.roi-6{background:var(--green)!important;color:#fff;font-weight:700;text-align:center;}
+.roi-7,.roi-8{background:var(--steel)!important;color:#fff;font-weight:700;text-align:center;}
+.live{background:var(--green)!important;color:#fff;font-size:0.72rem;text-align:center;font-weight:700;}
+.mvp{background:var(--amber)!important;color:#fff;font-size:0.72rem;text-align:center;font-weight:700;}
+.absent{background:var(--red)!important;color:#fff;font-size:0.72rem;text-align:center;font-weight:700;}
+.partial{background:var(--amber)!important;color:#fff;font-size:0.72rem;text-align:center;font-weight:700;}
+
+/* TAGS */
+.tag{display:inline-block;border-radius:3px;font-size:0.64rem;font-weight:700;padding:1px 5px;margin:0 1px;vertical-align:middle;white-space:nowrap;}
+.tw2{color:var(--navy);background:#E8F0FB;border:1px solid #c5d4ef;}
+.tm{color:#1A5C35;background:#E8F5E9;border:1px solid #a8d5b8;}
+.tc{color:#1A5C35;background:#E8F5E9;border:1px solid #a8d5b8;}
+.ti{color:var(--c68);background:var(--bdr);border:1px solid var(--bdr);}
+
+.cite{display:block;font-size:0.7rem;color:var(--c48);font-style:italic;padding:2px 0 5px 7px;border-left:2px solid var(--mist);margin:2px 0 7px;}
+
+/* SUGGESTION STEPS */
+.sug{background:var(--white);border:1px solid var(--doc-accent-bdr);border-left:3px solid var(--doc-accent);border-radius:3px;padding:7px 10px;margin-bottom:6px;}
+.sug .snum{font-size:0.66rem;font-weight:700;color:var(--doc-accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+.sug p{font-size:0.8rem;margin:0 0 3px;}
+.sug code{background:var(--beige);padding:1px 4px;border-radius:2px;font-size:0.75rem;font-family:monospace;}
+.sug ul{margin:3px 0 0;}
+.sug li{font-size:0.79rem;}
+
+/* PILLS */
+.pill{display:inline-block;font-size:0.66rem;font-weight:700;padding:2px 6px;border-radius:10px;margin-right:2px;vertical-align:middle;}
+.pill-crm{background:#D6E8FF;color:#1B3A6B;}
+.pill-auto{background:#D6F5E3;color:#1A5C35;}
+.pill-int{background:var(--bdr);color:var(--c68);}
+.pill-ai{background:rgba(104,85,168,.10);color:#5040A0;}
+
+/* CROSS-LINK BUTTON */
+.xlink{display:inline-flex;align-items:center;gap:5px;background:var(--doc-accent);color:#fff;text-decoration:none;
+  font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:3px;margin:3px 2px 5px 0;}
+.xlink:hover{opacity:.85;}
+
+/* CALLOUT BOX */
+.box{display:flex;margin:7px 0 9px;border-radius:4px;overflow:hidden;border:1px solid var(--mist);}
+.box-bar{width:5px;flex-shrink:0;}
+.box-body{padding:7px 10px;flex:1;background:var(--white);}
+.box-body strong{display:block;margin-bottom:2px;font-size:0.8rem;}
+.box-body p{font-size:0.8rem;margin:0;}
+
+/* WARN */
+.warn{background:#FEF3E2;border:1px solid #F5C97A;border-radius:4px;padding:7px 10px;margin:5px 0 9px;font-size:0.8rem;}
+.warn strong{color:var(--amber);}
+
+/* FLOW */
+.flow{margin:5px 0 9px;}
+.flow-step{display:flex;align-items:flex-start;margin-bottom:1px;}
+.flow-num{background:var(--navy);color:#fff;font-size:0.63rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;margin-right:6px;}
+.flow-arrow{color:var(--c48);font-size:0.75rem;padding:0 0 1px 22px;display:block;}
+.flow-text{font-size:0.81rem;line-height:1.45;}
+
+/* ANCHOR */
+.anchor{display:block;position:relative;top:-16px;visibility:hidden;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="topbar-back" href="Solux.html">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Back to Hub
+  </a>
+  <span class="topbar-doc">Business Analysis &amp; AI ROI Roadmap</span>
+  <div class="topbar-docs">
+    <a href="Solux_Working_Doc.html">① Working Doc</a>
+    <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
+    <a href="Style_Guide.html">Style Guide</a>
+  </div>
+</div>
+
+<!-- ══ RIGHT SIDEBAR ══ -->
+<nav id="sidebar">
+  <div class="sb-title">Navigation</div>
+
+  <div class="sb-sec">Analysis</div>
+  <a href="#s0">Overview</a>
+  <a href="#s1">1. Company Profile</a>
+  <a href="#s2">2. Workflows</a>
+  <a class="sub" href="#w1">2.1 Lead Intake</a>
+  <a class="sub" href="#w2">2.2 Sales Qualification</a>
+  <a class="sub" href="#w3">2.3 Study Lab</a>
+  <a class="sub" href="#w4">2.4 Quotation ⚠️</a>
+  <a class="sub" href="#w5">2.5 Partner Channel</a>
+  <a class="sub" href="#w6">2.6 After-Sales</a>
+  <a class="sub" href="#w7">2.7 Tender Monitoring</a>
+  <a href="#s3">3. Tech Stack</a>
+  <a href="#s4">4. CRM / ERP</a>
+  <a href="#s5">5. AI Roadmap</a>
+  <a href="#s6">6. First 90 Days</a>
+  <div class="sb-sec">Sprint Roadmap</div>
+  <a href="#sprint2" class="sub">Sprint 2 · Days 91–180</a>
+  <a href="#sprint3" class="sub">Sprint 3 · Days 181–270</a>
+  <a href="#sprint4" class="sub">Sprint 4 · Days 271–360</a>
+  <a href="#year1" class="sub">Year 1 Summary</a>
+  <a href="#sources">Sources</a>
+
+  <div class="hub-link">
+    <div class="sb-sec">Also In</div>
+    <a href="Solux_Working_Doc.html">① Working Document</a>
+    <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
+    <a href="Style_Guide.html">Style Guide</a>
+    <a href="Solux.html" class="hub-back">← Back to Hub</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div id="main">
+
+<!-- Header -->
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Solux Solar Lighting — Business Analysis &amp; AI ROI Roadmap</div>
+    <div class="hdr-sub">Cited · June 2026 · Internal Working Document</div>
+  </div>
+</div>
+<div class="metrics">
+  <div class="metric"><span class="n">500K+</span><span class="l">Installations</span></div>
+  <div class="metric"><span class="n">73</span><span class="l">Countries</span></div>
+  <div class="metric"><span class="n">7</span><span class="l">Offices</span></div>
+  <div class="metric"><span class="n">10+</span><span class="l">Years</span></div>
+  <div class="metric"><span class="n">32</span><span class="l">Patents</span></div>
+  <div class="metric"><span class="n">8+</span><span class="l">Engineers</span></div>
+</div>
+
+<div style="background:rgba(74,111,165,.06);border-bottom:1px solid rgba(74,111,165,.20);padding:8px 18px;display:flex;align-items:center;gap:12px;font-size:0.78rem;">
+  <span style="background:var(--orange);color:#fff;font-weight:bold;padding:2px 8px;border-radius:10px;white-space:nowrap;">Phase 2</span>
+  <span style="color:var(--gray);">This roadmap assumes Phase 1 (CRM foundation) is complete. See the <a href="Solux_Working_Doc.html" style="color:var(--orange);font-weight:bold;">Internal Working Document</a> before beginning any sprint.</span>
+</div>
+<!-- ══ OVERVIEW ══ -->
+<div class="section" id="s0">
+  <span class="anchor"></span>
+  <h1>Document Overview</h1>
+  <p>This document covers Solux's operational state, workflows, technology landscape, and AI prioritisation. Every section has two columns: <strong>left</strong> = what we know from sources, <strong>right</strong> = Claude's implementation suggestions. Cross-links in the right sidebar jump to the companion AI Initiatives file.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Section</th><th>Contents</th><th>Links to AI Initiatives</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Company</strong></td><td>Identity, global footprint (7 offices), product families, revenue model</td><td>—</td></tr>
+      <tr><td><strong>2. Workflows</strong></td><td>7 operational workflows — current state, pain point, severity</td><td>P01, P02, P04</td></tr>
+      <tr><td><strong>3. Tech Stack</strong></td><td>All identified systems and their integration status</td><td>P05, P07</td></tr>
+      <tr><td><strong>4. CRM / ERP</strong></td><td>What exists vs what's missing per module</td><td>P01, P02, P04</td></tr>
+      <tr><td><strong>5. AI Roadmap</strong></td><td>8 priorities ranked by ROI with timeline and links</td><td>All 7 projects</td></tr>
+      <tr><td><strong>6. First 90 Days</strong></td><td>Sprint plan — what to do and when</td><td>P01, P02</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══ SECTION 1 — COMPANY ══ -->
+<div class="section section-alt" id="s1">
+  <span class="anchor"></span>
+  <h1>1. Company Profile</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 What We Know</span>
+      <h2>Identity</h2>
+      <p>Sino-European B2B solar lighting manufacturer founded in 2014. Not a distributor — designs, produces, tests and supports complete solar lighting systems. Every sale requires a feasibility study, engineering validation and post-installation support.</p>
+      <span class="cite">Source: <span class="tag tw2">WEB-HOME</span> solux.fr/en/</span>
+
+      <h2>Global Offices</h2>
+      <div class="tw"><table>
+        <thead><tr><th>Office</th><th>Role</th><th>Key Market</th></tr></thead>
+        <tbody>
+          <tr><td><strong>China — Changzhou</strong></td><td>HQ + Manufacturing</td><td>9,000 m² factory · 600 m² test lab · 32 patents</td></tr>
+          <tr><td><strong>France — Guilherand-Granges</strong></td><td>R&amp;D</td><td>Engineering, Study Lab, EU compliance</td></tr>
+          <tr><td><strong>Dubai</strong></td><td>Regional Sales</td><td>Middle East — municipalities, contractors, hotels</td></tr>
+          <tr><td><strong>Saudi Arabia — Riyadh</strong></td><td>Regional Sales</td><td>Large-scale public infrastructure</td></tr>
+          <tr><td><strong>Vietnam — HCMC</strong></td><td>Regional Sales</td><td>Southeast Asia</td></tr>
+          <tr><td><strong>West &amp; Central Africa — Dakar</strong></td><td>Regional Sales</td><td>Africa; Mailchimp Africa list</td></tr>
+          <tr><td><strong>Morocco</strong></td><td>Opening soon</td><td>North Africa expansion</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag tw2">WEB-HOME</span> · Mailchimp Africa: <span class="tag tc">CONSULT</span></span>
+
+      <h2>Product Families</h2>
+      <ul>
+        <li><strong>Urban &amp; Pathway:</strong> Bollards, Vandal Bollards, Columns, Post-Top</li>
+        <li><strong>Pro Line:</strong> AOS Pro+, SSLX Pro, Colarsun Pro, Totem+</li>
+        <li><strong>Performance Line:</strong> AOS Performance, SSLX Performance, ReLight (retrofit)</li>
+      </ul>
+      <span class="cite">Source: <span class="tag tw2">WEB-HOME</span></span>
+    </div>
+
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <h2>CRM: Reflect the 7-Office Structure</h2>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Territory Setup</div>
+        <p>Create 6 territory records in the CRM (one per active sales office). Every Lead and Deal must be tagged with a <code>territory</code> field. Assignment rules: country → auto-assign to correct office. Dubai = Gulf countries; Dakar = West Africa; Riyadh = Saudi/GCC; Vietnam = SEA; France = Europe + Morocco.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Product Family Tag on Every Deal</div>
+        <p>Add <code>product_family</code> (Urban / Pro Line / Performance / ReLight / Mixed / Study-only) as a required field at deal creation. Enables future reporting: "How many Pro Line deals in Dubai this quarter?"</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Territory Auto-Classifier</div>
+        <p>When a lead arrives, AI reads the country field and automatically sets <code>territory</code> + <code>assigned_office</code> + <code>suggested_rep</code>. Handles ambiguous cases (e.g., a Morocco lead before the office opens → assign France for now).</p>
+      </div>
+      <h2>Revenue Model Tracking</h2>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Deal Type Field</div>
+        <p>Add <code>deal_type</code>: Direct Project / Distributor Channel / Retrofit-ReLight / Tender / After-Sales. This allows the owner to see which revenue stream is growing and where margin is strongest — impossible today without this field.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2 — WORKFLOWS ══ -->
+<div class="section" id="s2">
+  <span class="anchor"></span>
+  <h1>2. Workflow Analysis</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Workflow</th><th>Current State</th><th>Key Pain Point</th><th>Severity</th></tr></thead>
+    <tbody>
+      <tr><td><strong>2.1 Lead Intake</strong></td><td>10+ channels, manually reviewed, often copied to Excel</td><td>No automation, no classification, no dashboard</td><td class="sev-hi">HIGH</td></tr>
+      <tr><td><strong>2.2 Sales Qualification</strong></td><td>Manual, no structured project form</td><td>Incomplete data reaches engineering → back-and-forth</td><td class="sev-hi">HIGH</td></tr>
+      <tr><td><strong>2.3 Study Lab</strong></td><td>8-step process: Dialux + PVGIS done separately</td><td>Same data entered multiple times; archive not searchable</td><td class="sev-hi">HIGH</td></tr>
+      <tr><td><strong>2.4 Quotation ⚠️</strong></td><td>Manual Excel/Word, sent by email</td><td>No versioning, no approval, no follow-up</td><td class="sev-hi">HIGH</td></tr>
+      <tr><td><strong>2.5 Partner Channel</strong></td><td>Ad hoc, contact form inquiries</td><td>No pipeline tracking, unclear territory ownership</td><td class="sev-md">MED</td></tr>
+      <tr><td><strong>2.6 After-Sales</strong></td><td>WhatsApp / email, no case system</td><td>No diagnosis history, warranty status unclear</td><td class="sev-md">MED</td></tr>
+      <tr><td><strong>2.7 Tender Monitoring</strong></td><td>Gavin's MVP — manual trigger only</td><td>Not scheduled, not CRM-integrated</td><td class="sev-md">MED</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- W1 -->
+<div class="section section-alt" id="w1">
+  <span class="anchor"></span>
+  <h1>2.1 Lead Intake &amp; Marketing</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <h2>Lead Channels</h2>
+      <ul>
+        <li>Website Contact Forms (structured categories on Joomla)</li>
+        <li>JivoChat (live on homepage)</li>
+        <li>Contact Email</li>
+        <li>LinkedIn (organic + Waalaxy outreach)</li>
+        <li>Google Ads</li>
+        <li>LinkedIn Ads</li>
+        <li>Trade Shows</li>
+        <li>Sales Contact Lists</li>
+      </ul>
+      <p>Today: leads are <strong>manually collected, reviewed and often copied into Excel</strong> before being transferred to Sales. Each channel is disconnected. No centralized dashboard to identify high-value leads. Routing depends on an employee — not scalable.</p>
+      <span class="cite">Source: <span class="tag tm">MEHDI</span> AI Lead Qualification Agent file · channels: <span class="tag tc">CONSULT</span> · Joomla/JivoChat: <span class="tag tw2">WEB-HOME</span></span>
+      <h2>Email Marketing State</h2>
+      <ul>
+        <li><strong>Mailchimp</strong> — International &amp; Africa lists. Hundreds of campaigns, country-specific lists, audience tags, templates, catalogues, datasheets.</li>
+        <li><strong>Brevo</strong> — France. Same type of assets.</li>
+        <li>Not connected to CRM. Campaigns launched manually. Engaged contacts not flagged to sales.</li>
+      </ul>
+      <span class="cite">Source: <span class="tag tc">CONSULT</span> · <span class="tag tm">MEHDI</span> Marketing Intelligence file</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p01">→ See P01 Lead Intelligence Platform</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p06">→ See P06 Marketing Intelligence</a>
+
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Joomla Form Webhook</div>
+        <p>Add a webhook to the Joomla contact form → every submission POSTs to n8n → auto-creates a CRM Lead with <code>source = Website</code>, <code>lead_type</code> from form category. Zero manual data entry from the main lead channel.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> JivoChat Webhook</div>
+        <p>JivoChat has a native webhook. On every new conversation → n8n fires → CRM Lead created with source = JivoChat + transcript attached to record.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Waalaxy → CRM Daily Import</div>
+        <p>Waalaxy exports accepted LinkedIn connections as CSV. Schedule a daily 8am n8n job to pull this export and create CRM Leads — deduplicated by email. Tags source = LinkedIn/Waalaxy.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Classifier + Router</div>
+        <p>On every new CRM Lead: GPT-4o mini call reads inquiry text + country → returns <code>lead_type</code>, <code>product_family</code>, <code>territory</code>, <code>urgency_score</code> (1–5), draft first response in correct language. All written back to CRM automatically. Cost &lt; €0.001/lead.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Mailchimp/Brevo → CRM Sync</div>
+        <p>Weekly sync: any contact who opened 3+ emails or clicked a product link → create or update CRM contact with <code>email_engagement_score</code> and <code>last_clicked_product</code>. Hot engaged contacts surface to sales automatically.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W2 -->
+<div class="section" id="w2">
+  <span class="anchor"></span>
+  <h1>2.2 Sales Qualification</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <h2>Problem</h2>
+      <p>No structured project qualification form exists between Sales and Engineering. When a lead is ready to request a study, the salesperson describes the project via email or WhatsApp. The engineering team frequently needs to ask follow-up questions because key data is missing (GPS location, road type, luminaire count, operating hours, grid availability, etc.).</p>
+      <p>This back-and-forth adds days or weeks to every project cycle and creates frustration on both sides.</p>
+      <span class="cite">Source: <span class="tag tc">CONSULT</span> · <span class="tag tm">MEHDI</span> Lighting Study Platform file</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p02">→ See P02 Study Platform</a>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Qualification Checklist Stage Gate</div>
+        <p>Add a stage gate in the CRM Deal pipeline: a Deal cannot move from "Qualified" to "Study Requested" unless all of these fields are filled: <code>project_location</code> (GPS or city), <code>road_type</code>, <code>luminaire_qty</code>, <code>operating_hours_per_night</code>, <code>grid_available</code> (yes/no), <code>target_delivery_date</code>, <code>client_budget_range</code>.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Missing Info Checker</div>
+        <p>When a salesperson tries to advance the deal, AI checks the record completeness and blocks with a specific message: "This deal is missing: GPS coordinates and operating hours. Please complete before requesting the study." No vague error — specific fields named.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Qualification Form for Partners</div>
+        <p>Build a simple web form (linked from the Study Platform) that partners can fill themselves. Answers flow directly into a new CRM Deal + Study Request without sales rep involvement. Partners get their own qualified entry point.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W3 -->
+<div class="section section-alt" id="w3">
+  <span class="anchor"></span>
+  <h1>2.3 Study Lab (Engineering)</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State — 8-Step Process</span>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">Dialux simulation — luminaire power, optic, quantity</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Operation schedule — on/off hours, dimming, seasonal</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">Daily consumption — max energy including worst-case winter</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">PVGIS simulation — solar irradiance by location (manual entry)</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Panel sizing — PVGIS result + 30% safety margin</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Battery sizing — daily consumption + min. 2-day backup</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">7</div><div class="flow-text">Product selection — match to Solux catalogue</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">8</div><div class="flow-text">Mechanical study + 24/7 project assistance documentation</div></div>
+      </div>
+      <p>Hundreds of studies completed — stored in folders, PDFs, Dialux reports, spreadsheets. <strong>Difficult to search, compare or reuse.</strong> Each study starts from scratch even when similar projects exist.</p>
+      <span class="cite">Source: <span class="tag tw2">WEB-STUDY</span> solux.fr/en/study-lab · <span class="tag tm">MEHDI</span> Lighting Study Platform file</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p02">→ See P02 Study Platform</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p03">→ See P03 Automated Energy Study</a>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Automate Steps 4–6</div>
+        <p>Steps 4–6 are pure data re-entry. Fix: when GPS coordinates are in the study request, auto-call the PVGIS REST API → returns monthly irradiance data → platform auto-calculates panel size (÷worst month sun hrs × 1.30) and battery size (daily consumption × 2). Engineer reviews results — does not recalculate.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> CRM → Study Platform Queue</div>
+        <p>When a CRM Deal advances to "Study Requested" → webhook fires to Study Platform → new job appears in the engineering queue with all fields pre-filled from the CRM record. No email, no re-entry.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Similar Study Recommender</div>
+        <p>Before starting a new study, the platform searches ~600 past studies for similar location + product combinations and shows the 3 closest matches. Engineer uses them as references. Estimated time saving: 30–50% per study.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Study → CRM Callback</div>
+        <p>When engineer marks study "Delivered" → Study Platform fires webhook back to CRM → Deal advances to "Study Complete" stage + PDF report attached automatically. Sales rep is notified.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W4 -->
+<div class="section" id="w4">
+  <span class="anchor"></span>
+  <h1>2.4 Quotation &amp; Order</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <div class="warn"><strong>⚠️ INFERRED — Needs Verification:</strong> The details below are consultant inferences based on the absence of any quotation system in Mehdi's CRM file and on the website. Verify with Solux team during onsite visit.</div>
+      <p>Quotations are likely prepared manually in Excel or Word, sent as PDF by email. No version control — multiple versions of the same quote may exist with no clear "current" version. No approval workflow. No automated follow-up when a quote goes unanswered.</p>
+      <span class="cite">Source: <span class="tag ti">INFERRED</span> — absence of quote module across all sources</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Quote Object</div>
+        <p>Add a Quote object linked to each Deal. Fields: <code>quote_number</code> (auto-generated), <code>version</code> (v1, v2…), <code>products</code> (from Product Hub), <code>quantities</code>, <code>unit_prices</code>, <code>discount_pct</code>, <code>total_value</code>, <code>currency</code>, <code>valid_until</code>, <code>status</code> (Draft / Sent / Accepted / Rejected / Expired).</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Approval Rule</div>
+        <p>Quotes above a certain value (e.g., €50K) require owner approval before sending. CRM blocks the "Send" action until the owner marks it "Approved." One click in the CRM — no email chain for internal approval.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Follow-up Reminder</div>
+        <p>If a sent quote has had no response in 7 days → automatic task created for the sales rep: "Follow up on Quote #[number] sent to [client]." If no response in 14 days → second reminder. This stops revenue leaking through forgotten quotes.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Price Intelligence</div>
+        <p>When creating a new quote, AI queries the Commercial Intelligence Database (P07) for historical quotes to the same country/product combination → suggests a price range based on what has won and lost in the past. Informs pricing decisions without manual searching.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W5 -->
+<div class="section section-alt" id="w5">
+  <span class="anchor"></span>
+  <h1>2.5 Partner / Distributor Channel</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <p>Partner inquiries arrive via the website contact form (category: Distributor). Handled ad hoc — no dedicated partner pipeline in the CRM, no territory ownership rules across 7 offices, no partner onboarding tracking.</p>
+      <span class="cite">Source: <span class="tag tw2">WEB-HOME</span> contact form categories · <span class="tag ti">INFERRED</span> gap analysis</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Partner Object + Territory Lock</div>
+        <p>Create a dedicated "Partner" object in the CRM separate from regular Leads. Fields: <code>territory_exclusive</code> (yes/no), <code>countries_covered</code>, <code>partner_tier</code> (Silver/Gold/Platinum), <code>onboarding_status</code>. Territory lock: a new partner inquiry from a country with an existing exclusive partner auto-alerts the owner before any conversation advances.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Partner Onboarding Sequence</div>
+        <p>When a partner is approved → auto-trigger an onboarding checklist in the CRM: send NDA → send product catalogue → schedule intro call → share Study Platform access → assign territory. Each step tracked with completion status. Nothing falls through.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W6 -->
+<div class="section" id="w6">
+  <span class="anchor"></span>
+  <h1>2.6 After-Sales &amp; Support</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <h2>Support Channel</h2>
+      <p>After-sales cases handled via <strong>WhatsApp and email</strong>. No case management system. No diagnosis history per installation. Warranty status must be checked manually.</p>
+      <h2>What Solux Has (unused for CRM)</h2>
+      <p><strong>Solux Bridge</strong> — live IoT monitoring system on installed products. Provides real-time:</p>
+      <ul>
+        <li>Battery state of charge</li>
+        <li>Solar production history</li>
+        <li>Temperature readings</li>
+        <li>Fault alerts</li>
+        <li>Remote wireless diagnosis tool</li>
+      </ul>
+      <p>Despite having live IoT data, after-sales cases are not linked to Solux Bridge readings. An engineer responding to a complaint has no visibility of the installation's recent history.</p>
+      <span class="cite">Source: <span class="tag tc">CONSULT</span> WhatsApp handling · <span class="tag tw2">WEB-TECH</span> Solux Bridge specs</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> After-Sales Case Object</div>
+        <p>Add a "Case" object to the CRM linked to the original Deal/Installation. Fields: <code>installation_id</code>, <code>product_serial</code>, <code>issue_description</code>, <code>warranty_status</code> (in-warranty / expired), <code>case_status</code> (Open / In Diagnosis / Resolved), <code>resolution_notes</code>, <code>parts_sent</code>.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Solux Bridge → CRM Case</div>
+        <p>When a new After-Sales Case is opened, auto-pull the last 30 days of Solux Bridge data for that installation's product ID → attach to the Case record. The engineer diagnosing the problem immediately sees: battery % trend, solar production anomalies, temperature spikes, fault alert log. Remote diagnosis before any site visit.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Proactive Fault Detection</div>
+        <p>Future state: Solux Bridge fault alerts → if severity = critical → auto-create a CRM After-Sales Case before the customer even calls. Transforms support from reactive to proactive. Customer receives an email: "We detected an issue with your installation — our team is already investigating."</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> WhatsApp Intake</div>
+        <p>Short term (before full case system): set up a WhatsApp Business number connected to n8n. When a customer sends a support message → n8n creates a CRM Case with the WhatsApp transcript. Better than nothing while the full case module is built.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W7 -->
+<div class="section section-alt" id="w7">
+  <span class="anchor"></span>
+  <h1>2.7 Tender Monitoring</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current State</span>
+      <h2>Gavin's MVP — 7-Step Workflow</h2>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div class="flow-text">User launches a search <strong>manually through Claude</strong></div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">2</div><div class="flow-text">Application retrieves tenders from J360 for a selected period</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">3</div><div class="flow-text">For each tender, follows the official links provided by J360</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">4</div><div class="flow-text">Downloads available tender documents</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">5</div><div class="flow-text">Claude reads and analyzes the documentation</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">6</div><div class="flow-text">Relevant information is extracted</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step"><div class="flow-num">7</div><div class="flow-text">Application classifies and organizes opportunities for review</div></div>
+      </div>
+      <p>Gaps identified: manual trigger, no schedule, no CRM integration, scoring is relatively simple.</p>
+      <span class="cite">Source: <span class="tag tm">MEHDI</span> Tender Intelligence Tool – Handover Overview (Gavin's file)</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p04">→ See P04 Tender Intelligence Tool</a>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Remove the Manual Trigger</div>
+        <p>Replace Step 1 with a cron job (n8n scheduled, weekdays 7am). The search runs automatically. Zero human action required to keep the pipeline populated with tender intelligence.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Structured Scoring</div>
+        <p>Rewrite the Claude prompt to return structured JSON per tender: <code>product_fit</code> (0–10), <code>geography_fit</code> (0–10), <code>scale_fit</code> (0–10), <code>eligibility</code> (Yes/No/Unclear), <code>deadline_days</code>, <code>recommended_action</code>. Total score → auto-action.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Auto-Create Tender Opportunity</div>
+        <p>Score ≥ 7/10 → auto-create CRM Tender record + notify relevant regional sales manager. Score &lt; 7 → logged in archive only. Sales team reviews in CRM dashboard, not inside the Claude interface.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 3 — TECH STACK ══ -->
+<div class="section" id="s3">
+  <span class="anchor"></span>
+  <h1>3. Technology &amp; Systems Landscape</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current Systems</span>
+      <div class="tw"><table>
+        <thead><tr><th>System</th><th>Category</th><th>Status</th><th>Gap</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Custom CRM</strong></td><td>Sales &amp; Ops</td><td class="partial">PARTIAL</td><td>Data exists; workflows not enforced; no AI; no automation</td></tr>
+          <tr><td><strong>Study Platform v1</strong></td><td>Engineering</td><td class="mvp">MVP</td><td>Needs review, stabilization, CRM integration</td></tr>
+          <tr><td><strong>Tender Tool (Gavin)</strong></td><td>Business Dev</td><td class="mvp">MVP</td><td>Manual trigger; no schedule; no CRM link</td></tr>
+          <tr><td><strong>Solux Bridge</strong></td><td>IoT / After-Sales</td><td class="live">LIVE</td><td>Not linked to CRM after-sales cases</td></tr>
+          <tr><td><strong>Mailchimp</strong></td><td>Email Marketing</td><td class="live">LIVE</td><td>Not connected to CRM; data underutilized</td></tr>
+          <tr><td><strong>Brevo</strong></td><td>Email Marketing</td><td class="live">LIVE</td><td>Not connected to CRM; France only</td></tr>
+          <tr><td><strong>Joomla CMS</strong></td><td>Website</td><td class="live">LIVE</td><td>Contact form has no webhook to CRM</td></tr>
+          <tr><td><strong>JivoChat</strong></td><td>Live Chat</td><td class="live">LIVE</td><td>Conversations not transferred to CRM</td></tr>
+          <tr><td><strong>Google Ads / LinkedIn Ads</strong></td><td>Paid Marketing</td><td class="live">LIVE</td><td>Leads processed manually</td></tr>
+          <tr><td><strong>Waalaxy</strong></td><td>LinkedIn Outreach</td><td class="live">LIVE</td><td>Leads processed manually</td></tr>
+          <tr><td><strong>ERP</strong></td><td>Operations</td><td class="absent">ABSENT</td><td>No ERP for commercial operations</td></tr>
+          <tr><td><strong>Document Management</strong></td><td>Knowledge</td><td class="absent">ABSENT</td><td>Files in folders/email — not searchable</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag tw2">WEB-HOME</span> <span class="tag tw2">WEB-TECH</span> <span class="tag tm">MEHDI</span> <span class="tag tc">CONSULT</span></span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p05">→ See P05 Product Knowledge Hub</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p07">→ See P07 Commercial DB</a>
+      <h2>Integration Priority Map</h2>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> The Central Hub: CRM</div>
+        <p>The CRM must become the data hub. Everything flows into and out of it. Integration order: (1) Joomla form → CRM, (2) JivoChat → CRM, (3) Study Platform ↔ CRM, (4) Tender Tool → CRM, (5) Mailchimp/Brevo ↔ CRM, (6) Solux Bridge → CRM cases.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> n8n as Integration Middleware</div>
+        <p>Use n8n (self-hosted, free) as the glue between all systems. It handles webhooks, scheduled jobs, API calls, and CRM writes. One tool manages all integrations — no spaghetti of individual connections. Can run on a €5/month VPS.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> ERP: Don't Buy One Yet</div>
+        <p>The commercial operation (lead-to-quote, study management, after-sales) is fully addressable through the CRM with AI. ERP should only be considered when manufacturing scheduling, inventory, and financial reporting outgrow spreadsheets. That's a 12–18 month decision, not today.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4 — CRM/ERP ══ -->
+<div class="section section-alt" id="s4">
+  <span class="anchor"></span>
+  <h1>4. CRM &amp; ERP Assessment</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Current CRM State</span>
+      <p><em>"The owner is building the CRM — it has not yet been deployed to end-users. My role is to make sure it is configured correctly, workflow-ready, and easy to adopt from day one."</em></p>
+      <div style="background:#E8F5E9;border:1px solid #a8d5b8;border-radius:3px;padding:5px 9px;margin:4px 0 6px;font-size:0.78rem;color:#1A5C35;">
+        <strong>Build Phase Context:</strong> The CRM is currently being configured. Sales, engineering, and support teams have not yet been onboarded. First deployment is the opportunity to establish good habits and clear workflow from the start.
+      </div>
+      <span class="cite">Source: <span class="tag tc">CONSULT</span> (Klairs · confirmed with Mehdi)</span>
+      <div class="tw"><table>
+        <thead><tr><th>Module</th><th>Exists?</th><th>Gap</th></tr></thead>
+        <tbody>
+          <tr><td>Contacts / Companies</td><td>✅ Basic</td><td>Missing: territory, partner type, email engagement</td></tr>
+          <tr><td>Deal Pipeline</td><td>✅ Basic</td><td>Missing: stage validation rules, required fields per stage</td></tr>
+          <tr><td>Lead Intake</td><td>⚠️ Manual entry</td><td>No webhooks; no AI classification; no source attribution</td></tr>
+          <tr><td>Study Request</td><td>❌ Absent</td><td>Needs dedicated module linked to Engineering queue</td></tr>
+          <tr><td>Quotation</td><td>❌ Absent</td><td>Quotes live in Excel/Word outside CRM entirely</td></tr>
+          <tr><td>After-Sales Cases</td><td>❌ Absent</td><td>No case system; no Solux Bridge link; warranty unclear</td></tr>
+          <tr><td>Partner/Distributor</td><td>❌ Absent</td><td>No dedicated object; territory conflicts unmanaged</td></tr>
+          <tr><td>Tender Pipeline</td><td>❌ Absent</td><td>Gavin's tool not linked to CRM at all</td></tr>
+          <tr><td>Reporting / Dashboards</td><td>❌ Absent</td><td>Owner cannot see pipeline KPIs in real-time</td></tr>
+          <tr><td>AI / Automation</td><td>❌ Absent</td><td>No automation of any kind in current CRM</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag tc">CONSULT</span> · <span class="tag tm">MEHDI</span> CRM Activation project file</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p01">→ See P01 CRM Activation</a>
+      <h2>Build Order for CRM Modules</h2>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Phase 1 — Data Model (Week 1–2)</div>
+        <p>Fix the foundation first: add all missing required fields to existing objects (Contacts, Deals). Add stage validation — no deal advances without required data. Add territory and deal-type fields. This unlocks all future reporting without changing any code logic.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Phase 2 — New Objects (Week 3–4)</div>
+        <p>Build in order: (1) Study Request — linked to Deal, fed by Study Platform webhook. (2) Quote — linked to Deal, with version control and approval. (3) After-Sales Case — linked to Deal/Installation, with Solux Bridge data field. (4) Partner — separate from Lead, with territory lock.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Phase 3 — Owner Dashboard (Week 7–8)</div>
+        <p>Build an owner dashboard showing in real-time: total open deals by stage and territory, study requests in queue + SLA countdown, quotes sent awaiting response, overdue tasks, this week's new leads by source. One screen → full business visibility.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Daily AI Summary Email</div>
+        <p>Every morning at 7:30am, GPT-4o mini queries the CRM and sends the owner a 5-bullet summary: new leads yesterday, deals stuck &gt;14 days, quotes expiring this week, study requests overdue, after-sales cases open &gt;7 days. Replace manual monitoring with one email.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 5 — AI ROADMAP ══ -->
+<div class="section" id="s5">
+  <span class="anchor"></span>
+  <h1>5. AI ROI Priority Roadmap</h1>
+  <div class="tw"><table>
+    <thead><tr><th>ROI</th><th>Initiative</th><th>Timeline</th><th>AI Initiatives Link</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td class="roi-1">#1</td><td><strong>CRM Activation</strong> — Workflows, pipeline, AI classifier, owner dashboard</td><td>Month 1–2</td><td><a href="Solux_AI_Initiatives.html#t-p01" style="color:var(--blue);font-size:0.75rem;">→ P01</a></td><td><span class="tag tc">CONSULT</span> <span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-2">#2</td><td><strong>Lighting Study Platform</strong> — Review v1, CRM link, archive 600 past studies</td><td>Month 2–3</td><td><a href="Solux_AI_Initiatives.html#t-p02" style="color:var(--blue);font-size:0.75rem;">→ P02</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-3">#3</td><td><strong>AI Lead Intelligence Platform</strong> — Webhook integrations, classifier, first reply drafter</td><td>Month 3–4</td><td><a href="Solux_AI_Initiatives.html#t-p01" style="color:var(--blue);font-size:0.75rem;">→ P01</a></td><td><span class="tag tc">CONSULT</span> <span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-4">#4</td><td><strong>Product Knowledge Hub</strong> — Single spec database; enables AI accuracy across all tools</td><td>Month 3–4</td><td><a href="Solux_AI_Initiatives.html#t-p05" style="color:var(--blue);font-size:0.75rem;">→ P05</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-5">#5</td><td><strong>Tender Intelligence Tool Upgrade</strong> — Schedule + structured scoring + CRM auto-create</td><td>Month 4–5</td><td><a href="Solux_AI_Initiatives.html#t-p04" style="color:var(--blue);font-size:0.75rem;">→ P04</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-6">#6</td><td><strong>Marketing Intelligence Platform</strong> — AI layer on Mailchimp + Brevo; CRM sync</td><td>Month 5–6</td><td><a href="Solux_AI_Initiatives.html#t-p06" style="color:var(--blue);font-size:0.75rem;">→ P06</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-7">#7</td><td><strong>Commercial Intelligence Database</strong> — AI extracts 15 years of PDFs into structured DB</td><td>Month 6+</td><td><a href="Solux_AI_Initiatives.html#t-p07" style="color:var(--blue);font-size:0.75rem;">→ P07</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+      <tr><td class="roi-8">#8</td><td><strong>Automated Energy Study</strong> — Full PVGIS automation pipeline (needs P02 + P05 first)</td><td>Month 8+</td><td><a href="Solux_AI_Initiatives.html#t-p03" style="color:var(--blue);font-size:0.75rem;">→ P03</a></td><td><span class="tag tm">MEHDI</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 AI Cost Reality Check</span>
+      <p>GPT-4o mini pricing (verified June 2026): <strong>$0.15 per 1M input tokens / $0.60 per 1M output tokens</strong>. At Solux's lead volumes:</p>
+      <ul>
+        <li>Lead classifier (500 leads/month × ~500 tokens each) ≈ <strong>$0.04/month</strong></li>
+        <li>Daily owner summary (30/month × ~2,000 tokens) ≈ <strong>$0.01/month</strong></li>
+        <li>Tender scoring (200 tenders/month × ~3,000 tokens each) ≈ <strong>$0.09/month</strong></li>
+        <li>Commercial DB extraction (5,000 PDFs, one-time) ≈ <strong>$20–40 total</strong></li>
+      </ul>
+      <p>Total ongoing AI cost: <strong>under €30/month</strong> for all active AI features combined.</p>
+      <span class="cite">Source: openai.com/api/pricing — verified June 2026 · volume estimates: <span class="tag ti">INFERRED</span></span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Start with #1 and #3 Together</div>
+        <p>ROI #1 (CRM structure) and ROI #3 (lead automation) are deeply connected — you can't automate lead intake without a CRM that can receive it. Do the data model cleanup (ROI #1) first, then wire the webhooks and AI classifier (ROI #3) in the same month.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> ROI #4 Before ROI #5</div>
+        <p>The Product Knowledge Hub (ROI #4) must be built before the Tender Tool upgrade (ROI #5) — the tender AI scoring needs accurate product specs to assess "product_fit" for each tender. Build the hub first, then the tender scoring improves automatically.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 6 — FIRST 90 DAYS ══ -->
+<div class="section section-alt" id="s6">
+  <span class="anchor"></span>
+  <h1>6. First 90 Days — Sprint Plan</h1>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📄 Sprint Overview</span>
+      <div class="tw"><table>
+        <thead><tr><th>When</th><th>Action</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Week 1</strong></td><td>CRM access + full audit of current fields and objects</td><td>Audit report — what exists, what's missing</td></tr>
+          <tr><td><strong>Week 1</strong></td><td>Review Lighting Study Platform v1 (Mehdi's First Mission)</td><td>Review report — gaps, UX issues, missing features</td></tr>
+          <tr><td><strong>Week 2</strong></td><td>CRM object + field restructure</td><td>Clean data model with all required fields + territory setup</td></tr>
+          <tr><td><strong>Week 2–3</strong></td><td>Project qualification form / stage gates</td><td>Deals can no longer advance with missing data</td></tr>
+          <tr><td><strong>Week 3–4</strong></td><td>Study Lab module + Joomla webhook</td><td>First automation: web form → CRM lead (zero manual entry)</td></tr>
+          <tr><td><strong>Week 4–5</strong></td><td>AI Lead Classifier v1</td><td>Every new lead auto-classified and routed</td></tr>
+          <tr><td><strong>Week 5–6</strong></td><td>Quote object + follow-up automation</td><td>Quotes tracked in CRM; 7-day follow-up reminders fire automatically</td></tr>
+          <tr><td><strong>Week 7–8</strong></td><td>Owner dashboard v1</td><td>Owner sees pipeline, leads, studies, quotes in one screen</td></tr>
+          <tr><td><strong>Week 9–12</strong></td><td>Product Knowledge Hub v1</td><td>All product specs in one database — AI recommendations become accurate</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag ti">INFERRED</span> consultant analysis · Mehdi's "First Mission": <span class="tag tm">MEHDI</span></span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Week 1 Priority: Don't Build Yet</div>
+        <p>The instinct is to start building immediately. Resist. The most valuable Week 1 action is access to the actual CRM and Study Platform — read-only. Map what fields exist, what's populated, what's empty. Every build decision in Weeks 2–12 depends on this audit. One week of observation saves months of rework.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Quick Win: Joomla Webhook in Week 3</div>
+        <p>This is the fastest visible win. The Joomla form already has structured categories. Adding a webhook is 2–4 hours of work. From Day 1 of going live, every website form submission appears in the CRM automatically. Owner sees the impact immediately — builds confidence in the whole programme.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Week 4–5: Show AI Working</div>
+        <p>The AI Lead Classifier is the moment the team sees AI doing something real. Set it up to send a Slack or email notification with each classification: "New lead from Vietnam classified as: Pro Line enquiry, urgency 4/5, assigned to [rep]." Make the AI visible — don't let it work silently or nobody believes it's running.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Month 3 Review Gate</div>
+        <p>At 90 days, run a data quality check: what % of deals have all required fields? What % of leads were auto-classified? How many follow-up reminders fired? Use real numbers to decide which ROI priority to tackle next (ROI #4 Product Hub vs ROI #5 Tender upgrade).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ SPRINT 2 ══ -->
+<div class="section" id="sprint2">
+  <span class="anchor"></span>
+  <h1>Sprint 2 — Days 91–180 (Months 4–6)</h1>
+  <p style="font-size:0.83rem;color:var(--gray);margin-bottom:10px;">Focus: <strong>ROI #3 Lead Intelligence · ROI #4 Product Hub · ROI #5 Tender Tool · ROI #6 Marketing Intelligence</strong>. By end of Sprint 2, all lead channels are automated, product specs are centralised, tenders self-score daily, and Mailchimp/Brevo are feeding the CRM.</p>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📅 Sprint 2 Plan</span>
+      <div class="tw"><table>
+        <thead><tr><th>When</th><th>Action</th><th>ROI</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Week 13–14</strong></td><td>Wire remaining lead channel integrations: JivoChat webhook, Waalaxy daily import, Google/LinkedIn Ads CSV pull</td><td class="roi-3">#3</td><td>All 10 lead sources flow into CRM automatically</td></tr>
+          <tr><td><strong>Week 14–15</strong></td><td>AI Lead Classifier v2 — refine scoring based on first 500 leads; add geographic routing logic for all 7 offices</td><td class="roi-3">#3</td><td>Classification accuracy &gt;90%; territory assignment automated</td></tr>
+          <tr><td><strong>Week 15–16</strong></td><td>First reply drafter — AI drafts first response per lead type (Study Request / Distributor / Product Enquiry) in correct language</td><td class="roi-3">#3</td><td>Sales rep clicks "Send" instead of writing from scratch</td></tr>
+          <tr><td><strong>Week 15–17</strong></td><td>Product Knowledge Hub v1 — import factory Excel into structured database; capture all spec fields (LED, panel, battery, dimensions)</td><td class="roi-4">#4</td><td>Single source of truth for all product specs; no more outdated PDFs</td></tr>
+          <tr><td><strong>Week 17</strong></td><td>Connect Product Hub to Study Platform — step 07 (product selection) queries hub instead of manual catalogue lookup</td><td class="roi-4">#4</td><td>Product recommendations in studies become accurate and instant</td></tr>
+          <tr><td><strong>Week 17–18</strong></td><td>Tender Tool upgrade — replace manual Claude trigger with n8n daily cron; rewrite scoring prompt to structured JSON output</td><td class="roi-5">#5</td><td>Tenders scored automatically every weekday at 7am without human action</td></tr>
+          <tr><td><strong>Week 18–19</strong></td><td>Tender Tool → CRM: auto-create Opportunity for tenders scoring ≥7/10; notify regional sales manager by email</td><td class="roi-5">#5</td><td>High-value tenders appear in CRM pipeline before team arrives at work</td></tr>
+          <tr><td><strong>Week 19–21</strong></td><td>Marketing Intelligence v1 — connect Mailchimp + Brevo APIs; pull campaign performance data into analytics DB; weekly AI campaign analysis report</td><td class="roi-6">#6</td><td>Owner receives weekly "what's working" report from historical campaign data</td></tr>
+          <tr><td><strong>Week 21–24</strong></td><td>CRM ↔ Mailchimp/Brevo sync — engaged contacts (3+ opens or product click) auto-flagged in CRM; hot lead alert to sales rep</td><td class="roi-6">#6</td><td>Marketing engagement directly triggers sales follow-up — loop closed</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag ti">INFERRED</span> consultant sprint plan based on <span class="tag tm">MEHDI</span> ROI priorities</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Week 13 — Data Quality Audit First</div>
+        <p>Before adding more lead channels, audit the first 90 days of CRM data: how many leads arrived, what % were classified correctly, what % have all required fields. Fix any data model issues before scaling up volume. Bad data at 100 leads is manageable; bad data at 1,000 leads is a crisis.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Product Hub Change Notifications</div>
+        <p>When the factory updates the master Excel → the import script detects changed fields → sends a notification to Marketing: "SSLX Pro specs updated — panel efficiency changed from 24.5% to 25.5%. Please update the technical sheet." Prevents outdated specs reaching customers, which Mehdi explicitly flagged as a current risk.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Tender Scoring: Build Around Solux Priorities</div>
+        <p>The scoring criteria should reflect Solux's actual win conditions, not generic ones. Before writing the scoring prompt, interview the sales team: which tender characteristics historically led to wins? Product fit (solar street lighting explicit) + geography (office presence) + scale (50–500 units) + eligibility (CE/ISO required?) → encode these as the scoring rubric.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Sprint 2 Gate: Review Before Sprint 3</div>
+        <p>At Day 180, run a Sprint 2 review: (1) Are all 10 lead channels flowing into CRM? (2) Is the Product Hub being used by the Study Platform? (3) Is the Tender Tool creating CRM Opportunities without manual action? (4) Are Mailchimp hot leads triggering sales follow-up? If any answer is No — fix in Sprint 3 before adding the Commercial DB.</p>
+      </div>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p01">→ P01 Lead Platform</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p05">→ P05 Product Hub</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p04">→ P04 Tender Tool</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p06">→ P06 Marketing</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPRINT 3 ══ -->
+<div class="section section-alt" id="sprint3">
+  <span class="anchor"></span>
+  <h1>Sprint 3 — Days 181–270 (Months 7–9)</h1>
+  <p style="font-size:0.83rem;color:var(--gray);margin-bottom:10px;">Focus: <strong>ROI #7 Commercial Intelligence DB · ROI #8 Automated Energy Study · After-Sales CRM module · Solux Bridge integration</strong>. By end of Sprint 3, 15 years of commercial history is searchable, energy studies generate panel/battery sizing automatically, and after-sales cases are tracked with live IoT data.</p>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📅 Sprint 3 Plan</span>
+      <div class="tw"><table>
+        <thead><tr><th>When</th><th>Action</th><th>ROI</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Week 25–26</strong></td><td>Collect and inventory the full PDF archive — quotations, proformas, sales orders, invoices going back 15 years. Confirm total document count and file quality.</td><td class="roi-7">#7</td><td>Complete archive inventory; know exact scope before AI extraction</td></tr>
+          <tr><td><strong>Week 26–28</strong></td><td>Commercial DB — run GPT-4o mini batch extraction on all PDFs. Extract: customer, country, sales rep, products sold, quantities, selling price, discount, order date, delivery date, order value.</td><td class="roi-7">#7</td><td>Structured database of all 15 years of commercial transactions</td></tr>
+          <tr><td><strong>Week 28–29</strong></td><td>Commercial DB → CRM back-population — enrich existing CRM contacts with their 15-year commercial history. Attach lifetime value, last purchase date, average discount per customer.</td><td class="roi-7">#7</td><td>Every CRM contact now shows full commercial history without manual research</td></tr>
+          <tr><td><strong>Week 29</strong></td><td>Commercial DB query interface — natural language search: "How many AOS Pro+ units sold in Saudi Arabia since 2021?" → instant structured answer from the database.</td><td class="roi-7">#7</td><td>Sales team can answer historical pricing and volume questions instantly</td></tr>
+          <tr><td><strong>Week 29–31</strong></td><td>After-Sales Case module in CRM — add Case object (linked to Deal/Installation), warranty status tracking, resolution notes, parts sent log.</td><td>—</td><td>After-sales cases no longer managed in WhatsApp with no record</td></tr>
+          <tr><td><strong>Week 31–32</strong></td><td>Solux Bridge → CRM integration — when a Case is opened, auto-pull last 30 days of Bridge data (battery trend, solar production, fault alerts) and attach to the case record.</td><td>—</td><td>Engineer diagnoses remotely before any site visit</td></tr>
+          <tr><td><strong>Week 32–36</strong></td><td>Automated Energy Study — PVGIS API integration into Study Platform: GPS coordinates → auto-call PVGIS → auto-calculate panel size (÷ worst-month sun hrs × 1.30) and battery size (daily consumption × 2). Steps 4–6 become fully automatic.</td><td class="roi-8">#8</td><td>Engineering time per study reduced 30–50%; no manual PVGIS entry</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag ti">INFERRED</span> · Commercial DB: <span class="tag tm">MEHDI</span> · PVGIS steps: <span class="tag tw2">WEB-STUDY</span> · Solux Bridge: <span class="tag tw2">WEB-TECH</span></span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Commercial DB — Validate a Sample First</div>
+        <p>Before processing the full 15-year archive, run GPT-4o mini on 50 random PDFs from different years and document types (quote, invoice, proforma). Compare extracted data against the actual PDF. Aim for &gt;95% accuracy on key fields (customer name, product, price). If accuracy is lower, refine the extraction prompt before processing thousands of documents.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Product Popularity Dashboard (Mehdi's goal)</div>
+        <p>From the extracted Commercial DB data, auto-generate a product demand chart: units sold per product family per year per region. This answers Mehdi's explicit question: "How many units have been sold?" — and reveals which products are growing, which are declining, and which markets are most active. Inform factory production planning.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> PVGIS API: Add GPS as Required Study Field Now</div>
+        <p>Don't wait until Week 32 to realise GPS coordinates are missing from study requests. Add <code>project_gps</code> as a required field in the Study Platform form during Sprint 1. By Sprint 3, all new study requests will already have GPS data ready for the PVGIS API call. Retrofitting this requirement later is painful.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Proactive After-Sales: Solux Bridge Fault → Auto-Case</div>
+        <p>Future-state automation once the After-Sales CRM module is live: Solux Bridge fault alert (severity = critical) → n8n fires → CRM Case auto-created → assigned engineer notified → customer receives proactive email. Customer never has to call because the issue is already being handled. This is the highest-value use of the IoT data Solux already collects.</p>
+      </div>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p07">→ P07 Commercial DB</a>
+      <a class="xlink" href="Solux_AI_Initiatives.html#t-p03">→ P03 Energy Study</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPRINT 4 ══ -->
+<div class="section" id="sprint4">
+  <span class="anchor"></span>
+  <h1>Sprint 4 — Days 271–360 (Months 10–12)</h1>
+  <p style="font-size:0.83rem;color:var(--gray);margin-bottom:10px;">Focus: <strong>Stabilisation · AI quality improvement · Advanced automation · Distributor system · Year-end reporting</strong>. Sprint 4 is not about building new features — it is about making everything built in Sprints 1–3 reliable, fast, and measurably useful.</p>
+  <div class="two-col">
+    <div class="col-src">
+      <span class="col-label lbl-src">📅 Sprint 4 Plan</span>
+      <div class="tw"><table>
+        <thead><tr><th>When</th><th>Action</th><th>Type</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Week 37–38</strong></td><td>Full system audit — review all automations built in Sprints 1–3. Which are running reliably? Which have silent failures? Which are not being used by the team?</td><td style="font-weight:bold;text-align:center;background:#EEF3FA;">AUDIT</td><td>List of what works, what needs fixing, what to retire</td></tr>
+          <tr><td><strong>Week 38–40</strong></td><td>AI quality review — analyse 6 months of lead classifications. Review misclassified leads. Improve classifier prompt with real examples of errors. Retune tender scoring based on actual outcomes (which scored tenders became won deals?).</td><td style="font-weight:bold;text-align:center;background:#F3E8FF;color:var(--purple);">AI TUNE</td><td>Classifier accuracy improves; tender scoring reflects real win conditions</td></tr>
+          <tr><td><strong>Week 39–41</strong></td><td>Partner / Distributor module — dedicated Partner object in CRM with territory lock, onboarding checklist automation, partner portal access to Study Platform.</td><td style="font-weight:bold;text-align:center;background:#D6F5E3;color:var(--green);">NEW MODULE</td><td>Partner pipeline visible; territory conflicts auto-flagged before they escalate</td></tr>
+          <tr><td><strong>Week 41–43</strong></td><td>Drip sequence automation in Mailchimp/Brevo — set up behaviour-triggered sequences: Study Request form submit → 3-email nurture sequence using existing case studies (e.g. Senegal Port Reference)</td><td style="font-weight:bold;text-align:center;background:#FFF0D6;color:var(--amber);">MARKETING</td><td>Marketing nurture runs automatically without human launch each time</td></tr>
+          <tr><td><strong>Week 43–46</strong></td><td>Product Knowledge Hub v2 — add Health Dashboard: monitor website tech sheets vs hub specs; flag outdated documents in use; add mechanical drawings to spec database.</td><td style="font-weight:bold;text-align:center;background:#D6E8FF;color:var(--navy);">UPGRADE</td><td>Outdated specs sent to customers reduced to near-zero</td></tr>
+          <tr><td><strong>Week 46–48</strong></td><td>Year-end reporting — build owner annual review dashboard: leads by channel and conversion rate, studies completed vs backlog, tenders won vs pursued, deals by territory and product family, email engagement metrics.</td><td style="font-weight:bold;text-align:center;background:#EEF3FA;">REPORTING</td><td>First complete data-driven annual business review — impossible before this programme</td></tr>
+        </tbody>
+      </table></div>
+      <span class="cite">Source: <span class="tag ti">INFERRED</span> consultant year-1 completion plan</span>
+    </div>
+    <div class="col-sug">
+      <span class="col-label lbl-sug">💡 Claude's Suggestions</span>
+      <div class="sug"><div class="snum"><span class="pill pill-ai">AI LAYER</span> Use Real Outcome Data to Improve AI</div>
+        <p>After 6 months of the AI Lead Classifier running, you have ground truth: which classified leads became actual deals? Which tenders scored ≥7 actually converted? Use this data to retrain the scoring — not by changing the model, but by updating the prompt with concrete examples: "Leads like this from Vietnam for Pro Line resulted in deals worth €X. Classify them urgency 5." Prompt engineering with real outcomes is far more effective than random tuning.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-crm">CRM EDIT</span> Retire the Excel Habit Formally</div>
+        <p>By Sprint 4, if sales reps are still maintaining parallel Excel files, it means the CRM is not giving them what they need. Sprint 4 is the moment to have that conversation. Identify what they're keeping in Excel that's not in the CRM and build it. The goal is for the CRM to be the only place anyone needs to look.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-auto">AUTOMATE</span> Year-End: Numbers That Prove the Value</div>
+        <p>The annual review should produce specific before/after numbers: average time from lead to study request (was: X days, now: Y days), % of leads auto-classified without human review, number of tenders auto-scored and pushed to CRM, engineering time per study (was: X hours, now: Y hours after PVGIS automation). These numbers justify the programme and fund the next year.</p>
+      </div>
+      <div class="sug"><div class="snum"><span class="pill pill-int">INTEGRATE</span> Morocco Office Onboarding</div>
+        <p>Morocco is opening soon. By Sprint 4, the CRM territory system, lead routing, and Study Platform are all live. Morocco onboarding into the system should take days, not months — create a Morocco territory, add the new rep, set routing rules. The infrastructure built in Sprint 1 pays for itself here: no system rebuild needed, just configuration.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ YEAR 1 SUMMARY ══ -->
+<div class="section section-alt" id="year1">
+  <span class="anchor"></span>
+  <h1>Year 1 — What Gets Built (All 4 Sprints)</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Sprint</th><th>Period</th><th>ROI Priorities</th><th>Key Deliverables</th><th>State of Business at End</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Sprint 1</strong></td><td>Days 1–90<br/><em>Months 1–3</em></td><td class="roi-1">#1</td><td>CRM restructured · Study Platform reviewed · Joomla webhook live · AI Classifier v1 · Quote object · Owner dashboard</td><td>Lead intake partially automated · Engineering queue visible · Owner has real-time pipeline view</td></tr>
+      <tr><td><strong>Sprint 2</strong></td><td>Days 91–180<br/><em>Months 4–6</em></td><td class="roi-3">#3 #4 #5 #6</td><td>All 10 lead channels automated · Product Hub v1 · Tender Tool scheduled + CRM-integrated · Mailchimp/Brevo → CRM sync</td><td>Zero manual lead entry · Product specs centralised · Tenders self-score daily · Marketing engagement drives sales follow-up</td></tr>
+      <tr><td><strong>Sprint 3</strong></td><td>Days 181–270<br/><em>Months 7–9</em></td><td class="roi-7">#7 #8</td><td>15-year Commercial DB extracted · After-Sales Case module · Solux Bridge → CRM link · PVGIS automation in Study Platform</td><td>Full commercial history searchable · After-sales professional and tracked · Engineering study time cut 30–50%</td></tr>
+      <tr><td><strong>Sprint 4</strong></td><td>Days 271–360<br/><em>Months 10–12</em></td><td style="font-weight:bold;text-align:center;background:#EEF3FA;">STABILISE</td><td>AI tuning from real data · Partner module · Drip sequences · Product Hub Health Dashboard · Annual reporting dashboard</td><td>Full system running reliably · Morocco office onboarded instantly · First data-driven annual review possible</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box"><div class="box-bar" style="background:var(--green)"></div><div class="box-body" style="background:#F0FFF5;">
+    <strong style="color:var(--green)">What Solux looks like at Day 360</strong>
+    <p>Every lead auto-classified and routed. Every study request tracked from CRM through engineering to delivery. Every tender scored before the team starts work. Every customer has a 15-year commercial history visible in one click. The owner gets a daily AI briefing. The engineering team spends 30–50% less time on PVGIS calculations. Marketing knows what works. All of this runs on &lt; €30/month in AI costs.</p>
+  </div></div>
+  <span class="cite">Source: <span class="tag ti">INFERRED</span> consultant Year 1 synthesis</span>
+</div>
+
+
+<!-- ══ SOURCES ══ -->
+<div class="section" id="sources">
+  <span class="anchor"></span>
+  <h1>Sources &amp; Citation Legend</h1>
+  <div class="tw"><table>
+    <thead><tr><th>Code</th><th>Source</th><th>Location</th><th>What It Provided</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tw2">WEB-HOME</span></td><td>Solux Homepage</td><td>https://solux.fr/en/</td><td>Company stats, offices, product families, Joomla, JivoChat, contact form categories</td></tr>
+      <tr><td><span class="tag tw2">WEB-STUDY</span></td><td>Study Lab Page</td><td>https://solux.fr/en/study-lab</td><td>8-step engineering process, PVGIS, Dialux, 30% margin, 2-day battery backup, 24/7 assistance</td></tr>
+      <tr><td><span class="tag tw2">WEB-TECH</span></td><td>Technology Page</td><td>https://solux.fr/en/technology</td><td>LiFePO4 5K cycles, TOPCON 25.5%, Philips LED 196 lm/W, MPPT, Solux Bridge LoRa/Mesh</td></tr>
+      <tr><td><span class="tag tm">MEHDI</span></td><td>Mehdi's Project Files</td><td>IA KLAIRS.zip — 7 Apple Pages files</td><td>All 7 AI project concepts with full workflows, Gavin's MVP details, marketing assets, 15-year archive</td></tr>
+      <tr><td><span class="tag tc">CONSULT</span></td><td>Klairs Consultation</td><td>Direct engagement context</td><td>"CRM is in build phase — not yet deployed to end-users", lead channels, Mailchimp/Brevo split, WhatsApp support</td></tr>
+      <tr><td><span class="tag ti">INFERRED</span></td><td>Consultant Inference</td><td>Analysis — not a named source</td><td>Quotation process details, sprint timelines, cost estimates. Must verify with Solux team.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+</div><!-- end #main -->
+</body>
+</html>
