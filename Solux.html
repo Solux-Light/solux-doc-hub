@@ -3,223 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solux — Consulting Hub</title>
+<title>Solux Hub by Klairs</title>
 <style>
-:root {
-  --beige:    #F8F5F0;
-  --white:    #FFFFFF;
-  --charcoal: #1C2030;   /* topbar + footer only */
-  --navy:     #1C3254;
-  --steel:    #4A6FA5;
-  --mist:     #C8D4E3;
-  --bdr:      #D8D4CC;
-
-  /* Per-doc accent colours */
-  --green:    #2E7D52;
-  --amber:    #C07000;
-  --purple:   #6855A8;
-
-  --c86: rgba(28,32,48,.86);
-  --c68: rgba(28,32,48,.68);
-  --c48: rgba(28,32,48,.48);
-  --c16: rgba(28,32,48,.16);
-  --c04: rgba(28,32,48,.04);
-  --s10: rgba(74,111,165,.10);
+:root{
+  --navy:#1B3A6B; --blue:#2E75B6; --orange:#E87722;
+  --dark:#1A1A1A; --gray:#666; --light:#F7F9FC; --bdr:#D0D7E4;
 }
-
 *{box-sizing:border-box;margin:0;padding:0;}
-body{
-  font-family:"Helvetica Neue",Arial,sans-serif;
-  background:var(--beige);min-height:100vh;
-  display:flex;flex-direction:column;
-}
+body{font-family:Arial,sans-serif;background:#e8ecf2;min-height:100vh;display:flex;flex-direction:column;}
 
-/* ── TOPBAR: only dark element ── */
-.topbar{
-  background:var(--charcoal);height:34px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;border-bottom:1px solid var(--c16);
-  flex-shrink:0;
-}
-.topbar-brand{
-  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;
-  text-transform:uppercase;color:rgba(255,255,255,.42);
-}
-.topbar-doc{
-  font-size:0.68rem;color:rgba(255,255,255,.26);
-  letter-spacing:0.08em;text-transform:uppercase;
-}
-.topbar-docs{display:flex;gap:14px;}
-.topbar-docs a{
-  font-size:0.68rem;color:rgba(255,255,255,.85);
-  text-decoration:none;letter-spacing:0.04em;transition:color .12s;
-}
-.topbar-docs a:hover{color:#fff;}
-
-/* ── HEADER: white bg, navy text ── */
+/* ── HEADER ── */
 .hdr{
-  background:var(--white);
-  padding:26px 40px 22px;
-  border-bottom:3px solid var(--navy);
+  background:var(--navy);padding:28px 40px 22px;
+  border-bottom:4px solid var(--orange);
 }
 .hdr-logo{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
 .logo-mark{
-  width:40px;height:40px;background:var(--steel);border-radius:6px;
+  width:42px;height:42px;background:var(--orange);border-radius:6px;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;font-weight:900;color:#fff;letter-spacing:-1px;flex-shrink:0;
+  font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:-1px;flex-shrink:0;
 }
-.hdr-title{color:var(--navy);font-size:1.4rem;font-weight:700;letter-spacing:.01em;}
-.hdr-sub{color:var(--c48);font-size:0.80rem;margin-top:2px;}
+.hdr-title{color:#fff;font-size:1.5rem;font-weight:bold;letter-spacing:.01em;}
+.hdr-sub{color:rgba(255,255,255,.55);font-size:0.82rem;margin-top:2px;}
 .hdr-meta{
-  display:flex;gap:20px;margin-top:14px;padding-top:13px;
-  border-top:1px solid var(--bdr);
+  display:flex;gap:20px;margin-top:14px;padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.1);
 }
-.hdr-meta span{color:var(--c48);font-size:0.72rem;}
-.hdr-meta strong{color:var(--steel);}
+.hdr-meta span{color:rgba(255,255,255,.5);font-size:0.73rem;}
+.hdr-meta strong{color:var(--orange);}
 
 /* ── MAIN ── */
-main{flex:1;padding:36px 40px;max-width:1000px;margin:0 auto;width:100%;}
+main{flex:1;padding:40px;max-width:960px;margin:0 auto;width:100%;}
 
 .hub-title{
-  font-size:0.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--c48);margin-bottom:18px;
+  font-size:0.72rem;font-weight:bold;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:20px;
 }
 
 /* ── CARDS ── */
-.cards{display:flex;gap:22px;margin-bottom:36px;}
+.cards{display:flex;gap:24px;margin-bottom:40px;}
+
 .card{
-  flex:1;background:var(--white);border-radius:6px;
-  border:1px solid var(--bdr);
-  box-shadow:0 1px 4px rgba(28,32,48,.06);overflow:hidden;
+  flex:1;background:#fff;border-radius:8px;border:1px solid var(--bdr);
+  box-shadow:0 2px 8px rgba(0,0,0,.07);overflow:hidden;
   display:flex;flex-direction:column;
   transition:box-shadow .15s,transform .15s;
   text-decoration:none;
 }
-.card:hover{box-shadow:0 5px 18px rgba(28,32,48,.11);transform:translateY(-2px);}
+.card:hover{box-shadow:0 6px 20px rgba(0,0,0,.13);transform:translateY(-2px);}
 
-.card-banner{height:5px;}
-.card-banner.green {background:linear-gradient(90deg,#1A6640,var(--green));}
-.card-banner.blue  {background:linear-gradient(90deg,var(--navy),var(--steel));}
-.card-banner.amber {background:linear-gradient(90deg,#7A4800,var(--amber));}
+.card-banner{height:6px;}
+.card-banner.blue{background:linear-gradient(90deg,var(--navy),var(--blue));}
+.card-banner.orange{background:linear-gradient(90deg,var(--orange),#f5a623);}
 
-.card-body{padding:22px 22px 16px;flex:1;}
-.card-icon{font-size:1.8rem;margin-bottom:9px;display:block;}
-.card-title{color:var(--navy);font-size:1rem;font-weight:700;margin-bottom:6px;}
-.card-desc{color:var(--c68);font-size:0.80rem;line-height:1.6;margin-bottom:13px;}
+.card-body{padding:24px 24px 18px;flex:1;}
+.card-icon{font-size:2rem;margin-bottom:10px;display:block;}
+.card-title{color:var(--navy);font-size:1.05rem;font-weight:bold;margin-bottom:6px;}
+.card-desc{color:var(--gray);font-size:0.82rem;line-height:1.6;margin-bottom:14px;}
 
-.card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px;}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
 .tag{
-  display:inline-block;font-size:0.65rem;font-weight:600;padding:2px 7px;
-  border-radius:10px;border:1px solid var(--bdr);color:var(--c68);background:var(--beige);
+  display:inline-block;font-size:0.67rem;font-weight:bold;padding:2px 7px;
+  border-radius:10px;border:1px solid var(--bdr);color:var(--gray);background:#f4f6fa;
 }
 
 .card-footer{
-  padding:11px 22px;background:var(--beige);
+  padding:12px 24px;background:var(--light);
   border-top:1px solid var(--bdr);
   display:flex;align-items:center;justify-content:space-between;
 }
-.card-footer span{font-size:0.73rem;color:var(--c48);}
-
+.card-footer span{font-size:0.75rem;color:var(--gray);}
 .card-cta{
-  font-size:0.73rem;font-weight:700;
-  padding:4px 13px;border-radius:3px;text-decoration:none;
-  transition:opacity .12s;color:#fff;
+  background:var(--navy);color:#fff;font-size:0.75rem;font-weight:bold;
+  padding:5px 14px;border-radius:4px;text-decoration:none;
+  transition:background .12s;
 }
-.card.c-working  .card-cta{background:var(--green);}
-.card.c-analysis .card-cta{background:var(--steel);}
-.card.c-ai       .card-cta{background:var(--amber);}
-.card:hover .card-cta{opacity:.82;}
-
-.seq{font-size:0.73rem;font-weight:700;margin-right:5px;}
-.seq-green {color:var(--green);}
-.seq-steel {color:var(--steel);}
-.seq-amber {color:var(--amber);}
+.card:hover .card-cta{background:var(--orange);}
 
 /* ── SECTION LINKS ── */
-.section-links{
-  background:var(--white);border-radius:6px;border:1px solid var(--bdr);
-  padding:18px 22px;margin-bottom:22px;
-}
-.sl-title{
-  font-size:0.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--c48);margin-bottom:12px;
-}
+.section-links{background:#fff;border-radius:8px;border:1px solid var(--bdr);padding:20px 24px;margin-bottom:24px;}
+.sl-title{font-size:0.72rem;font-weight:bold;letter-spacing:.09em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;}
 .sl-grid{display:flex;gap:16px;}
 .sl-col{flex:1;}
-.sl-col h4{
-  font-size:0.73rem;color:var(--navy);font-weight:700;
-  margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--bdr);
-}
+.sl-col h4{font-size:0.75rem;color:var(--navy);font-weight:bold;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--bdr);}
 .sl-col a{
-  display:block;font-size:0.76rem;color:var(--steel);text-decoration:none;
-  padding:3px 0 3px 8px;border-left:2px solid transparent;
+  display:block;font-size:0.78rem;color:var(--blue);text-decoration:none;
+  padding:3px 0;border-left:2px solid transparent;padding-left:8px;
   transition:all .1s;
 }
-/* Per-column hover accent */
-.sl-col.col-working h4  {border-bottom-color:var(--green);}
-.sl-col.col-working a:hover{border-left-color:var(--green);color:var(--green);padding-left:10px;}
-.sl-col.col-analysis h4 {border-bottom-color:var(--steel);}
-.sl-col.col-analysis a:hover{border-left-color:var(--steel);color:var(--navy);padding-left:10px;}
-.sl-col.col-ai h4       {border-bottom-color:var(--amber);}
-.sl-col.col-ai a:hover  {border-left-color:var(--amber);color:var(--amber);padding-left:10px;}
-
-.badge{
-  display:inline-block;font-size:0.58rem;font-weight:700;padding:1px 5px;
-  border-radius:8px;margin-left:4px;vertical-align:middle;
-  background:#D6F5E3;color:#1A5C35;border:1px solid #A0D5B8;
+.sl-col a:hover{border-left-color:var(--orange);color:var(--navy);background:#f7f9fc;padding-left:10px;}
+.sl-col a .badge{
+  display:inline-block;font-size:0.6rem;font-weight:bold;padding:1px 5px;
+  border-radius:8px;margin-left:5px;vertical-align:middle;
+  background:#FFF0D6;color:#8B4A00;border:1px solid #f0c87a;
 }
-.sbadge{
-  display:inline-block;font-size:0.58rem;font-weight:700;padding:1px 5px;
-  border-radius:8px;margin-left:4px;vertical-align:middle;
-  background:#EDE9F8;color:#5040A0;border:1px solid #BFB0E8;
+.sl-col a .sbadge{
+  display:inline-block;font-size:0.6rem;font-weight:bold;padding:1px 5px;
+  border-radius:8px;margin-left:5px;vertical-align:middle;
+  background:#D6E8FF;color:#1B3A6B;border:1px solid #a8c4e8;
 }
 
 /* ── STATUS STRIP ── */
 .strip{
-  background:var(--white);border-radius:6px;border:1px solid var(--bdr);
-  padding:13px 22px;display:flex;
+  background:#fff;border-radius:8px;border:1px solid var(--bdr);
+  padding:14px 24px;display:flex;gap:0;
 }
 .strip-item{
-  flex:1;text-align:center;border-right:1px solid var(--bdr);padding:0 14px;
+  flex:1;text-align:center;border-right:1px solid var(--bdr);
+  padding:0 16px;
 }
 .strip-item:last-child{border-right:none;}
-.strip-item .n{font-size:1.2rem;font-weight:700;color:var(--navy);display:block;}
-.strip-item .l{font-size:0.65rem;color:var(--c48);margin-top:1px;}
+.strip-item .n{font-size:1.3rem;font-weight:bold;color:var(--orange);display:block;}
+.strip-item .l{font-size:0.67rem;color:var(--gray);margin-top:1px;}
 
 /* ── FOOTER ── */
 footer{
-  background:var(--charcoal);padding:10px 40px;
+  background:var(--navy);padding:10px 40px;
   display:flex;justify-content:space-between;align-items:center;
 }
-footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
+footer span{color:rgba(255,255,255,.35);font-size:0.68rem;}
 </style>
 </head>
 <body>
-
-<!-- SLIM TOPBAR -->
-<div class="topbar">
-  <span class="topbar-brand">Solux Solar Lighting</span>
-  <span class="topbar-doc">Consulting Hub</span>
-  <div class="topbar-docs">
-    <a href="Solux_Working_Doc.html">① Working Doc</a>
-    <a href="Solux_Business_Analysis.html">② Business Analysis</a>
-    <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
-    <a href="Style_Guide.html">Style Guide</a>
-  </div>
-</div>
 
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-logo">
     <div class="logo-mark">SX</div>
     <div>
-      <div class="hdr-title">Solux Solar Lighting</div>
-      <div class="hdr-sub">Operations Systems Consulting — Document Hub</div>
+      <div class="hdr-title">Solux Hub by Klairs</div>
+      <div class="hdr-sub">Solux Solar Lighting · Operations Systems Consulting — Document Hub</div>
     </div>
   </div>
   <div class="hdr-meta">
     <span>Consultant: <strong>Klairs</strong></span>
-    <span>Scope: <strong>CRM · ERP · AI Automation · Product Intelligence</strong></span>
+    <span>Scope: <strong>Solux_byMehdi (CRM + ERP functions) · AI Automation · Product Intelligence</strong></span>
     <span>Horizon: <strong>12 months · 4 sprints</strong></span>
     <span>Status: <strong>In Progress</strong></span>
   </div>
@@ -230,14 +148,14 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
 
   <div class="hub-title">Documents — Read in Sequence</div>
 
-  <!-- THREE CARDS -->
+  <!-- TWO MAIN CARDS -->
   <div class="cards">
 
-    <a class="card c-working" href="Solux_Working_Doc.html">
-      <div class="card-banner green"></div>
+    <a class="card" href="Solux_Working_Doc.html">
+      <div class="card-banner" style="background:linear-gradient(90deg,#1A7A4A,#2E9E5E);"></div>
       <div class="card-body">
         <span class="card-icon">📋</span>
-        <div class="card-title"><span class="seq seq-green">① START HERE</span>Internal Working Document v2</div>
+        <div class="card-title"><span style="color:var(--orange);font-size:0.75rem;font-weight:bold;margin-right:6px;">① START HERE</span>Internal Working Document v2</div>
         <div class="card-desc">Phase 1 operational playbook — CRM foundation, workflow refinement, and AI-assisted basics. Week 1 discovery sprint + 3-month implementation. Includes Klairs working notes, assumptions, decision log, and guiding principles.</div>
         <div class="card-tags">
           <span class="tag">Week 1 Discovery</span>
@@ -254,11 +172,11 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
       </div>
     </a>
 
-    <a class="card c-analysis" href="Solux_Business_Analysis.html">
+    <a class="card" href="Solux_Business_Analysis.html">
       <div class="card-banner blue"></div>
       <div class="card-body">
         <span class="card-icon">📊</span>
-        <div class="card-title"><span class="seq seq-steel">②</span>Business Analysis & AI ROI Roadmap</div>
+        <div class="card-title"><span style="color:var(--orange);font-size:0.75rem;font-weight:bold;margin-right:6px;">②</span>Business Analysis & AI ROI Roadmap</div>
         <div class="card-desc">Full operational analysis of Solux — company profile, 7 core workflows, CRM/ERP audit, AI ROI priority ranking, and a 4-sprint 12-month implementation roadmap with Claude's suggestions for every section.</div>
         <div class="card-tags">
           <span class="tag">Company Profile</span>
@@ -276,11 +194,11 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
       </div>
     </a>
 
-    <a class="card c-ai" href="Solux_AI_Initiatives.html">
-      <div class="card-banner amber"></div>
+    <a class="card" href="Solux_AI_Initiatives.html">
+      <div class="card-banner orange"></div>
       <div class="card-body">
         <span class="card-icon">🤖</span>
-        <div class="card-title"><span class="seq seq-amber">③</span>AI & Product Initiatives</div>
+        <div class="card-title"><span style="color:var(--orange);font-size:0.75rem;font-weight:bold;margin-right:6px;">③</span>AI & Product Initiatives</div>
         <div class="card-desc">Deep-dive on all 7 AI projects from Mehdi's brief — verbatim source content side-by-side with Claude's implementation suggestions, automation options, CRM/ERP integrations, and n8n workflow blueprints.</div>
         <div class="card-tags">
           <span class="tag">P01 Lead Intelligence</span>
@@ -293,7 +211,7 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
         </div>
       </div>
       <div class="card-footer">
-        <span>7 projects · Sidebar navigation</span>
+        <span>7 projects · Tab navigation</span>
         <span class="card-cta">Open →</span>
       </div>
     </a>
@@ -305,7 +223,7 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
     <div class="sl-title">Quick Jump — Section Index</div>
     <div class="sl-grid">
 
-      <div class="sl-col col-working">
+      <div class="sl-col">
         <h4>📋 ① Working Document</h4>
         <a href="Solux_Working_Doc.html#s0">0. One-Page Summary</a>
         <a href="Solux_Working_Doc.html#s1">1. What We Need From Solux</a>
@@ -318,31 +236,49 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
         <a href="Solux_Working_Doc.html#s9">9. Klairs Working Notes <span class="badge">Internal</span></a>
       </div>
 
-      <div class="sl-col col-analysis">
+      <div class="sl-col">
         <h4>📊 ② Business Analysis</h4>
         <a href="Solux_Business_Analysis.html#s1">1. Company Profile</a>
         <a href="Solux_Business_Analysis.html#w1">2. Workflows (Lead → After-Sales)</a>
         <a href="Solux_Business_Analysis.html#s3">3. Tech Stack Audit</a>
         <a href="Solux_Business_Analysis.html#s4">4. CRM / ERP Assessment</a>
+        <a href="Solux_Business_Analysis.html#sbm">4b. Solux_byMehdi Platform <span class="badge">NEW</span></a>
         <a href="Solux_Business_Analysis.html#s5">5. AI ROI Priority Roadmap</a>
         <a href="Solux_Business_Analysis.html#s6">6. First 90 Days <span class="badge">Sprint 1</span></a>
-        <a href="Solux_Business_Analysis.html#sprint2">Sprint 2 · Days 91–180</a>
-        <a href="Solux_Business_Analysis.html#sprint3">Sprint 3 · Days 181–270</a>
+        <a href="Solux_Business_Analysis.html#sprint2">Sprint 2 · Days 91–180 <span class="badge">ROI #3–6</span></a>
+        <a href="Solux_Business_Analysis.html#sprint3">Sprint 3 · Days 181–270 <span class="badge">ROI #7–8</span></a>
         <a href="Solux_Business_Analysis.html#sprint4">Sprint 4 · Days 271–360</a>
         <a href="Solux_Business_Analysis.html#year1">Year 1 Summary</a>
       </div>
 
-      <div class="sl-col col-ai">
+      <div class="sl-col">
         <h4>🤖 ③ AI Initiatives</h4>
-        <a href="Solux_AI_Initiatives.html#t-p01">P01 — AI Lead Intelligence Platform <span class="badge">S1</span></a>
-        <a href="Solux_AI_Initiatives.html#t-p02">P02 — Lighting Study Platform <span class="badge">S1</span></a>
-        <a href="Solux_AI_Initiatives.html#t-p03">P03 — Automated Energy Study <span class="sbadge">S3</span></a>
-        <a href="Solux_AI_Initiatives.html#t-p04">P04 — Tender Intelligence Tool</a>
-        <a href="Solux_AI_Initiatives.html#t-p05">P05 — Product Knowledge Hub</a>
-        <a href="Solux_AI_Initiatives.html#t-p06">P06 — Marketing Intelligence</a>
-        <a href="Solux_AI_Initiatives.html#t-p07">P07 — Commercial Intelligence DB <span class="sbadge">S3</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p01">P01 — AI Lead Intelligence Platform <span class="sbadge">Sprint 1</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p02">P02 — Lighting Study Platform <span class="sbadge">Sprint 1</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p03">P03 — Automated Energy Study <span class="sbadge">Sprint 3</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p04">P04 — Tender Intelligence Tool <span class="sbadge">Sprint 2</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p05">P05 — Product Knowledge Hub <span class="sbadge">Sprint 2</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p06">P06 — Marketing Intelligence <span class="sbadge">Sprint 2</span></a>
+        <a href="Solux_AI_Initiatives.html#t-p07">P07 — Commercial Intelligence DB <span class="sbadge">Sprint 3</span></a>
       </div>
 
+    </div>
+  </div>
+
+  <!-- UPDATE LOG -->
+  <div class="section-links" style="border-left:4px solid var(--orange);">
+    <div class="sl-title" style="color:var(--orange);">Update</div>
+    <div style="font-size:0.8rem;color:var(--dark);line-height:1.65;">
+      <div style="margin-bottom:8px;">
+        <strong style="color:var(--navy);">02 Jul 2026 — New source received from Mehdi:</strong>
+        <em>Solux_byMehdi — Sales &amp; Operations Platform Overview</em> (file: <code style="background:#f4f6fa;border:1px solid var(--bdr);border-radius:3px;padding:1px 5px;font-size:0.72rem;">Solux_ERP_Overview.docx</code>).
+      </div>
+      <div style="margin-bottom:8px;">
+        The overview describes the platform Mehdi is building as the operational backbone of Solux. It mixes <strong>CRM functions</strong> (customers, quotations, pipeline statuses) with <strong>ERP functions</strong> (costing, operations, finance, order management) — so it is referred to across this hub as <strong style="color:var(--navy);">Solux_byMehdi</strong>, not as "the CRM" or "the ERP".
+      </div>
+      <div style="font-size:0.75rem;color:var(--gray);">
+        Sections updated: Business Analysis <a href="Solux_Business_Analysis.html#sbm" style="color:var(--blue);font-weight:bold;">§4b Solux_byMehdi (new)</a> · <a href="Solux_Business_Analysis.html#s3" style="color:var(--blue);">§3 Tech Stack</a> · <a href="Solux_Business_Analysis.html#s4" style="color:var(--blue);">§4 CRM/ERP Assessment</a> · <a href="Solux_Business_Analysis.html#w4" style="color:var(--blue);">§2.4 Quotation</a>
+      </div>
     </div>
   </div>
 
@@ -358,7 +294,7 @@ footer span{color:rgba(255,255,255,.28);font-size:0.67rem;}
 </main>
 
 <footer>
-  <span>Solux Solar Lighting · Operations Systems Consulting</span>
+  <span>Solux Hub by Klairs · Solux Solar Lighting · Operations Systems Consulting</span>
   <span>Consultant: Klairs · klairs@klairsthefirst.com</span>
 </footer>
 
