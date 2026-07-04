@@ -68,38 +68,7 @@ body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--ch
 #sidebar .hub-link a.hub-back:hover{color:var(--navy);}
 
 /* MAIN */
-#main{margin-right:var(--sb);transition:margin-right .25s ease;}
-
-/* SIDEBAR TOGGLE BUTTON */
-#sb-toggle{
-  position:fixed;
-  right:0;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:150;
-  width:22px;
-  height:48px;
-  background:var(--navy);
-  border:none;
-  border-radius:4px 0 0 4px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:0.75rem;
-  transition:right .25s ease, background .15s;
-  box-shadow:-2px 0 6px rgba(28,32,48,.18);
-}
-#sb-toggle:hover{background:var(--steel);}
-#sb-toggle .arrow{display:inline-block;transition:transform .25s;}
-
-/* Hidden state */
-body.sb-hidden #sidebar{transform:translateX(100%);transition:transform .25s ease;}
-body.sb-hidden #main{margin-right:0;}
-body.sb-hidden #sb-toggle{right:0;}
-body.sb-hidden #sb-toggle .arrow{transform:rotate(180deg);}
-#sidebar{transition:transform .25s ease;}
+#main{margin-right:var(--sb);}
 
 /* HEADER */
 .hdr{background:var(--white);padding:14px 18px 12px;border-bottom:3px solid var(--doc-accent);display:flex;align-items:center;justify-content:space-between;}
@@ -197,13 +166,6 @@ tr:nth-child(even) td{background:var(--c04);}
 /* ANCHOR */
 .anchor{display:block;position:relative;top:-16px;visibility:hidden;}
 </style>
-
-<script>
-  window.hypothesisConfig = function() {
-    return { group: 'r2ek3ovp' };
-  };
-</script>
-<script src="https://hypothes.is/embed.js" async></script>
 </head>
 <body>
 <div class="topbar">
@@ -215,14 +177,9 @@ tr:nth-child(even) td{background:var(--c04);}
   <div class="topbar-docs">
     <a href="Solux_Business_Analysis.html">② Business Analysis</a>
     <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
-    <a href="Style_Guide.html">Style Guide</a>
+    <a href="Style_Solux Projects_by Klairs.html">Style Guide</a>
   </div>
 </div>
-
-<!-- SIDEBAR TOGGLE BUTTON -->
-<button id="sb-toggle" onclick="document.body.classList.toggle('sb-hidden')" title="Toggle sidebar">
-  <span class="arrow">&#8250;</span>
-</button>
 
 <!-- SIDEBAR -->
 <div id="sidebar">
@@ -254,7 +211,7 @@ tr:nth-child(even) td{background:var(--c04);}
     <div class="sb-sec">Documents</div>
     <a href="Solux_Business_Analysis.html">② Business Analysis</a>
     <a href="Solux_AI_Initiatives.html">③ AI Initiatives</a>
-    <a href="Style_Guide.html">Style Guide</a>
+    <a href="Style_Solux Projects_by Klairs.html">Style Guide</a>
     <a href="Solux.html" class="hub-back">← Back to Hub</a>
   </div>
 </div>
@@ -358,6 +315,7 @@ tr:nth-child(even) td{background:var(--c04);}
       <tr><td>AI ideas are ahead of system readiness</td><td>AI may produce inaccurate or untrusted outputs</td><td>Clean CRM data and product knowledge first, then add AI as suggestion-only</td><td class="p-hi">High</td></tr>
     </tbody>
   </table></div>
+  <div class="warn"><strong>UPDATE — 2026-07-04:</strong> The "Quotation" and "Study Lab handoff" rows above are largely built already. Mehdi's live repo (github.com/mzouaisolux/solux — SBM/Solux_byMehdi) shows a working <code>project_requests</code> workflow (draft → submitted → director approval → factory cost → logistics → pricing → quotation → won/lost) and a <code>documents</code>/<code>quotation_reminders</code> system for quotes and follow-up. See Business Analysis §4 for full detail. Owner dashboard, distributor pipeline, after-sales cases, and tender-CRM linkage still appear open. Full source: Business Analysis → Sources &amp; Citation Legend → GITHUB.</div>
 </div>
 
 <!-- ══ 3. ROADMAP ══ -->
