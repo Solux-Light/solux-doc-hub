@@ -697,8 +697,13 @@ window.addEventListener('load',function(){
     <div class="col-claude">
       <span class="col-label lbl-claude">💡 Claude's Implementation Suggestions</span>
 
+      <h2>Ownership Correction — Confirmed by Andrew &amp; Phi, 3 Jul 2026</h2>
+      <div class="box"><div class="box-bar" style="background:var(--doc-accent)"></div><div class="box-body">
+        <p>The 7-step list at left is Mehdi's own framing, but the engineers themselves confirmed a narrower scope: Engineering's work ends at Battery Sizing. <strong>Product Selection and Mechanical Study are Sales-owned</strong>, not Engineering — see the full 8-step ownership table in <a href="Solux_Business_Analysis.html#w3" style="color:var(--doc-accent);font-weight:700;">Business Analysis §2.3</a>. That means "the engineer transfers results manually into the study document" (step 7 here) is really a hand-off to Sales, not an Engineering task to automate.</p>
+      </div></div>
+
       <h2>The Core Problem to Solve</h2>
-      <p>Steps 4–7 in the workflow above are pure data re-entry. The engineer already has everything needed from the Phase 1 (Lighting Design) output — the system should just call PVGIS automatically and fill in the results.</p>
+      <p>Steps 4–6 in the workflow above are pure data re-entry. The engineer already has everything needed from the Phase 1 (Lighting Design) output — the system should just call PVGIS automatically and fill in the results, then hand the sizing output to Sales for product selection.</p>
 
       <div class="sug-step"><div class="snum"><span class="pill pill-int">DEPENDENCY</span> Phase 1 Must Come First</div>
         <p>Phase 2 automation cannot be built standalone — it plugs directly into Phase 1 above. The PVGIS API call is triggered <em>from within</em> the same platform after a lighting design is selected. This means: <strong>Phase 1 must be reviewed and stabilised in Sprint 1 before any Phase 2 development begins in Sprint 3.</strong> The GPS coordinate field must also be added to the Phase 1 study request forms during Sprint 1 — without coordinates, there is nothing to send to PVGIS when automation is ready.</p>
