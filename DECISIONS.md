@@ -13,5 +13,7 @@
 | 2026-07-06 | Going forward, pair every commit/push to the hub docs with an append-only update to CURRENT_STATE.md / DECISIONS.md / TASKS.md in the same push | Keeps the project brain in sync with actual doc changes across sessions, per Klairs's standing confirmation | Done |
 | 2026-07-06 | Full hub consistency review: fixed stale "Phase 1 selects products" language in AI Initiatives P05 tab, added the 04 Jul (mzouaisolux) and 06 Jul (ownership) entries to the hub landing page Update log, added a forward-pointing banner to Working Doc §0 | Landing page and Working Doc had drifted behind the detail docs; Working Doc kept as historical Phase 1 record per existing convention, banner added instead of rewrite | Done |
 
+| 2026-07-09 | Add `sync-github-repos-to-obsidian.sh` at repo root to clone/fast-forward the Solux documentation repos (solux-light/solux-doc-hub, mzouaisolux/solux) into an Obsidian vault, with an optional markdown-only mirror mode | Lets the team read/link/annotate the Markdown brain and repo docs inside Obsidian; script is config-driven (env vars + flags) so it stays generic without pulling in other-project context | Done |
+
 ## Open Decisions
 [Fill in decisions that still need to be made]

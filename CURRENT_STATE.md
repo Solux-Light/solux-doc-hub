@@ -14,6 +14,8 @@ Last updated: 2026-07-06
 - **(2026-07-06)** Reconciled a divergence: local hub docs and the live repo had drifted apart (repo had the mzouaisolux findings in §4; local had the Study Lab ownership work). Merged both into one push rather than overwriting either.
 - **(2026-07-06)** Full consistency review across all four hub docs: fixed stale "Phase 1 selects products" language in AI Initiatives' P05 tab (Product Selection is Sales, not part of either Study Lab phase), backfilled the hub landing page's Update log with the 04 Jul (mzouaisolux) and 06 Jul (ownership) entries it was missing, and added a forward-pointing banner to Working Doc §0 noting it predates Solux_byMehdi naming and the live-codebase findings.
 
+- **(2026-07-09)** Added `sync-github-repos-to-obsidian.sh` — a config-driven Bash script that clones or fast-forward-updates the Solux documentation repos into an Obsidian vault (default `~/Obsidian/Solux/GitHub`). Supports `--markdown-only` mirroring, `--dry-run`, custom repo lists, and uses `gh` for auth when available. Tested locally (clone, idempotent update, markdown-only mirror excludes non-md and `.git`).
+
 ## What's Working
 - Vercel deployment pipeline
 - Document structure across business layers

@@ -13,6 +13,7 @@
 - [ ] - [ ] Define Phase 4+ in ROADMAP.md
 
 - [ ] ## Completed
+- [ ] - [x] Add sync-github-repos-to-obsidian.sh (clone/update Solux repos into an Obsidian vault; optional markdown-only mirror) (2026-07-09)
 - [ ] - [x] Merge Tender -> P01
 - [ ] - [x] Add Study Lab P02 + P03
 - [ ] - [x] Layer in Solux_byMehdi content
