@@ -4,6 +4,9 @@
   "redirects": [
     { "source": "/", "destination": "/Solux" }
   ],
-  "buildCommand": "node inject-hypothesis.js",
+  "rewrites": [
+    { "source": "/triggers/github", "destination": "/api/triggers/github" }
+  ],
+  "buildCommand": "node sync-smbke.js && node inject-hypothesis.js",
   "outputDirectory": "."
 }

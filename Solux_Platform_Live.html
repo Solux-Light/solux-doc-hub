@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solux — Platform Live (from SMBKE)</title>
+<meta name="generator" content="sync-smbke.js" />
+<style>
+:root{
+  --beige:#F8F5F0; --white:#FFFFFF; --charcoal:#1C2030;
+  --navy:#1C3254; --steel:#4A6FA5; --mist:#C8D4E3; --bdr:#D8D4CC;
+  --doc-accent:#3B4A63; --doc-accent-bg:rgba(59,74,99,.09); --doc-accent-bdr:rgba(59,74,99,.28);
+  --c86:rgba(28,32,48,.86); --c68:rgba(28,32,48,.68);
+  --c48:rgba(28,32,48,.48); --c32:rgba(28,32,48,.32);
+  --c16:rgba(28,32,48,.16); --c08:rgba(28,32,48,.08);
+  --sb:220px; --topbar:34px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Helvetica Neue",Arial,sans-serif;font-size:14px;color:var(--charcoal);background:var(--beige);line-height:1.65;}
+.topbar{position:sticky;top:0;z-index:200;background:var(--charcoal);height:var(--topbar);display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+.topbar-back{color:#B8C8DC;font-size:0.72rem;font-weight:600;text-decoration:none;letter-spacing:0.04em;}
+.topbar-back:hover{color:#fff;}
+.topbar-doc{font-size:0.68rem;color:rgba(255,255,255,.30);letter-spacing:0.08em;text-transform:uppercase;}
+#sidebar{position:fixed;right:0;top:0;width:var(--sb);height:100vh;background:#EDEAE4;overflow-y:auto;z-index:100;padding-top:var(--topbar);border-left:1px solid var(--bdr);display:flex;flex-direction:column;}
+#sidebar .sb-title{background:var(--bdr);padding:8px 14px;color:var(--navy);font-size:0.64rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+#sidebar a{display:block;padding:7px 14px;color:var(--c86);text-decoration:none;font-size:0.74rem;border-left:2px solid transparent;}
+#sidebar a:hover,#sidebar a.active{background:rgba(28,32,48,.05);color:var(--navy);border-left-color:var(--doc-accent);}
+#sidebar .hub-link{margin-top:auto;border-top:1px solid var(--bdr);background:#fff;padding:6px 0;}
+#sidebar .hub-link a{color:var(--steel);}
+#main{margin-right:var(--sb);}
+.hdr{background:#fff;padding:14px 18px 12px;border-bottom:3px solid var(--doc-accent);}
+.hdr-title{color:var(--navy);font-size:1rem;font-weight:700;}
+.hdr-sub{color:var(--steel);font-size:0.73rem;margin-top:2px;}
+.banner{background:#FFF9EF;border-bottom:1px solid #f0c87a;padding:10px 18px;font-size:0.78rem;color:var(--c86);}
+.banner strong{color:#8B4A00;}
+.banner code{background:var(--beige);border:1px solid var(--bdr);border-radius:2px;padding:1px 5px;font-size:0.72rem;}
+.meta{display:flex;flex-wrap:wrap;gap:10px 18px;padding:10px 18px;background:#fff;border-bottom:1px solid var(--mist);font-size:0.72rem;color:var(--c68);}
+.meta span b{color:var(--navy);font-weight:700;}
+.sec{padding:18px 18px 28px;max-width:920px;}
+.sec + .sec{border-top:1px solid var(--mist);}
+.sec-meta{margin-bottom:10px;}
+.sec-meta .path{font-size:0.68rem;color:var(--c48);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.md h1{font-size:1.25rem;color:var(--navy);margin:1.2rem 0 .5rem;}
+.md h2{font-size:1.05rem;color:var(--navy);margin:1.1rem 0 .45rem;}
+.md h3{font-size:0.92rem;color:var(--navy);margin:1rem 0 .35rem;}
+.md h4{font-size:0.85rem;color:var(--steel);margin:.85rem 0 .3rem;}
+.md p{margin:.45rem 0;color:var(--c86);}
+.md ul,.md ol{margin:.4rem 0 .6rem 1.3rem;color:var(--c86);}
+.md li{margin:.2rem 0;}
+.md blockquote{margin:.6rem 0;padding:8px 12px;background:#fff;border-left:3px solid var(--steel);color:var(--c68);font-size:0.82rem;}
+.md hr{border:none;border-top:1px solid var(--mist);margin:1.2rem 0;}
+.md code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.78em;background:rgba(28,32,48,.06);padding:1px 4px;border-radius:2px;}
+.md pre.md-code{background:#1C2030;color:#E8EEF6;padding:12px 14px;border-radius:4px;overflow-x:auto;margin:.7rem 0;font-size:0.75rem;line-height:1.5;}
+.md pre.md-code code{background:none;padding:0;color:inherit;}
+.md a{color:var(--steel);}
+@media(max-width:860px){
+  #sidebar{display:none;}
+  #main{margin-right:0;}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="topbar-back" href="Solux.html">← Hub</a>
+  <span class="topbar-doc">Auto-synced from SMBKE</span>
+</div>
+<aside id="sidebar">
+  <div class="sb-title">Live sections</div>
+  <nav>
+        <a href="#overview" class="active">Product overview</a>
+        <a href="#roles">Roles &amp; access</a>
+        <a href="#lifecycle">Order lifecycle</a>
+        <a href="#next">App next steps</a>
+  </nav>
+  <div class="hub-link">
+    <a href="Solux.html">← Document hub</a>
+    <a href="Solux_Business_Analysis.html#sbm">Business Analysis §4b</a>
+  </div>
+</aside>
+<div id="main">
+  <div class="hdr">
+    <div>
+      <div class="hdr-title">Platform Live — SMBKE truth</div>
+      <div class="hdr-sub">Auto-generated at hub build time from the app repo. Hand-authored hub docs are unchanged.</div>
+    </div>
+  </div>
+  <div class="banner">
+    <strong>Source of truth:</strong> SMBKE (<code>Ngamei/SMBKE</code>).
+    This page is rebuilt whenever solux-hub deploys (including after an SMBKE webhook trigger).
+    Do not edit this file by hand — run <code>node sync-smbke.js</code> or wait for the next deploy.
+  </div>
+  <div class="meta">
+    <span><b>Commit</b> <code>e1ec2e6</code></span>
+    <span><b>Ref</b> main</span>
+    <span><b>Pulled</b> 2026-07-15T04:07:29.850Z</span>
+    <span><b>Via</b> local:/Users/soluxmini/GitHub-Repos/SMBKE (feature/spec-version-pin)</span>
+    <span><b>Tip</b> docs(knowledge-hub): rename to Change Request User Flows, retitle to 'Change Requests'; add who-writes-which-record diagram (§13); update cross-refs</span>
+  </div>
+
+  <section class="sec" id="overview">
+    <div class="sec-meta">
+      <span class="path">docs/current-implementation/PRODUCT_OVERVIEW.md</span>
+    </div>
+    <div class="md">
+<h1>Product Overview — Current Implementation</h1>
+<blockquote><strong>Audit note.</strong> Describes what the application <strong>currently does</strong>, inferred</blockquote>
+<blockquote>from routes (<code>app/(app)/</code>), data model (<code>supabase/migrations/</code>), and the</blockquote>
+<blockquote><code>lib/</code> domain logic. The original <code>spec.md</code> describes a much smaller &quot;quotation</blockquote>
+<blockquote>tool&quot;; the implementation has grown well beyond it (see</blockquote>
+<blockquote>MISSING_DOCUMENTATION.md → &quot;spec drift&quot;). Where behavior is implied but not</blockquote>
+<blockquote>directly proven by code, it is tagged <strong>Assumed from code</strong> / **Needs</blockquote>
+<blockquote>confirmation**.</blockquote>
+<hr />
+<h2>1. What this product is</h2>
+<p><strong>SOLUX</strong> is a solar/LED lighting company (brand confirmed by <code>lib/bl.ts SOLUX_SHIPPER_DEFAULT</code> → &quot;CHANGZHOU SOLUX TECHNOLOGY COMPANY LTD&quot;, contact <code>vera@zr-light.com.cn</code>; the <code>solux</code> Tailwind accent; document codes like <code>SLX-VPL-26-030</code>).</p>
+<p>The application is an <strong>internal operations platform</strong> that takes an export order from <strong>quotation → factory task list → production → shipping → delivery</strong>, with role-based access, an operational notification/action layer, and a sales forecast layer.</p>
+<blockquote>The original <code>spec.md</code> scoped this as a &quot;Quotation Tool&quot; (generate quotations</blockquote>
+<blockquote>&amp; proforma invoices, admin + sales roles only). The shipping live build is</blockquote>
+<blockquote>substantially larger: 4 real roles + super-admin, a three-entity lifecycle,</blockquote>
+<blockquote>production tracking, a visibility engine, an event log, and an Action Center.</blockquote>
+<hr />
+<h2>2. Core capabilities (implemented, Confirmed by code)</h2>
+<h3>2.1 Quotations / documents (<code>/documents</code>, <code>/clients</code>)</h3>
+<ul>
+<li>Create, edit, version, and manage quotations (<code>documents</code> table).</li>
+<li>Per-line product configuration with pricing (<code>document_lines</code>,</li>
+</ul>
+<p><code>lib/pricing.ts</code>), currency <code>USD</code>/<code>EUR</code>/<code>CNY</code>, payment mode (<code>deposit_balance</code>/<code>lc</code>/<code>hybrid</code>), incoterm, freight type, container plan (<code>document_containers</code>).</p>
+<ul>
+<li><strong>Quotation versioning</strong> (m059): revisions form a <code>root_document_id</code> chain with</li>
+</ul>
+<p>incrementing <code>version</code>.</p>
+<ul>
+<li><strong>Affair name</strong> (m056): a human project label distinct from the document code.</li>
+<li><strong>Advisory validation loop</strong> (m068): sales can request a manager's review</li>
+</ul>
+<p>(<code>pending</code>→<code>approved</code>/<code>rejected</code>); <strong>this never blocks sending or winning</strong>.</p>
+<ul>
+<li><strong>Sales forecast</strong> (m050): probability / expected close fields, surfaced on</li>
+</ul>
+<p><code>/forecast</code>.</p>
+<ul>
+<li><strong>Reminders</strong> (m043) and <strong>attachments</strong> (m060) attached to deals/affairs.</li>
+</ul>
+<h3>2.2 Clients (<code>/clients</code>, <code>/clients/[id]</code>)</h3>
+<ul>
+<li>Client records with <code>client_code</code> (3 uppercase letters), country/address/VAT,</li>
+</ul>
+<p>phone country code, commission config.</p>
+<ul>
+<li><strong>Ownership</strong> (m066): each client/deal has an effective owner</li>
+</ul>
+<p>(<code>sales_owner_id</code> ?? <code>created_by</code>), reassignable by management.</p>
+<ul>
+<li><strong>BL profile</strong> (m054): a reusable Bill-of-Lading template per client</li>
+</ul>
+<p>(shipper / consignee / notify party / required documents / notes).</p>
+<h3>2.3 Production task lists (<code>/task-lists</code>, <code>/task-lists/[id]</code>)</h3>
+<ul>
+<li>Created when a quotation is <strong>Won</strong>; holds the technical/production</li>
+</ul>
+<p>configuration and the <strong>validation workflow</strong> between Sales and Task-List-Manager/Operations.</p>
+<ul>
+<li>Per-line technical values, plus <strong>factory overrides / extras</strong> (m071) that the</li>
+</ul>
+<p>factory can adjust without touching the sales configuration.</p>
+<ul>
+<li><strong>Sticker requirements</strong> (m061) and <strong>risk flags</strong> (m062).</li>
+<li>Statuses: <code>draft</code> → <code>under_validation</code> → (<code>needs_revision</code> ↺) → <code>validated</code> →</li>
+</ul>
+<p><code>production_ready</code> (→ <code>cancelled</code>).</p>
+<h3>2.4 Production orders (<code>/production/orders/[id]</code>)</h3>
+<ul>
+<li>Manufacturing + logistics tracking once a task list is <code>validated</code> /</li>
+</ul>
+<p><code>production_ready</code>.</p>
+<ul>
+<li><strong>Payment tracking</strong>: deposit / balance, with a &quot;start without deposit&quot;</li>
+</ul>
+<p>override (m025).</p>
+<ul>
+<li><strong>Baseline + delay model</strong>: an <code>initial_production_deadline</code> is frozen at</li>
+</ul>
+<p><strong>production activation</strong>; a live <code>current_production_deadline</code> is moved by an <strong>additive delay-event log</strong> (<code>production_deadline_changes</code>, m072–m074). Delays are <strong>categorized</strong> (factory vs external) so external delays don't inflate the factory KPI.</p>
+<ul>
+<li><strong>Shipping / BL execution</strong> (m070): BL number, forwarder, vessel/voyage,</li>
+</ul>
+<p>weights, CBM, packages, HS code; plus ETD/ETA/booking columns.</p>
+<ul>
+<li>Status set (10): <code>awaiting_deposit</code> → <code>deposit_received</code> →</li>
+</ul>
+<p><code>production_scheduled</code> → <code>in_production</code> → (<code>production_delayed</code>) → <code>production_completed</code> → <code>shipment_booked</code> → <code>shipped</code> → <code>delivered</code> (→ <code>cancelled</code>).</p>
+<h3>2.5 Factory mapping (<code>/factory-mapping</code>, <code>/admin/factory-mapping</code>)</h3>
+<ul>
+<li>Configuration tool that maps product options to factory instructions</li>
+</ul>
+<p>(<code>factory_mappings</code>, m014). Resolution priority (<code>lib/types.ts resolveFactoryInstruction</code>): <strong>override &gt; client preset (m071) &gt; mapping &gt; missing</strong>.</p>
+<ul>
+<li><strong>Factory-only</strong>: visible to TLM / Operations / Super-Admin</li>
+</ul>
+<p>(<code>factory_mapping.access</code>, m064). Never overwrites the sales configuration (standing product rule).</p>
+<h3>2.6 Dashboards &amp; operations</h3>
+<ul>
+<li><code>/dashboard</code>, <code>/dashboard-v2</code> — role-shaped overview (e.g. &quot;Orders in flight&quot;,</li>
+</ul>
+<p><code>components/dashboard/OrdersInFlight.tsx</code>, which collapses the 3 entities into one live stage via <code>lib/lifecycle.ts computeOrderFlightStage</code>).</p>
+<ul>
+<li><code>/operations</code> — operations feed + <strong>Action Center</strong> (derived, prioritized</li>
+</ul>
+<p>to-dos).</p>
+<ul>
+<li><code>/business</code> — management/exec KPIs.</li>
+<li><code>/forecast</code> — sales forecast workspace (global view gated by</li>
+</ul>
+<p><code>forecast.view_global</code>).</p>
+<h3>2.7 Collaboration &amp; notifications</h3>
+<ul>
+<li><strong>Event log</strong> (<code>events</code>, m022+): immutable, polymorphic operational events with</li>
+</ul>
+<p>severity + status, threaded <code>event_comments</code> (m044) and per-user read state (m045).</p>
+<ul>
+<li><strong>Entity messages / conversation drawer</strong> (<code>entity_messages</code>, m049): a</li>
+</ul>
+<p>contextual discussion thread per document / task list / production order / client, mounted globally and resolved from the URL.</p>
+<ul>
+<li><strong>Action Center</strong> (<code>lib/action-center.ts</code>): live-derived operational actions</li>
+</ul>
+<p>(validate, clarify, deposit, production late, missing deadline, BL missing, …), grouped into urgent / waiting-on-me / waiting-on-client / info-missing, with acknowledge / done / notes.</p>
+<ul>
+<li><strong>Notification bell</strong> (<code>lib/notifications.ts</code>): unread comment aggregation +</li>
+</ul>
+<p>&quot;N task lists awaiting your review&quot;.</p>
+<h3>2.8 Administration</h3>
+<ul>
+<li><code>/admin/users</code> — role assignment, super-admin toggle, display names (m052).</li>
+<li><code>/permissions</code>, <code>/admin/permissions</code> — capability matrix editor (m026), teams &amp;</li>
+</ul>
+<p>access grants (m067).</p>
+<ul>
+<li><code>/admin/diagnostics</code> — health checks / dev reset RPCs (m033–m035).</li>
+<li>Catalog admin: categories, products &amp; images, banks, sales conditions.</li>
+<li><code>/view-as</code> — super-admin role simulation.</li>
+</ul>
+<hr />
+<h2>3. Who uses it (roles)</h2>
+<p><code>admin</code>, <code>sales</code>, <code>task_list_manager</code>, <code>operations</code>, and the virtual <code>super_admin</code>. See USER_ROLES.md for the full breakdown. In short:</p>
+<ul>
+<li><strong>Sales</strong> create quotations &amp; manage their own clients/deals (isolated).</li>
+<li><strong>Task-list-manager / operations</strong> validate task lists, configure factory</li>
+</ul>
+<p>instructions, and run production/shipping.</p>
+<ul>
+<li><strong>Admin</strong> manages users, permissions, and catalog.</li>
+<li><strong>Super-admin</strong> can simulate roles (View-As) and perform physical deletes.</li>
+</ul>
+<hr />
+<h2>4. Platform &amp; architecture (Confirmed by code)</h2>
+<ul>
+<li><strong>Next.js 14 App Router.</strong> All app routes live under <code>app/(app)/</code>, guarded by</li>
+</ul>
+<p>the route-group layout. API routes: attachment download (<code>/api/attachments/[id]/download</code>) and conversations (<code>/api/conversations/[entity_type]/[entity_id]</code>).</p>
+<ul>
+<li><strong>Supabase</strong>: Postgres + RLS + RPCs + Storage. Auth via Supabase Auth.</li>
+<li><strong>TypeScript + Tailwind.</strong> Domain logic concentrated in <code>lib/</code> (pure,</li>
+</ul>
+<p>client+server-safe modules where possible; server-only modules import <code>@/lib/supabase/server</code>).</p>
+<ul>
+<li><strong>Migrations applied manually</strong> in Supabase; idempotent; each ends with</li>
+</ul>
+<p><code>notify pgrst, 'reload schema';</code>.</p>
+<hr />
+<h2>5. What it deliberately is NOT (Confirmed by code / comments)</h2>
+<ul>
+<li><strong>Not an accounting system</strong> (per <code>spec.md</code> objective and the absence of</li>
+</ul>
+<p>ledger/invoice-accounting tables).</p>
+<ul>
+<li><strong>Not a chat system</strong> — <code>entity_messages</code> and Action Center notes are</li>
+</ul>
+<p>intentionally minimal &quot;micro-coordination&quot;, not full messaging (<code>lib/action-center.ts</code>, <code>lib/entity-messages-shared.ts</code> comments).</p>
+<ul>
+<li><strong>File upload for BL documents is out of scope</strong> in the current BL profile</li>
+</ul>
+<p>(<code>lib/bl.ts</code> comment).</p>
+<hr />
+<h2>6. Known high-level gaps (pointers)</h2>
+<ul>
+<li>The data-visibility engine (m067) is **not yet enforced at the database (RLS)</li>
+</ul>
+<p>layer** — app-level only.</p>
+<ul>
+<li>The capability matrix governs <strong>actions only</strong>, not row visibility.</li>
+<li>Several routes are <strong>redirect stubs</strong> (<code>/</code>, <code>/order-follow-up</code>,</li>
+</ul>
+<p><code>/production</code>, <code>/production/orders</code>, <code>/production/queue</code>, <code>/permissions</code>).</p>
+<ul>
+<li>Original <code>spec.md</code> is <strong>out of date</strong> relative to the implementation.</li>
+</ul>
+<p>See MISSING_DOCUMENTATION.md and POTENTIAL_INCONSISTENCIES.md for detail.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="roles">
+    <div class="sec-meta">
+      <span class="path">docs/current-implementation/USER_ROLES.md</span>
+    </div>
+    <div class="md">
+<h1>User Roles &amp; Permissions — Current Implementation</h1>
+<blockquote><strong>Audit note.</strong> Grounded in <code>lib/auth.ts</code>, <code>lib/permissions.ts</code>,</blockquote>
+<blockquote><code>lib/types.ts</code>, <code>lib/visibility.ts</code>, <code>lib/access-labels.ts</code>, and the route /</blockquote>
+<blockquote>server-action gating observed across <code>app/(app)/</code>. Per-capability **default</blockquote>
+<blockquote>role assignments** live in the DB <code>role_permissions</code> matrix (seeded by <code>m026</code></blockquote>
+<blockquote>/ <code>m053</code>) and are <strong>not</strong> fully re-derived here — those are tagged</blockquote>
+<blockquote><strong>Needs confirmation</strong>.</blockquote>
+<hr />
+<h2>1. The two-layer security model (Confirmed by code)</h2>
+<p>The app deliberately separates <strong>security</strong> from <strong>rendering</strong>:</p>
+<p>| Concept | Function | Reads View-As cookie? | Governs | |---|---|---|---| | <strong>REAL role</strong> | <code>getCurrentUserRole()</code> (<code>lib/auth.ts</code>) | <strong>Never</strong> | ALL security decisions | | <strong>EFFECTIVE role</strong> | <code>getEffectiveRole()</code> (<code>lib/auth.ts</code>) | Yes (super-admin only) | UI rendering only |</p>
+<ul>
+<li><strong>REAL role</strong> is read from <code>user_roles</code> and surfaces the virtual</li>
+</ul>
+<p><code>super_admin</code> when <code>user_roles.super_admin = true</code> (the DB <code>role</code> column stays <code>admin</code> so RLS keeps working).</p>
+<ul>
+<li><strong>EFFECTIVE role</strong> honors the <code>solux_view_as_role</code> cookie</li>
+</ul>
+<p>(<code>VIEW_AS_COOKIE</code>), but <strong>only for super-admins</strong>. Every other user's effective role equals their real role — they cannot simulate.</p>
+<ul>
+<li>Capability mirror (same split, <code>lib/permissions.ts</code>):</li>
+</ul>
+<p>- <code>hasCapability</code> / <code>requireCapability</code> → <strong>REAL</strong> role. - <code>hasUiCapability</code> → <strong>EFFECTIVE</strong> role.</p>
+<blockquote><strong>Observed pattern (Confirmed by code):</strong> <strong>pages</strong> guard with the EFFECTIVE</blockquote>
+<blockquote>role (so View-As previews work), while <strong>mutating server actions</strong> guard with</blockquote>
+<blockquote>the REAL role (so a super-admin in View-As mode still can't accidentally lose</blockquote>
+<blockquote>privileges, and a real sales user can never escalate). This is the correct</blockquote>
+<blockquote>security posture but means &quot;what I see&quot; and &quot;what I can do&quot; can differ during</blockquote>
+<blockquote>View-As.</blockquote>
+<blockquote><strong>Testing note (standing user rule):</strong> to test role-based RLS / visibility,</blockquote>
+<blockquote>use a <strong>real</strong> account of that role — <strong>not</strong> View-As, which keeps the</blockquote>
+<blockquote>super-admin DB session.</blockquote>
+<hr />
+<h2>2. The roles</h2>
+<p><code>Role</code> (<code>lib/types.ts</code>): <code>admin</code>, <code>sales</code>, <code>task_list_manager</code>, <code>operations</code>, <code>super_admin</code>.</p>
+<ul>
+<li>Four are real DB <code>user_roles.role</code> values: **admin, sales,</li>
+</ul>
+<p>task_list_manager, operations**.</p>
+<ul>
+<li><strong><code>super_admin</code> is a boolean flag</strong> (<code>user_roles.super_admin</code>, m016), surfaced</li>
+</ul>
+<p>by code as a virtual role. It is never stored in the <code>role</code> column.</p>
+<h3>Role groupings (helpers in <code>lib/types.ts</code>)</h3>
+<ul>
+<li><code>isAdminLike(role)</code> → <code>admin</code> <strong>or</strong> <code>super_admin</code>.</li>
+<li><code>isTechnicalRole(role)</code> → admin-like <strong>or</strong> <code>task_list_manager</code> <strong>or</strong></li>
+</ul>
+<p><code>operations</code>.</p>
+<ul>
+<li><code>VIEW_AS_ROLES</code> → the set of roles a super-admin may simulate (defined in</li>
+</ul>
+<p><code>lib/types.ts</code>; super_admin itself is not a simulation target). Exact list: <strong>Needs confirmation against <code>lib/types.ts</code></strong> (expected: the four real roles).</p>
+<h3>Auth guards (<code>lib/auth.ts</code>)</h3>
+<p>| Guard | Passes for | Used to gate | |---|---|---| | <code>requireAdmin()</code> | <code>isAdminLike</code> (admin, super_admin) | admin-level writes | | <code>requireTaskListManagerOrAdmin()</code> | admin-like <strong>or</strong> task_list_manager <strong>or</strong> operations | technical_values edits, factory PDF, TLM/ops dashboards, component mappings | | <code>requireSuperAdmin()</code> | <code>super_admin</code> flag only | <strong>physical DELETE</strong> of business records; reserved destructive ops |</p>
+<hr />
+<h2>3. Per-role summary</h2>
+<blockquote>Page reachability uses the EFFECTIVE role; the <strong>actions</strong> listed are gated by</blockquote>
+<blockquote>the REAL role and/or a capability key. Where a default capability assignment</blockquote>
+<blockquote>is not directly visible in code it is marked <strong>Needs confirmation</strong>.</blockquote>
+<h3>3.1 <code>sales</code></h3>
+<ul>
+<li><strong>Intent (Assumed from code):</strong> owns clients and quotations; isolated to their</li>
+</ul>
+<p>own accounts/deals by default.</p>
+<ul>
+<li><strong>Can (Confirmed by code / capability):</strong></li>
+</ul>
+<p>- Create/edit quotations (<code>quotation.create</code>). - Create/edit clients they own. - Delete their own quotations regardless of status (RLS m057; owner-delete capability <code>quotation.delete</code> per m055). - Request advisory validation on a quotation (m068). - Set forecast fields on their own deals (m050). - Add reminders, notes, attachments, entity messages on entities they can see.</p>
+<ul>
+<li><strong>Cannot (Confirmed by code):</strong></li>
+</ul>
+<p>- See other sales reps' clients/quotations by default (RLS isolation m046 / m058 / m066). <strong>No hardcoded client exceptions</strong> (standing rule). - Validate/reject task lists; edit <code>technical_values</code> (<code>requireTaskListManagerOrAdmin</code>). - Edit production order status/deadline/payments/shipment. - Access factory mapping (<code>factory_mapping.access</code>). - See the global forecast (<code>forecast.view_global</code>). - Access admin / permissions surfaces.</p>
+<ul>
+<li><strong>Task-list visibility:</strong> once a task list is <code>under_validation</code> / <code>validated</code></li>
+</ul>
+<p>/ <code>production_ready</code> / <code>cancelled</code> it is <strong>locked for sales</strong> (<code>TASK_LIST_LOCKED_FOR_SALES</code>, <code>lib/types.ts</code>).</p>
+<h3>3.2 <code>task_list_manager</code> (TLM)</h3>
+<ul>
+<li><strong>Intent:</strong> technical reviewer / validator of task lists.</li>
+<li><strong>Can (Confirmed by code):</strong></li>
+</ul>
+<p>- Validate / reject task lists (<code>task_list.validate</code>, <code>task_list.reject</code>; <code>requireTaskListManagerOrAdmin</code>). - Edit <code>technical_values</code> and factory config; factory mapping access (<code>factory_mapping.access</code>, m064). - Generate factory PDF / technical surfaces. - See all task lists in the TLM queue (<code>TASK_LIST_TLM_QUEUE = [under_validation]</code>).</p>
+<ul>
+<li><strong>Production orders:</strong> shares the technical scope; <strong>Needs confirmation</strong></li>
+</ul>
+<p>whether TLM has the full <code>production_order.*</code> edit capabilities by default vs <code>operations</code> (the matrix decides — <code>role_permissions</code>).</p>
+<ul>
+<li><strong>Cannot:</strong> admin user/permission management; physical deletes.</li>
+</ul>
+<h3>3.3 <code>operations</code></h3>
+<ul>
+<li><strong>Intent (Confirmed by code, m042 + <code>requireTaskListManagerOrAdmin</code>):</strong></li>
+</ul>
+<p>production planning, shipment, deadlines — <strong>shares the task-list-manager technical scope</strong>.</p>
+<ul>
+<li><strong>Can:</strong> everything TLM can for task lists, plus the production-order</li>
+</ul>
+<p>operational edits (status / deadline / payments / shipment / timeline) — subject to the <code>production_order.*</code> capabilities in <code>role_permissions</code> (defaults <strong>Needs confirmation</strong>).</p>
+<ul>
+<li><strong>Visibility:</strong> technical role → sees all rows under the legacy visibility</li>
+</ul>
+<p>fallback (<code>lib/visibility.ts</code>).</p>
+<h3>3.4 <code>admin</code></h3>
+<ul>
+<li><strong>Can:</strong> all <code>quotation.<em></code>, <code>task_list.</em></code>, <code>production_order.*</code>,</li>
+</ul>
+<p><code>factory_mapping.access</code>, <code>forecast.view_global</code>, and the <code>admin.*</code> capabilities (<code>manage_permissions</code>, <code>manage_users</code>, <code>diagnostics</code>) — subject to the matrix. <code>isAdminLike</code> passes <code>requireAdmin</code>.</p>
+<ul>
+<li><strong>Cannot (by policy):</strong> physical DELETE of business records — that requires</li>
+</ul>
+<p><code>requireSuperAdmin()</code>. Admins are expected to <strong>cancel</strong> (status) or <strong>archive</strong> (<code>archived_at</code>) instead.</p>
+<h3>3.5 <code>super_admin</code> (virtual)</h3>
+<ul>
+<li><strong>Can:</strong> everything an admin can, <strong>plus</strong> physical deletes</li>
+</ul>
+<p>(<code>requireSuperAdmin</code>), <strong>plus View-As simulation</strong> of other roles.</p>
+<ul>
+<li>It is the only role that can change <code>effectiveRole ≠ realRole</code>.</li>
+</ul>
+<hr />
+<h2>4. Capability catalog (<code>lib/permissions.ts</code>)</h2>
+<p>The <code>Capability</code> union has <strong>22 keys</strong> (verbatim):</p>
+<pre class="md-code"><code>
+quotation.create | quotation.cancel | quotation.archive | quotation.delete
+
+task_list.validate | task_list.reject | task_list.archive | task_list.delete |
+
+  task_list.sync_orphans
+
+factory_mapping.access
+
+production_order.edit_status | production_order.edit_deadline |
+
+  production_order.edit_payments | production_order.edit_shipment |
+
+  production_order.set_timeline | production_order.start_without_deposit |
+
+  production_order.archive | production_order.delete
+
+forecast.view_global
+
+admin.manage_permissions | admin.manage_users | admin.diagnostics
+
+</code></pre>
+<ul>
+<li><strong>Resolution:</strong> <code>lib/permissions.ts</code> reads the <code>role_permissions</code> matrix with</li>
+</ul>
+<p>a <strong>30-second in-memory cache</strong>, <strong>fail-closed</strong> (on error, capability is denied).</p>
+<ul>
+<li><strong>Matrix scope:</strong> governs <strong>app-level gating only</strong> — it does <strong>not</strong> alter</li>
+</ul>
+<p>RLS. A capability grant lets the UI/action run, but the DB row must still pass RLS.</p>
+<ul>
+<li><strong>Default matrix (which role gets which key): Needs confirmation</strong> — stored in</li>
+</ul>
+<p><code>role_permissions</code>, seeded by <code>m026</code> and backfilled for <code>operations</code> in <code>m053</code>. The lists in §3 are the <strong>intent inferred from route gating</strong>, tagged Assumed where not directly seeded in code.</p>
+<hr />
+<h2>5. Visibility / &quot;who can see which rows&quot; (<code>lib/visibility.ts</code>, m067)</h2>
+<p>Distinct from capabilities (which gate <strong>actions</strong>), visibility gates <strong>which rows</strong> a user can see.</p>
+<ul>
+<li>A user's scope is the <strong>union of their <code>access_grants</code></strong>:</li>
+</ul>
+<p><code>self</code> | <code>team</code> | <code>region</code> | <code>lens(production|finance|logistics)</code> | <code>all</code>.</p>
+<ul>
+<li><strong>Legacy fallback (Confirmed by code):</strong> until grants are assigned, technical</li>
+</ul>
+<p>roles (admin-like / TLM / operations) see <strong>all</strong>; sales see <strong>own</strong>. This preserves today's behavior.</p>
+<ul>
+<li><strong>Lens statuses</strong> (<code>LENS_STATUSES</code>): production → task lists in</li>
+</ul>
+<p><code>[validated, production_ready]</code>; finance → documents in <code>[won]</code>; logistics → documents in <code>[won]</code>.</p>
+<ul>
+<li><strong>Enforcement layer:</strong> <strong>app-level only.</strong> <code>getVisibilityScope</code>, <code>canSeeRow</code>,</li>
+</ul>
+<p><code>canSeeRecord</code>, <code>canSeeOwner</code>, <code>ownerAllowList</code> are used in queries/components. <strong>DB-level RLS does NOT yet enforce lens/team scopes</strong> (additive m067). → See POTENTIAL_INCONSISTENCIES.md.</p>
+<ul>
+<li>Manager-facing labels for grants: <code>lib/access-labels.ts</code> (<code>ACCESS_TYPES</code>,</li>
+</ul>
+<p><code>LENS_INFO</code>, <code>visibilitySummary</code>, <code>grantChipLabel</code>).</p>
+<hr />
+<h2>6. Accessible pages by role (from route gating)</h2>
+<blockquote>Reachability via EFFECTIVE role; list pages mostly readable by all</blockquote>
+<blockquote>authenticated users with RLS-scoped data. Mutations gated as in §3.</blockquote>
+<p>| Route | Who (effective) | Notes | |---|---|---| | <code>/dashboard</code>, <code>/dashboard-v2</code> | all | role-shaped widgets (sales strip vs management panel) | | <code>/business</code> | management (admin-like) | exec KPIs | | <code>/operations</code> | technical roles | operations feed + Action Center | | <code>/forecast</code> | all; global view needs <code>forecast.view_global</code> | sales see own | | <code>/clients</code>, <code>/clients/[id]</code> | all (RLS-scoped) | sales see owned | | <code>/documents</code>, <code>/documents/[id]</code>, <code>/documents/new</code> | all (RLS-scoped) | | | <code>/task-lists</code>, <code>/task-lists/[id]</code> | all to view; TLM/ops to validate | sales locked once <code>under_validation</code>+ | | <code>/production/orders/[id]</code> | technical roles edit; others view if visible | <code>/production</code>, <code>/production/orders</code>, <code>/production/queue</code> are redirect stubs | | <code>/factory-mapping</code> | TLM / operations / super-admin (<code>factory_mapping.access</code>) | &quot;factory only&quot; config | | <code>/admin/<em></code> (users, permissions, diagnostics, banks, categories, products, sales-conditions, factory-mapping, components) | admin-like; permissions/users/diagnostics via <code>admin.</em></code> | some admin sub-pages rely on the layout guard only (see below) | | <code>/permissions</code>, <code>/permissions/actions</code>, <code>/permissions/teams</code> | admin (<code>admin.manage_permissions</code>) | <code>/permissions</code> root is a redirect stub | | <code>/view-as</code> | super-admin | sets the View-As cookie | | <code>/</code>, <code>/order-follow-up</code> | redirect stubs | |</p>
+<hr />
+<h2>7. Unclear / missing / inconsistent permissions</h2>
+<ul>
+<li><strong>Per-capability default matrix not visible in code</strong> — <code>role_permissions</code></li>
+</ul>
+<p>seeding is the source of truth; this audit cannot assert exact defaults. <strong>Needs confirmation.</strong> (e.g. does <code>task_list_manager</code> get <code>production_order.edit_*</code> by default, or only <code>operations</code>?)</p>
+<ul>
+<li><strong>Page guard vs action guard split</strong> — admin sub-pages</li>
+</ul>
+<p><code>admin/products/images</code> and <code>admin/products/import</code> reportedly have <strong>no in-body role guard</strong>; they rely solely on the <code>app/(app)/admin</code> layout guard. If the layout guard ever changes, these would be exposed. <strong>Confirmed by code (routes map); recommend a defense-in-depth in-body check.</strong></p>
+<ul>
+<li><strong>Visibility not enforced at RLS</strong> — a user with a narrow lens grant still</li>
+</ul>
+<p>relies on app-level filtering; a direct DB/RPC path could over-return. <strong> Confirmed (m067 additive).</strong></p>
+<ul>
+<li>*<em><code>production_order.</em></code> capability ownership between TLM and operations** is</li>
+</ul>
+<p>ambiguous from code alone. <strong>Needs confirmation.</strong></p>
+<ul>
+<li><strong>View-As divergence</strong> — during View-As, a super-admin sees a role's UI but</li>
+</ul>
+<p>retains real privileges on actions. Intended, but can surprise testers who expect actions to be blocked. <strong>Confirmed by code.</strong></p>
+    </div>
+  </section>
+
+  <section class="sec" id="lifecycle">
+    <div class="sec-meta">
+      <span class="path">docs/current-implementation/ORDER_LIFECYCLE.md</span>
+    </div>
+    <div class="md">
+<h1>Order Lifecycle — Current Implementation</h1>
+<blockquote><strong>Audit note.</strong> Grounded in <code>lib/lifecycle.ts</code> (semantic layer +</blockquote>
+<blockquote><code>computeOrderFlightStage</code>), <code>lib/production-lifecycle.ts</code> (baseline/delay),</blockquote>
+<blockquote><code>lib/delays.ts</code>, <code>lib/types.ts</code> (raw enums), and</blockquote>
+<blockquote><code>supabase/migrations/023_lifecycle_propagation.sql</code> (cancellation triggers).</blockquote>
+<blockquote>&quot;Confirmed by code&quot; = directly in those files. Step-transition <strong>owners</strong> are</blockquote>
+<blockquote>tagged Assumed-from-code where the gating role is inferred from</blockquote>
+<blockquote><code>requireTaskListManagerOrAdmin</code> / capability keys rather than a single</blockquote>
+<blockquote>explicit map.</blockquote>
+<hr />
+<h2>1. The three entities</h2>
+<p>An &quot;order&quot; is the union of three rows, each with its own status enum (<code>lib/types.ts</code>):</p>
+<pre class="md-code"><code>
+documents (quotation) ──► production_task_lists ──► production_orders
+
+   DocStatus               ProductionTaskListStatus    ProductionOrderStatus
+
+</code></pre>
+<p><code>lib/lifecycle.ts</code> is the <strong>semantic layer</strong>: instead of comparing raw statuses inline, the app asks <code>isDocActive</code>, <code>isTaskListCancelled</code>, <code>isPOTerminal</code>, etc. <code>computeOrderFlightStage()</code> collapses all three into <strong>one</strong> operational stage.</p>
+<hr />
+<h2>2. The unified 6-phase &quot;flight&quot; strip (Confirmed by code)</h2>
+<p><code>ORDER_FLIGHT_PHASES</code> (<code>lib/lifecycle.ts</code>):</p>
+<pre class="md-code"><code>
+0 Quote → 1 Task list → 2 Payment → 3 Production → 4 Shipping → 5 Delivered
+
+</code></pre>
+<p><code>computeOrderFlightStage(o)</code> resolves the <strong>most advanced</strong> signal: production-order status first, then task-list status, then &quot;won but nothing started&quot;. Mapping (verbatim from code):</p>
+<p>| Source status | Phase | Label | Tone | |---|---|---|---| | PO <code>delivered</code> | 5 | Delivered | emerald | | PO <code>shipped</code> | 4 | In transit | violet | | PO <code>shipment_booked</code> | 4 | Shipment booked | violet | | PO <code>production_completed</code> | 4 | Production complete | emerald | | PO <code>production_delayed</code> | 3 | Production delayed | red | | PO <code>in_production</code> | 3 | In production | amber / red if late | | PO <code>production_scheduled</code> | 3 | Production approved | sky | | PO <code>deposit_received</code> | 3 | Deposit received | sky | | PO <code>awaiting_deposit</code> | 2 | Awaiting deposit | amber | | TL <code>production_ready</code> | 2 | Production ready | sky | | TL <code>validated</code> | 2 | Task list validated | sky | | TL <code>under_validation</code> | 1 | Under task list review | amber | | TL <code>needs_revision</code> | 1 | Needs revision | red | | TL <code>draft</code> | 1 | Task list draft | neutral | | TL <code>cancelled</code> | 1 | Task list cancelled | neutral | | (won, nothing started) | 1 | Awaiting task list | neutral |</p>
+<blockquote><strong>Note (Confirmed by code):</strong> <code>production_completed</code> maps to **phase 4</blockquote>
+<blockquote>(Shipping)**, not phase 3 — once manufacturing is done the order is</blockquote>
+<blockquote>considered &quot;in the shipping phase&quot;. And <code>deposit_received</code> maps to phase **3</blockquote>
+<blockquote>(Production)**, not phase 2 (Payment) — receiving the deposit advances the bar</blockquote>
+<blockquote>into Production. These are intentional but non-obvious; document carefully</blockquote>
+<blockquote>before changing.</blockquote>
+<hr />
+<h2>3. Step-by-step lifecycle</h2>
+<h3>3.1 Quotation / document (<code>DocStatus</code>)</h3>
+<pre class="md-code"><code>
+draft → sent → negotiating → won
+
+                    │            └─► (kicks off the task-list phase)
+
+                    └─► lost      (dead)
+
+  any → cancelled               (dead)
+
+</code></pre>
+<p>| Transition | Who (Assumed from code) | Notes | |---|---|---| | create <code>draft</code> | sales (<code>quotation.create</code>) | <code>/documents/new</code> | | <code>draft → sent</code> | sales | &quot;send&quot; the quotation | | <code>sent → negotiating</code> | sales | negotiation in progress | | → <code>won</code> | sales | deal won (basis for task list) | | → <code>lost</code> | sales | dead deal | | → <code>cancelled</code> | sales owner / admin (<code>quotation.cancel</code>) | cascades down (see §5) |</p>
+<ul>
+<li><code>DOC_ALIVE_STATUSES = [draft, sent, negotiating, won]</code>;</li>
+</ul>
+<p><code>DOC_DEAD_STATUSES = [lost, cancelled]</code>; <code>DOC_PIPELINE_STATUSES = [sent, negotiating]</code>.</p>
+<ul>
+<li><strong><code>isDocCancelled</code> treats <code>lost</code> AND <code>cancelled</code> as cancelled</strong> — and m023's</li>
+</ul>
+<p>trigger cascades <code>lost → cancelled</code> on the task list + PO.</p>
+<ul>
+<li><strong>Advisory validation loop (m068, <code>lib/validation.ts</code>)</strong> runs <em>alongside</em> the</li>
+</ul>
+<p>doc status: <code>none → pending → approved | rejected → (revise) → pending</code>. It is <strong>advisory only — a quote can be sent/won regardless of validation state</strong>. ⚠️ This &quot;validation&quot; is a different concept from <strong>task-list</strong> validation (§3.2) — see POTENTIAL_INCONSISTENCIES.md.</p>
+<h3>3.2 Production task list (<code>ProductionTaskListStatus</code>)</h3>
+<blockquote><strong>Trigger to enter this phase:</strong> the document being <strong>won</strong>. The flight-stage</blockquote>
+<blockquote>fallback &quot;Awaiting task list — Deal won, task list not started yet&quot; implies</blockquote>
+<blockquote>the task list is <strong>NOT auto-created on win</strong> — a user creates it. Whether any</blockquote>
+<blockquote>path auto-creates it is <strong>Needs confirmation</strong>.</blockquote>
+<pre class="md-code"><code>
+draft → under_validation → validated → production_ready
+
+            │      ▲
+
+            ▼      │
+
+       needs_revision (back to sales)
+
+  any → cancelled
+
+</code></pre>
+<p>| Transition | Who (Confirmed/Assumed) | Notes | |---|---|---| | create / edit <code>draft</code> | sales (configures), then submits | <code>TASK_LIST_LOCKED_FOR_SALES</code> once <code>under_validation</code>+ | | <code>draft → under_validation</code> | sales requests review | enters <code>TASK_LIST_TLM_QUEUE</code> | | <code>under_validation → validated</code> | TLM / operations (<code>task_list.validate</code>, <code>requireTaskListManagerOrAdmin</code>) | <strong>Confirmed by code</strong> (guard) | | <code>under_validation → needs_revision</code> | TLM / operations (<code>task_list.reject</code>) | sent back to sales | | <code>validated → production_ready</code> | TLM / operations | release to production | | → <code>cancelled</code> | gated; cascades to PO | |</p>
+<ul>
+<li><code>TASK_LIST_PRODUCTION_STATUSES = [validated, production_ready]</code> — the point at</li>
+</ul>
+<p>which a production order becomes usable (<code>OrdersInFlight.resolveOrderRowHref</code>, <code>lib/lifecycle.ts</code>).</p>
+<ul>
+<li>Factory <strong>overrides/extras</strong> (m071) edited here never overwrite the sales</li>
+</ul>
+<p>configuration (standing product rule).</p>
+<h3>3.3 Production order (<code>ProductionOrderStatus</code>)</h3>
+<pre class="md-code"><code>
+awaiting_deposit → deposit_received → production_scheduled → in_production
+
+                                                                 │
+
+                                              (production_delayed)│
+
+                                                                 ▼
+
+                              production_completed → shipment_booked → shipped → delivered
+
+  any → cancelled
+
+</code></pre>
+<p>| Transition | Who (Assumed from code → capability) | Notes | |---|---|---| | create (<code>awaiting_deposit</code>) | when TL is <code>validated</code>/<code>production_ready</code> | exact auto/manual creation <strong>Needs confirmation</strong> | | record deposit → <code>deposit_received</code> | ops (<code>production_order.edit_payments</code>) | <strong>activation</strong> event | | start without deposit | ops (<code>production_order.start_without_deposit</code>, m025) | sets <code>deposit_override_at</code>; <strong>activation</strong> event | | set timeline / <code>production_scheduled</code> | ops (<code>production_order.set_timeline</code>) | stamps <code>initial_production_deadline</code> at activation | | <code>→ in_production</code> | ops (<code>production_order.edit_status</code>) | | | <code>→ production_delayed</code> | ops, or implied by deadline change | a delay event (m073) moves <code>current_production_deadline</code> | | <code>→ production_completed</code> | ops | stamps <code>actual_completion_date</code> (Assumed) | | <code>→ shipment_booked</code> | ops (<code>production_order.edit_shipment</code>) | | | <code>→ shipped</code> | ops | ETD/ETA columns | | <code>→ delivered</code> | ops | terminal success | | <code>→ cancelled</code> | gated | terminal dead |</p>
+<ul>
+<li>`PO_ACTIVE_STATUSES = [awaiting_deposit, deposit_received,</li>
+</ul>
+<p>production_scheduled, in_production, production_delayed]<code>; </code>PO_SHIPPING_STATUSES = [production_completed, shipment_booked, shipped]<code>; </code>PO_TERMINAL_STATUSES = [delivered, cancelled]<code>; </code>PO_CLOSED_SUCCESS_STATUSES = [delivered]`.</p>
+<hr />
+<h2>4. Production baseline &amp; delay model (Confirmed by code)</h2>
+<p><code>lib/production-lifecycle.ts</code>:</p>
+<ul>
+<li><strong>Production start date</strong> = <code>deposit_received_at</code> ?? date(<code>deposit_override_at</code>).</li>
+</ul>
+<p>NULL until production activates.</p>
+<ul>
+<li><strong>Activation</strong> = deposit fully received OR start-without-deposit override.</li>
+<li><strong>Initial Project Completion</strong> = <code>start_date + production_working_days</code></li>
+</ul>
+<p>(working days, weekends excluded via <code>lib/working-days.ts addWorkingDays</code>), <strong>stamped once at activation</strong> into the stored column <code>initial_production_deadline</code>, then <strong>frozen</strong> (read via <code>getInitialProjectCompletion</code>, never recomputed).</p>
+<ul>
+<li><strong>Baseline lock</strong>: <code>baseline_locked_at</code> is stamped at activation; before</li>
+</ul>
+<p>activation <code>working_days</code> stays editable. <code>isBaselineLocked</code> also treats any active order as locked (legacy safety net).</p>
+<ul>
+<li><strong>Operational delay</strong> = <code>current_production_deadline − initial_production_deadline</code></li>
+</ul>
+<p>(<code>computeBaselineDelay</code>, equivalent to <code>computeProductionDelay</code> in <code>lib/types.ts</code>). NULL until activation.</p>
+<ul>
+<li><strong>Lifecycle phase</strong> (<code>getLifecyclePhase</code>): <code>closed</code> (cancelled/archived) →</li>
+</ul>
+<p><code>completed</code> (<code>actual_completion_date</code> set) → <code>in_production</code> (active) → <code>awaiting_start</code>.</p>
+<h3>4.1 Delay categorization (m072–m074, <code>lib/delays.ts</code>)</h3>
+<ul>
+<li>Each delay is a <strong>row in <code>production_deadline_changes</code></strong> with a <code>delay_type</code></li>
+</ul>
+<p>and <code>days_added</code> (additive — never overwrite the deadline manually).</p>
+<ul>
+<li><code>DelayType</code>: <code>production</code> | <code>payment</code> | <code>shipping</code> | <code>client_change</code> |</li>
+</ul>
+<p><code>client_waiting</code> | <code>supplier</code> | <code>customs</code> | <code>other</code>.</p>
+<ul>
+<li>**Only <code>delay_type='production'</code> (or NULL legacy) counts toward the factory</li>
+</ul>
+<p>KPI** (<code>isFactoryDelay</code>). External delays surface amber but don't poison factory performance. <code>computeDelayBreakdown</code> → <code>{factoryDays, externalDays, latestType, changeCount}</code>.</p>
+<ul>
+<li>Delay events are <strong>editable but audit-logged</strong> (<code>updated_by</code>/<code>updated_at</code>,</li>
+</ul>
+<p>m074) — an explicit product decision over strict immutability.</p>
+<blockquote><strong>May 2026 revision (Confirmed by code comment):</strong> baseline locks at</blockquote>
+<blockquote><strong>production activation</strong>, NOT at first <code>working_days</code> save. The old</blockquote>
+<blockquote><code>validation_date + working_days</code> formula was wrong for the Solux workflow</blockquote>
+<blockquote>(production starts after deposit, not at validation).</blockquote>
+<hr />
+<h2>5. Cancellation propagation (Confirmed by code — m023 + <code>CASCADE_RULES</code>)</h2>
+<p>DB triggers (<code>trg_propagate_doc_cancellation</code>, <code>trg_propagate_task_list_cancellation</code>) are the <strong>source of truth</strong>; <code>CASCADE_RULES</code> in <code>lib/lifecycle.ts</code> mirrors them for UI confirm dialogs:</p>
+<p>| Cancel this | Also cancels | Skip if target already | |---|---|---| | document | every linked <strong>task list</strong> | <code>cancelled</code> | | document | every linked <strong>production order</strong> | <code>cancelled</code>, <code>delivered</code> | | task list | its <strong>production order</strong> | <code>cancelled</code>, <code>delivered</code> |</p>
+<ul>
+<li>A <strong>delivered</strong> PO is never auto-cancelled by an upstream cancellation.</li>
+<li>Cancellation fires regardless of which code path issued the status update</li>
+</ul>
+<p>(the trigger guarantees consistency even for direct SQL).</p>
+<hr />
+<h2>6. UI ↔ DB status inconsistencies (for the audit)</h2>
+<ol>
+<li><strong><code>production_status</code> is a query alias, not a column.</strong> The real column is</li>
+</ol>
+<p><code>production_orders.status</code>. <code>OrderInFlight</code>/<code>OrderStageInput</code> use <code>production_status</code>; the DB stores <code>status</code>. Any raw query that selects <code>production_status</code> directly would fail — it must alias <code>status AS production_status</code>. <strong>Confirmed by code</strong> (<code>lib/lifecycle.ts</code>, <code>components/dashboard/OrdersInFlight.tsx</code>). See POTENTIAL_INCONSISTENCIES.md.</p>
+<ol>
+<li><strong>Two different &quot;validated/validation&quot; meanings.</strong> Documents have an</li>
+</ol>
+<p><em>advisory</em> validation (<code>validation_status</code> pending/approved/rejected, m068); task lists have a <em>workflow</em> validation (<code>under_validation</code>/<code>validated</code>). They are unrelated but share the word &quot;validation&quot;. <strong>Confirmed by code.</strong></p>
+<ol>
+<li><strong>&quot;Completed&quot; defined two ways.</strong> <code>getLifecyclePhase</code> marks <code>completed</code> when</li>
+</ol>
+<p><code>actual_completion_date</code> is set; <code>computeOrderFlightStage</code> shows &quot;Production complete&quot; on PO status <code>production_completed</code> (phase 4). A PO could in principle have one without the other. <strong>Suspected</strong> — reconcile.</p>
+<ol>
+<li><strong><code>deposit_received</code> advances the flight bar to Production (phase 3),</strong> while</li>
+</ol>
+<p><code>awaiting_deposit</code> sits at Payment (phase 2). Intentional but easy to misread as &quot;payment phase still&quot;. <strong>Confirmed by code.</strong></p>
+<ol>
+<li><strong>Task-list creation on Won is not proven automatic.</strong> The &quot;Awaiting task</li>
+</ol>
+<p>list&quot; fallback implies a manual step. <strong>Needs confirmation.</strong></p>
+    </div>
+  </section>
+
+  <section class="sec" id="next">
+    <div class="sec-meta">
+      <span class="path">docs/ai/NEXT_STEPS.md</span>
+    </div>
+    <div class="md">
+<h1>Next Steps — SMBKE</h1>
+<p>As of bootstrap (2026-07-10). Update as work proceeds.</p>
+<ol>
+<li><strong>Product Knowledge Hub</strong> — active work on <code>feature/product-knowledge-hub</code> (versioned spec source of truth, migrations 160–161, baseline import). Decide when to merge into <code>main</code>.</li>
+<li><strong>Merge this bootstrap PR</strong>, then run the ai-brain sync so <code>docs/ai/</code> mirrors into the Obsidian vault (<code>projects/SMBKE/</code>).</li>
+<li><strong>Delete/archive the old iCloud copy</strong> (<code>~/Library/Mobile Documents/.../KLAIRS/SBM_K-edit</code>) — corrupted <code>.git</code>, divergence trap.</li>
+<li><strong>Add a root README.md</strong> (repo landing page currently empty).</li>
+<li><strong>Operational roadmap</strong> — continue per <code>docs/OPERATIONAL_STABILIZATION_ROADMAP.md</code> and <code>docs/UX_BACKLOG.md</code>.</li>
+<li>Optional hygiene: untrack <code>tsconfig.tsbuildinfo</code>; resolve <code>light-request-genius/</code> nesting; sweep <code><em> 2.</em></code> iCloud residue.</li>
+</ol>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  var links = document.querySelectorAll('#sidebar nav a');
+  function setActive() {
+    var hash = location.hash.slice(1) || (links[0] && links[0].getAttribute('href').slice(1));
+    links.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + hash);
+    });
+  }
+  window.addEventListener('hashchange', setActive);
+  setActive();
+})();
+</script>
+</body>
+</html>
